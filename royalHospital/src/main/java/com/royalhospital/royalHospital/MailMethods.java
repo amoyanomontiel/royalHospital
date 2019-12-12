@@ -1,5 +1,8 @@
 package com.royalhospital.royalHospital;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -8,7 +11,12 @@ import javax.mail.Message;
 import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.Session;
-import javax.mail.Store;;
+import javax.mail.Store;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;;
 
 public class MailMethods {
 	private String host;
@@ -40,7 +48,37 @@ public class MailMethods {
 				// Get message one by one
 				// Check web page
 				Message objectMessage = messages[counter];
-				ObjectEmail objectM = new ObjectEmail(objectMessage.getSubject(), objectMessage.getFrom()[0].toString(), getBodyText(objectMessage));
+				// Revisar pagina web para los archivos adjuntos
+				//ObjectEmail objectM = new ObjectEmail(objectMessage.getSubject(), objectMessage.getFrom()[0].toString(), getBodyText(objectMessage));
+				JEditorPane editor = new JEditorPane("text/html", getBodyText(objectMessage));
+				System.out.println(getBodyText(objectMessage));
+        	    editor.setEditable(false);
+        	    editor.addHyperlinkListener(new HyperlinkListener() {
+					
+					@Override
+					public void hyperlinkUpdate(HyperlinkEvent e) {
+						if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+							if(Desktop.isDesktopSupported()) {
+							    try {
+									Desktop.getDesktop().browse(e.getURL().toURI());
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								} catch (URISyntaxException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+					        }
+					}
+				});
+        	    JScrollPane pane = new JScrollPane(editor);
+        	    JFrame f = new JFrame("HTML Demo");
+        	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        	    f.getContentPane().add(pane);
+        	    f.setSize(800, 600);
+        	    f.setVisible(true);
+        	    //break;
 			}	
 		} catch (Exception e) {
 			System.out.println("Error reading content about messages");
@@ -64,9 +102,9 @@ public class MailMethods {
 							text = getBodyText(bodyP);
 						continue;
 					} else if (bodyP.isMimeType("text/html")) {
-						String s = getBodyText(bodyP);
-						if (s != null)
-							return s;
+						String textHtml = getBodyText(bodyP);
+						if (textHtml != null)
+							return textHtml;
 					} else {
 						return getBodyText(bodyP);
 					}

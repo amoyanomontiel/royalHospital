@@ -1,7 +1,7 @@
 package com.royalhospital.royalHospital;
 
 /**
- * Hello world!
+ * Paquete controlador de la App
  *
  */
 public class App 

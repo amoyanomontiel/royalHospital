@@ -1,5 +1,5 @@
-package vistas;
+package views;
 
-public class Info {
+public class MainRoyalView {
 // En este paquete van todas las vistas
 }

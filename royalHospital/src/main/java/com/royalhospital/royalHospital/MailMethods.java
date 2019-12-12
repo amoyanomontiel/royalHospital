@@ -46,6 +46,7 @@ public class MailMethods {
 		try {
 			for (int counter = 0; counter < messages.length; counter++) {
 				// Get message one by one
+				// Check web page
 				Message objectMessage = messages[counter];
 				// Revisar pagina web para los archivos adjuntos
 				//ObjectEmail objectM = new ObjectEmail(objectMessage.getSubject(), objectMessage.getFrom()[0].toString(), getBodyText(objectMessage));

@@ -40,7 +40,7 @@ public class MailMethods {
 
 	private Message[] messages;
 
-	private ArrayList<ObjectEmail> listAllObjectsMail = new ArrayList<ObjectEmail>();
+	//private ArrayList<ObjectEmail> listAllObjectsMail = new ArrayList<ObjectEmail>();
 
 	public void storeAllMessages() {
 		try {

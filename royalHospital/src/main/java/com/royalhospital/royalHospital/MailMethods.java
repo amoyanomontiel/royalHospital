@@ -3,8 +3,8 @@ package com.royalhospital.royalHospital;
 import java.util.Properties;
 
 import javax.mail.Folder;
-
-import javax.mail.Session;;
+import javax.mail.Session;
+import javax.mail.Store;;
 
 public class MailMethods {
 	private String host;
@@ -18,11 +18,40 @@ public class MailMethods {
 	// Session with E-mail server
 	private Session session;
 	
+	// POP3 object that is used for this connection with Server
+	private Store store;
+	
 	// List of all folders in E-mail
 	private Folder [] folderList;
 	
+	private Folder emailFolder;
 	
 	private void receiveAllEmails() {
+		
+	}
+	
+	
+	private void setFolderEmails() {
+		try {
+			folderList = store.getDefaultFolder().list();
+			
+			// Check folder --> "INBOX", why?
+			emailFolder = store.getFolder("INBOX");
+		} catch (Exception e) {
+			System.out.println("Error receive list of folders Email");
+		}
+		
+	}
+	
+	private boolean connectMailServer() {
+		try {
+			// check getStore values --> "imaps", why?
+			store = session.getStore("imaps");
+			store.connect(host, userName, passwd);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 		
 	}
 	

@@ -22,7 +22,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.html.HTMLEditorKit.Parser;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -44,24 +43,26 @@ public class MailMethods {
 	// List of all folders in E-mail
 	private Folder[] folderList;
 
+	
+	
+	// Falta separar métodos, mostar mejor el mail, agregar metodo para abrir mail en concreto, eliminar img del e-mail a la hora de abrirlo
+	
 	private Folder emailFolder;
 
 	private Message[] messages;
 
 	private ArrayList<ObjectEmail> listAllObjectsMail = new ArrayList<ObjectEmail>();
 
-	private List<File> attacjments = new ArrayList<File>();
+	private List<File> attachments = new ArrayList<File>();
 
 	private String homeRute = System.getProperty("user.home");
 	
 	public void storeAllMessages() {
 		try {
 			for (int counter = 0; counter < messages.length; counter++) {
-				// Get message one by one
-				// Check web page
 				Message objectMessage = messages[counter];
 
-				List attachments = new ArrayList();
+				attachments = new ArrayList();
 				Multipart multipart = (Multipart) objectMessage.getContent();
 
 				File fileAttachment;
@@ -70,7 +71,7 @@ public class MailMethods {
 					BodyPart bodyPart = multipart.getBodyPart(i);
 					if (!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())
 							&& StringUtils.isBlank(bodyPart.getFileName())) {
-						continue;// dealing with attachments only
+						continue;
 					}
 					InputStream is = bodyPart.getInputStream();
 					fileAttachment = new File(homeRute + "\\Downloads\\" + bodyPart.getFileName());
@@ -85,6 +86,7 @@ public class MailMethods {
 				}
 
 				ObjectEmail objectM = new ObjectEmail(objectMessage.getSubject(), objectMessage.getFrom()[0].toString(), getBodyText(objectMessage));
+				listAllObjectsMail.add(objectM);
 				String bodyTextSave = getBodyText(objectMessage);
 				String filterName = "";
 				if(attachments.size() != 0) {

@@ -16,7 +16,7 @@ public class App
     	RoyalLoginView initLogin = new RoyalLoginView();
     	initLogin.setVisible(true);
     	
-    	initLogin.getBtnLogin().addActionListener(new LoginListener());
+    	initLogin.getBtnLogin().addActionListener(new LoginListener(initLogin));
 //        // Test about mail
 //        MailMethods objetoMail = new MailMethods();
 //        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");

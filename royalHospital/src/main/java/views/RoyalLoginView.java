@@ -14,7 +14,7 @@ public class RoyalLoginView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUserName;
-	private JTextField textField_1;
+	private JTextField txtPassword;
 	private JButton btnLogin;
 	/**
 	 * Launch the application.
@@ -49,10 +49,10 @@ public class RoyalLoginView extends JFrame {
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(172, 233, 116, 22);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		txtPassword = new JTextField();
+		txtPassword.setBounds(172, 233, 116, 22);
+		contentPane.add(txtPassword);
+		txtPassword.setColumns(10);
 		
 		JLabel lblUserName = new JLabel("Usuario");
 		lblUserName.setBounds(89, 190, 56, 16);
@@ -82,12 +82,12 @@ public class RoyalLoginView extends JFrame {
 		this.txtUserName = txtUserName;
 	}
 
-	public JTextField getTextField_1() {
-		return textField_1;
+	public JTextField getTxtPassword() {
+		return txtPassword;
 	}
 
-	public void setTextField_1(JTextField textField_1) {
-		this.textField_1 = textField_1;
+	public void setTxtPassword(JTextField txtPassword) {
+		this.txtPassword = txtPassword;
 	}
 
 	public JButton getBtnLogin() {

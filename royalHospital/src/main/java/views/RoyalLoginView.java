@@ -9,12 +9,13 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class RoyalLoginView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUserName;
-	private JTextField textField_1;
+	private JTextField txtPassword;
 	private JButton btnLogin;
 	/**
 	 * Launch the application.
@@ -38,36 +39,39 @@ public class RoyalLoginView extends JFrame {
 	public RoyalLoginView() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 380, 425);
+		setBounds(100, 100, 410, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		txtUserName = new JTextField();
-		txtUserName.setBounds(172, 187, 116, 22);
+		txtUserName.setBounds(191, 220, 116, 22);
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(172, 233, 116, 22);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		txtPassword = new JTextField();
+		txtPassword.setBounds(191, 278, 116, 22);
+		contentPane.add(txtPassword);
+		txtPassword.setColumns(10);
 		
 		JLabel lblUserName = new JLabel("Usuario");
-		lblUserName.setBounds(89, 190, 56, 16);
+		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblUserName.setBounds(98, 222, 71, 16);
 		contentPane.add(lblUserName);
 		
 		JLabel lblPassword = new JLabel("Contraseña");
-		lblPassword.setBounds(89, 236, 71, 16);
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblPassword.setBounds(98, 280, 91, 16);
 		contentPane.add(lblPassword);
 		
 		btnLogin = new JButton("Entrar");
-		btnLogin.setBounds(133, 307, 97, 25);
+		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnLogin.setBounds(144, 367, 116, 32);
 		contentPane.add(btnLogin);	
 		
 		JLabel lblRoyalIcon = new JLabel();
-		lblRoyalIcon.setBounds(70, 40, 237, 106);
+		lblRoyalIcon.setBounds(70, 40, 268, 117);
 		ImageIcon img = new ImageIcon(RoyalLoginView.class.getResource("/views/royalhospital.png"));
 		Icon in = new ImageIcon(img.getImage().getScaledInstance(lblRoyalIcon.getWidth(), lblRoyalIcon.getHeight(), Image.SCALE_DEFAULT));
 		lblRoyalIcon.setIcon(in);
@@ -82,12 +86,12 @@ public class RoyalLoginView extends JFrame {
 		this.txtUserName = txtUserName;
 	}
 
-	public JTextField getTextField_1() {
-		return textField_1;
+	public JTextField getTxtPassword() {
+		return txtPassword;
 	}
 
-	public void setTextField_1(JTextField textField_1) {
-		this.textField_1 = textField_1;
+	public void setTxtPassword(JTextField txtPassword) {
+		this.txtPassword = txtPassword;
 	}
 
 	public JButton getBtnLogin() {

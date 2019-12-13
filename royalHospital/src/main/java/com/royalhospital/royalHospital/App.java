@@ -3,8 +3,6 @@ package com.royalhospital.royalHospital;
 import Listeners.LoginListener;
 import views.RoyalLoginView;
 
-import views.MainRoyalView;
-
 /**
  * Paquete controlador de la App
   *
@@ -27,7 +25,7 @@ public class App
 //        objetoMail.receiveAllEmails();
 //        objetoMail.storeAllMessages();
         
-        MainRoyalView main = new MainRoyalView();
-        main.setVisible(true);
+//        MainRoyalView main = new MainRoyalView();
+//        main.setVisible(true);
     }
 }

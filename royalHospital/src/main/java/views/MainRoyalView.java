@@ -14,13 +14,14 @@ import javax.swing.JTree;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import java.awt.Font;
 
 public class MainRoyalView extends JFrame {
 
 	private static final int BTN_HEIGHT = 40;
-	private static final int IMG_HEIGHT = 40;
+	private static final int IMG_HEIGHT = 30;
 	private static final int BTN_WIDTH = 150;
-	private static final int IMG_WIDTH = 40;
+	private static final int IMG_WIDTH = 30;
 	private JPanel contentPane;
 	private ArrayList<JButton> buttons = new ArrayList<>();
 	private static DefaultMutableTreeNode raiz;
@@ -92,6 +93,7 @@ public class MainRoyalView extends JFrame {
 		
 		for(JButton a: buttons) {
 			a.setBackground(Color.WHITE);//Aquí le cambio el color para que coincida con el fondo de la foto.
+			a.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			contentPane.add(a);
 		}
 		//hola

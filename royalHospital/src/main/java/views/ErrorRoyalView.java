@@ -15,11 +15,11 @@ import javax.swing.JButton;
 public class ErrorRoyalView extends JFrame{
 	
 	private JPanel contentPane;
-	
+	private JLabel lblMessage;
 	
 	public ErrorRoyalView(String error) {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 380, 220);
 		setTitle("Error");
 		contentPane = new JPanel();
@@ -27,9 +27,9 @@ public class ErrorRoyalView extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(133, 60, 119, 22);
-		contentPane.add(lblNewLabel);
+		lblMessage = new JLabel("New label");
+		lblMessage.setBounds(133, 60, 119, 22);
+		contentPane.add(lblMessage);
 		
 		JLabel img_error = new JLabel("hola");
 		img_error.setBounds(60, 48, 49, 46);
@@ -40,8 +40,18 @@ public class ErrorRoyalView extends JFrame{
 		
 		contentPane.add(img_error);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(133, 122, 97, 25);
-		contentPane.add(btnNewButton);
+		JButton btnAccept = new JButton("New button");
+		btnAccept.setBounds(133, 122, 97, 25);
+		contentPane.add(btnAccept);
 	}
+
+	public JLabel getLblMessage() {
+		return lblMessage;
+	}
+
+	public void setLblMessage(JLabel lblMessage) {
+		this.lblMessage = lblMessage;
+	}
+	
+	
 }

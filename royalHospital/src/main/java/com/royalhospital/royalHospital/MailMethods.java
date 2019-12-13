@@ -1,11 +1,16 @@
 package com.royalhospital.royalHospital;
 
 import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
+import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -16,7 +21,10 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;;
+import javax.swing.event.HyperlinkListener;
+import javax.swing.text.html.HTMLEditorKit.Parser;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class MailMethods {
 	private String host;
@@ -40,26 +48,61 @@ public class MailMethods {
 
 	private Message[] messages;
 
-	//private ArrayList<ObjectEmail> listAllObjectsMail = new ArrayList<ObjectEmail>();
+	private ArrayList<ObjectEmail> listAllObjectsMail = new ArrayList<ObjectEmail>();
 
+	private List<File> attacjments = new ArrayList<File>();
+
+	private String homeRute = System.getProperty("user.home");
+	
 	public void storeAllMessages() {
 		try {
 			for (int counter = 0; counter < messages.length; counter++) {
 				// Get message one by one
 				// Check web page
 				Message objectMessage = messages[counter];
-				// Revisar pagina web para los archivos adjuntos
-				//ObjectEmail objectM = new ObjectEmail(objectMessage.getSubject(), objectMessage.getFrom()[0].toString(), getBodyText(objectMessage));
-				JEditorPane editor = new JEditorPane("text/html", getBodyText(objectMessage));
-				System.out.println(getBodyText(objectMessage));
-        	    editor.setEditable(false);
-        	    editor.addHyperlinkListener(new HyperlinkListener() {
-					
+
+				List attachments = new ArrayList();
+				Multipart multipart = (Multipart) objectMessage.getContent();
+
+				File fileAttachment;
+				
+				for (int i = 0; i < multipart.getCount(); i++) {
+					BodyPart bodyPart = multipart.getBodyPart(i);
+					if (!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())
+							&& StringUtils.isBlank(bodyPart.getFileName())) {
+						continue;// dealing with attachments only
+					}
+					InputStream is = bodyPart.getInputStream();
+					fileAttachment = new File(homeRute + "\\Downloads\\" + bodyPart.getFileName());
+					FileOutputStream fos = new FileOutputStream(fileAttachment);
+					byte[] buf = new byte[4096];
+					int bytesRead;
+					while ((bytesRead = is.read(buf)) != -1) {
+						fos.write(buf, 0, bytesRead);
+					}
+					fos.close();
+					attachments.add(fileAttachment);
+				}
+
+				ObjectEmail objectM = new ObjectEmail(objectMessage.getSubject(), objectMessage.getFrom()[0].toString(), getBodyText(objectMessage));
+				String bodyTextSave = getBodyText(objectMessage);
+				String filterName = "";
+				if(attachments.size() != 0) {
+					for(int counterAttachments = 0; counterAttachments < attachments.size(); counterAttachments++) {
+						filterName = searchOnlyNameAttachment(attachments.get(counterAttachments).toString());
+						bodyTextSave.replace(attachments.get(counterAttachments).toString(), "");
+						bodyTextSave += "<a href=file:///'"+attachments.get(counterAttachments).toString()+"'>" + filterName + " </a>";
+					}
+				}
+				JEditorPane editor = new JEditorPane("text/html", bodyTextSave);
+				editor.setEditable(false);
+				editor.addHyperlinkListener(new HyperlinkListener() {
+
 					@Override
 					public void hyperlinkUpdate(HyperlinkEvent e) {
-						if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-							if(Desktop.isDesktopSupported()) {
-							    try {
+						if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+							if (Desktop.isDesktopSupported()) {
+								try {
 									Desktop.getDesktop().browse(e.getURL().toURI());
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
@@ -69,22 +112,52 @@ public class MailMethods {
 									e1.printStackTrace();
 								}
 							}
-					        }
+						}
 					}
 				});
-        	    JScrollPane pane = new JScrollPane(editor);
-        	    JFrame f = new JFrame("HTML Demo");
-        	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        	    f.getContentPane().add(pane);
-        	    f.setSize(800, 600);
-        	    f.setVisible(true);
-        	    //break;
-			}	
+				JScrollPane pane = new JScrollPane(editor);
+				JFrame f = new JFrame("HTML Demo");
+				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				f.getContentPane().add(pane);
+				f.setSize(800, 600);
+				f.setVisible(true);
+				// break;
+			}
 		} catch (Exception e) {
 			System.out.println("Error reading content about messages");
 		}
 	}
 
+	public String searchOnlyNameAttachment(String ruteAttachment) {
+		try {
+			char [] allCaracters = ruteAttachment.toCharArray();
+			ArrayList<Character> allCaractersArray = new ArrayList<Character>();
+			char elementSearch = "\\'".charAt(0);
+			for(int counter = 0; counter < allCaracters.length; counter++) {
+				if(allCaracters[allCaracters.length-1 - counter] != elementSearch) {
+					allCaractersArray.add(allCaracters[allCaracters.length-1 - counter]);
+				}else {
+					break;
+				}
+			}
+			for(int i=0; i<allCaractersArray.size()/2; i++){
+	            char temp =allCaractersArray.get(i);
+	            allCaractersArray.set(i, allCaractersArray.get(allCaractersArray.size() - i - 1));
+	            allCaractersArray.set(allCaractersArray.size() - i - 1, temp);
+	        }
+			
+			StringBuilder builderName = new StringBuilder(allCaractersArray.size());
+			for(Character ch : allCaractersArray) {
+				builderName.append(ch);
+			}
+			
+			return builderName.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public String getBodyText(Part bodyPart) {
 		try {
 			if (bodyPart.isMimeType("text/*")) {
@@ -114,8 +187,9 @@ public class MailMethods {
 				Multipart mp = (Multipart) bodyPart.getContent();
 				for (int i = 0; i < mp.getCount(); i++) {
 					String bodyText = getBodyText(mp.getBodyPart(i));
-					if (bodyText != null)
-						return bodyText;
+					if (bodyText != null) {
+						return bodyText;	
+					}
 				}
 			}
 

@@ -13,8 +13,6 @@ public class DBConection {
 			// Y vuelve a mostrarse la ventana de login
 		}
 		try {
-			Connection conection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/comunidad", "root",
-					"");
 			conect = DriverManager.getConnection("jdbc:mysql://localhost/royalhospital", "root", "");
 		} catch (Exception e) {
 			// Dani pon ventana de error de "No se ha podido conectar a la Base de Datos"

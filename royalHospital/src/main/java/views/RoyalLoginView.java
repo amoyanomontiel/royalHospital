@@ -64,6 +64,10 @@ public class RoyalLoginView extends JFrame {
 		
 		JButton btnLogin = new JButton("Entrar");
 		btnLogin.setBounds(137, 283, 97, 25);
+<<<<<<< HEAD
 		contentPane.add(btnLogin);
+=======
+		contentPane.add(btnLogin);
+>>>>>>> refs/heads/ftp
 	}
 }

@@ -29,13 +29,6 @@
     <version>1.4.7</version>
 </dependency>
 
-<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.17</version>
-</dependency>
-
 <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
 <dependency>
     <groupId>javax.activation</groupId>
@@ -48,6 +41,12 @@
     <groupId>commons-net</groupId>
     <artifactId>commons-net</artifactId>
     <version>3.6</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.5</version>
 </dependency>
 
   </dependencies>

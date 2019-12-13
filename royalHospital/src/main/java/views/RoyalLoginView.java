@@ -65,9 +65,5 @@ public class RoyalLoginView extends JFrame {
 		JButton btnLogin = new JButton("Entrar");
 		btnLogin.setBounds(137, 283, 97, 25);
 		contentPane.add(btnLogin);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(149, 66, 56, 16);
-		contentPane.add(lblNewLabel);
 	}
 }

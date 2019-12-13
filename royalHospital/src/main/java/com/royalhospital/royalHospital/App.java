@@ -1,6 +1,6 @@
 package com.royalhospital.royalHospital;
 
-//import views.MainRoyalView;
+import views.MainRoyalView;
 
 /**
  * Paquete controlador de la App

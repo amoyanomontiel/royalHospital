@@ -1,7 +1,4 @@
 package views;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Image;
 
 import javax.swing.JFrame;
@@ -18,22 +15,22 @@ public class RoyalLoginView extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtUserName;
 	private JTextField textField_1;
-
+	private JButton btnLogin;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RoyalLoginView frame = new RoyalLoginView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					RoyalLoginView frame = new RoyalLoginView();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -65,7 +62,7 @@ public class RoyalLoginView extends JFrame {
 		lblPassword.setBounds(89, 236, 71, 16);
 		contentPane.add(lblPassword);
 		
-		JButton btnLogin = new JButton("Entrar");
+		btnLogin = new JButton("Entrar");
 		btnLogin.setBounds(133, 307, 97, 25);
 		contentPane.add(btnLogin);	
 		
@@ -76,4 +73,29 @@ public class RoyalLoginView extends JFrame {
 		lblRoyalIcon.setIcon(in);
 		contentPane.add(lblRoyalIcon);
 	}
+
+	public JTextField getTxtUserName() {
+		return txtUserName;
+	}
+
+	public void setTxtUserName(JTextField txtUserName) {
+		this.txtUserName = txtUserName;
+	}
+
+	public JTextField getTextField_1() {
+		return textField_1;
+	}
+
+	public void setTextField_1(JTextField textField_1) {
+		this.textField_1 = textField_1;
+	}
+
+	public JButton getBtnLogin() {
+		return btnLogin;
+	}
+
+	public void setBtnLogin(JButton btnLogin) {
+		this.btnLogin = btnLogin;
+	}
+	
 }

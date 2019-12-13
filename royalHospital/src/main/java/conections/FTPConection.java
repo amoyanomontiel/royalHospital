@@ -7,15 +7,15 @@ import org.apache.commons.net.ftp.FTPClient;
 public class FTPConection {
 	private static String ftpServer = "localhost";
 	private static int port = 9000;
-	private static String ftpUser = "";
-	private static String ftpPassword = "";
+	private String ftpUser = "";
+	private String ftpPassword = "";
 
 	public FTPConection(String ftpUser, String ftpPassword) {
 		this.ftpUser = ftpUser;
 		this.ftpPassword = ftpPassword;
 	}
 
-	public static FTPClient createFTPClient() {
+	public FTPClient createFTPClient() {
 		FTPClient client = new FTPClient();
 		try {
 			client.connect(ftpServer, port);

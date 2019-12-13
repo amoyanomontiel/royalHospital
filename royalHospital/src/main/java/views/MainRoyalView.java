@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import org.apache.commons.net.ftp.FTPClient;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,8 +31,9 @@ public class MainRoyalView extends JFrame {
 	
 	/**
 	 * Create the frame.
+	 * @param ftpClient 
 	 */
-	public MainRoyalView() {//Hay que pasarle por parametro la direccion(path) de la carpeta raiz que le pertenece 
+	public MainRoyalView(FTPClient ftpClient) {//Hay que pasarle por parametro la direccion(path) de la carpeta raiz que le pertenece 
 		//segun los permisos que tenga
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

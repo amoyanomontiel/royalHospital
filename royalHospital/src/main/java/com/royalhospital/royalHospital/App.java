@@ -14,6 +14,7 @@ public class App
     public static void main( String[] args )
     {        
     	RoyalLoginView initLogin = new RoyalLoginView();
+    	initLogin.setLocationRelativeTo(null);
     	initLogin.setVisible(true);
     	
     	initLogin.getBtnLogin().addActionListener(new LoginListener(initLogin));

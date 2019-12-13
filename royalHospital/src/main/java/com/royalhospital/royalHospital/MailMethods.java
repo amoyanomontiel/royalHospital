@@ -1,13 +1,19 @@
 package com.royalhospital.royalHospital;
 
 import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
+import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.Session;
@@ -16,7 +22,10 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;;
+import javax.swing.event.HyperlinkListener;
+
+import org.apache.commons.lang3.StringUtils;
+
 
 public class MailMethods {
 	private String host;
@@ -40,8 +49,10 @@ public class MailMethods {
 
 	private Message[] messages;
 
-	//private ArrayList<ObjectEmail> listAllObjectsMail = new ArrayList<ObjectEmail>();
+	private ArrayList<ObjectEmail> listAllObjectsMail = new ArrayList<ObjectEmail>();
 
+	private List<File> attacjments = new ArrayList<File>();
+	
 	public void storeAllMessages() {
 		try {
 			for (int counter = 0; counter < messages.length; counter++) {
@@ -49,7 +60,32 @@ public class MailMethods {
 				// Check web page
 				Message objectMessage = messages[counter];
 				// Revisar pagina web para los archivos adjuntos
-				//ObjectEmail objectM = new ObjectEmail(objectMessage.getSubject(), objectMessage.getFrom()[0].toString(), getBodyText(objectMessage));
+				
+				
+				List attachments = new ArrayList();
+				    Multipart multipart = (Multipart) objectMessage.getContent();
+
+				    for (int i = 0; i < multipart.getCount(); i++) {
+				        BodyPart bodyPart = multipart.getBodyPart(i);
+				        if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) &&
+				               StringUtils.isBlank(bodyPart.getFileName())) {
+				            continue;//dealing with attachments only
+				        } 
+				        InputStream is = bodyPart.getInputStream();
+				        String homeRute = System.getProperty("user.home");
+				        File f = new File(homeRute + "\\Downloads\\" + bodyPart.getFileName());
+				        FileOutputStream fos = new FileOutputStream(f);
+				        byte[] buf = new byte[4096];
+				        int bytesRead;
+				        while((bytesRead = is.read(buf))!=-1) {
+				            fos.write(buf, 0, bytesRead);
+				        }
+				        fos.close();
+				        attachments.add(f);
+				    }
+				
+				
+				ObjectEmail objectM = new ObjectEmail(objectMessage.getSubject(), objectMessage.getFrom()[0].toString(), getBodyText(objectMessage));
 				JEditorPane editor = new JEditorPane("text/html", getBodyText(objectMessage));
 				System.out.println(getBodyText(objectMessage));
         	    editor.setEditable(false);
@@ -85,6 +121,7 @@ public class MailMethods {
 		}
 	}
 
+	
 	public String getBodyText(Part bodyPart) {
 		try {
 			if (bodyPart.isMimeType("text/*")) {

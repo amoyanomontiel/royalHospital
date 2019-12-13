@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class MainRoyalView extends JFrame {
+public class RoyalLoginView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUserName;
@@ -23,7 +23,7 @@ public class MainRoyalView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainRoyalView frame = new MainRoyalView();
+					RoyalLoginView frame = new RoyalLoginView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,7 +35,7 @@ public class MainRoyalView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainRoyalView() {
+	public RoyalLoginView() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 385, 420);

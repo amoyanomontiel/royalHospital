@@ -91,7 +91,7 @@ public class NewMailView extends JFrame {
 		JButton newFileButton = new JButton(" Adjuntar");
 		newFileButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		newFileButton.setBounds(67, 503, 150, 40);
-		ImageIcon fileIcon = new ImageIcon("src//main//java//views//descarga.png");
+		ImageIcon fileIcon = new ImageIcon("src//main//java//views//download.png");
 		Icon newFileIcon = new ImageIcon(fileIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 		newFileButton.setIcon(newFileIcon);
 		contentPane.add(newFileButton);
@@ -99,7 +99,7 @@ public class NewMailView extends JFrame {
 		JButton sendButton = new JButton(" Enviar");
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sendButton.setBounds(595, 503, 150, 40);
-		ImageIcon sendIcon = new ImageIcon("src//main//java//views//enviar.png");
+		ImageIcon sendIcon = new ImageIcon("src//main//java//views//send.png");
 		Icon newSendIcon = new ImageIcon(sendIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 		sendButton.setIcon(newSendIcon);
 		contentPane.add(sendButton);
@@ -107,7 +107,7 @@ public class NewMailView extends JFrame {
 		JButton CancelButton = new JButton(" Cancelar");
 		CancelButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		CancelButton.setBounds(384, 503, 150, 40);
-		ImageIcon cancelIcon = new ImageIcon("src//main//java//views//cancelar.png");
+		ImageIcon cancelIcon = new ImageIcon("src//main//java//views//cancel.png");
 		Icon newCancelIcon = new ImageIcon(cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 		CancelButton.setIcon(newCancelIcon);
 		contentPane.add(CancelButton);

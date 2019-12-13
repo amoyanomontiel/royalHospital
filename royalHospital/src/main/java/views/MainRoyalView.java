@@ -33,6 +33,7 @@ public class MainRoyalView extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
+		setTitle("Royal Hospital");
 		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\royalhospital.png");
 		setIconImage(royal.getImage());
 		contentPane = new JPanel();

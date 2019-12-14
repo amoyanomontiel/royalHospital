@@ -40,6 +40,9 @@ public class RoyalLoginView extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 410, 500);
+		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
+		setIconImage(royal.getImage());
+		setTitle("Login");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

@@ -40,8 +40,7 @@ public class MailMethods {
 	// List of all folders in E-mail
 	private Folder[] folderList;
 
-	// Falta separar métodos, mostar mejor el mail, agregar metodo para abrir mail
-	// en concreto, eliminar img del e-mail a la hora de abrirlo
+	// Falta eliminar img del e-mail a la hora de abrirlo
 
 	private Folder emailFolder;
 

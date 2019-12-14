@@ -1,21 +1,21 @@
 package conections;
 
-import java.io.IOException;
-
 import org.apache.commons.net.ftp.FTPClient;
+
+import views.ErrorRoyalView;
 
 public class FTPConection {
 	private static String ftpServer = "localhost";
 	private static int port = 9000;
-	private static String ftpUser = "";
-	private static String ftpPassword = "";
+	private String ftpUser;
+	private String ftpPassword;
 
 	public FTPConection(String ftpUser, String ftpPassword) {
 		this.ftpUser = ftpUser;
 		this.ftpPassword = ftpPassword;
 	}
 
-	public static FTPClient createFTPClient() {
+	public FTPClient createFTPClient() {
 		FTPClient client = new FTPClient();
 		try {
 			client.connect(ftpServer, port);
@@ -23,12 +23,19 @@ public class FTPConection {
 				// consola.append("Conectado con el servidor\n");
 				System.out.println("Conectado con el servidor\n");
 			} else {
-				// consola.append("No te has podido conectar, inicia sesión primero\n");
-				System.out.println("No te has podido conectar, inicia sesión primero\n");
+				ErrorRoyalView error = new ErrorRoyalView("");
+				error.setVisible(true);
+				error.setLocationRelativeTo(null);
 			}
-		} catch (IOException ex) {
-			System.err.println(ex.getMessage());
+		} catch (Exception ex) {
+			ErrorRoyalView error = new ErrorRoyalView("La conexión con el servidor de Royal Hospital ha fallado");
+			error.setVisible(true);
+			error.setLocationRelativeTo(null);
 		}
+	
+		
+	
+		
 		return client;
 	}
 }

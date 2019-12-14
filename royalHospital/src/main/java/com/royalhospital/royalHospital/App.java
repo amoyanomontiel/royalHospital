@@ -16,7 +16,8 @@ public class App
         objetoMail.setProperties();
         objetoMail.connectMailServer();
         objetoMail.setFolderEmails();
-        objetoMail.receiveAllEmails();
-        objetoMail.storeAllMessages();
+        objetoMail.receiveAndSaveAllEmails();
+        objetoMail.generateJScrollPaneWithEmails();
+        //objetoMail.storeAllMessages();
     }
 }

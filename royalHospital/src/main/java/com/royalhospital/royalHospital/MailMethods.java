@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import javax.mail.BodyPart;
@@ -17,8 +16,10 @@ import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.Store;
+import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -51,84 +52,154 @@ public class MailMethods {
 
 	private Message[] messages;
 
-	private ArrayList<ObjectEmail> listAllObjectsMail = new ArrayList<ObjectEmail>();
-
-	private List<File> attachments = new ArrayList<File>();
-
 	private String homeRute = System.getProperty("user.home");
 	
-	public void storeAllMessages() {
+	
+	public void storeAttachmentsElements(int messagePositionParam) {
+		
+		Message objectMessage = messages[messagePositionParam];
+		
 		try {
+			Multipart multipart = (Multipart) objectMessage.getContent();
+
+			File fileAttachment;
+			
+			for (int i = 0; i < multipart.getCount(); i++) {
+				BodyPart bodyPart = multipart.getBodyPart(i);
+				if (!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())
+						&& StringUtils.isBlank(bodyPart.getFileName())) {
+					continue;
+				}
+				InputStream is = bodyPart.getInputStream();
+				
+				// Save attachment on Download directory
+				fileAttachment = new File(homeRute + "\\Downloads\\" + bodyPart.getFileName());
+				FileOutputStream fos = new FileOutputStream(fileAttachment);
+				
+				// Buffer of bytes
+				byte[] buf = new byte[4096];
+				int bytesRead;
+				
+				
+				while ((bytesRead = is.read(buf)) != -1) {
+					fos.write(buf, 0, bytesRead);
+				}
+				fos.close();
+			}	
+		} catch (Exception e) {
+			System.out.println("Error getting attachments for Email");
+		}		
+	}
+	
+	
+	public JFrame generateJScrollPaneWithEmails() {
+		try {
+			
+			JFrame test = new JFrame("test");
+			
+			JPanel viewScroll = new JPanel();
+			
+			JComboBox scrollEmails = new JComboBox();
+			
 			for (int counter = 0; counter < messages.length; counter++) {
 				Message objectMessage = messages[counter];
-
-				attachments = new ArrayList();
-				Multipart multipart = (Multipart) objectMessage.getContent();
-
-				File fileAttachment;
 				
-				for (int i = 0; i < multipart.getCount(); i++) {
-					BodyPart bodyPart = multipart.getBodyPart(i);
-					if (!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())
-							&& StringUtils.isBlank(bodyPart.getFileName())) {
-						continue;
-					}
-					InputStream is = bodyPart.getInputStream();
-					fileAttachment = new File(homeRute + "\\Downloads\\" + bodyPart.getFileName());
-					FileOutputStream fos = new FileOutputStream(fileAttachment);
-					byte[] buf = new byte[4096];
-					int bytesRead;
-					while ((bytesRead = is.read(buf)) != -1) {
-						fos.write(buf, 0, bytesRead);
-					}
-					fos.close();
-					attachments.add(fileAttachment);
-				}
-
-				ObjectEmail objectM = new ObjectEmail(objectMessage.getSubject(), objectMessage.getFrom()[0].toString(), getBodyText(objectMessage));
-				listAllObjectsMail.add(objectM);
-				String bodyTextSave = getBodyText(objectMessage);
-				String filterName = "";
-				if(attachments.size() != 0) {
-					for(int counterAttachments = 0; counterAttachments < attachments.size(); counterAttachments++) {
-						filterName = searchOnlyNameAttachment(attachments.get(counterAttachments).toString());
-						bodyTextSave.replace(attachments.get(counterAttachments).toString(), "");
-						bodyTextSave += "<a href=file:///'"+attachments.get(counterAttachments).toString()+"'>" + filterName + " </a>";
-					}
-				}
-				JEditorPane editor = new JEditorPane("text/html", bodyTextSave);
-				editor.setEditable(false);
-				editor.addHyperlinkListener(new HyperlinkListener() {
-
-					@Override
-					public void hyperlinkUpdate(HyperlinkEvent e) {
-						if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-							if (Desktop.isDesktopSupported()) {
-								try {
-									Desktop.getDesktop().browse(e.getURL().toURI());
-								} catch (IOException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								} catch (URISyntaxException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-							}
-						}
-					}
-				});
-				JScrollPane pane = new JScrollPane(editor);
-				JFrame f = new JFrame("HTML Demo");
-				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				f.getContentPane().add(pane);
-				f.setSize(800, 600);
-				f.setVisible(true);
-				// break;
+				String informationEmail = "Titulo:   " + objectMessage.getSubject() + "      " + filterFromMessage(objectMessage.getFrom()[0].toString());
+				
+				scrollEmails.addItem(informationEmail);
 			}
+			
+			test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			viewScroll.add(scrollEmails);
+			test.getContentPane().add(viewScroll);
+			test.setSize(800, 600);
+			test.setVisible(true);
+			addListenerScrollMessage(scrollEmails);
+			return null;
 		} catch (Exception e) {
-			System.out.println("Error reading content about messages");
+			System.out.println("Error creating JScrollPane");
+			return null;
 		}
 	}
+	
+	
+	private void addListenerScrollMessage(JComboBox scrollEmails) {
+		
+	}
+	
+	
+	public String filterFromMessage(String fromParam) {
+		String filterFrom = "";
+		boolean checkCaracter = false;
+		
+		for(int counter = 0; counter < fromParam.length(); counter++) {
+			char caracter = fromParam.charAt(counter);
+			if(caracter == "<".charAt(0) || checkCaracter) {
+				if(!checkCaracter) {
+					filterFrom += "Remitente:     ";
+					checkCaracter = true;
+				}else {
+					if(caracter == ">".charAt(0)) {
+						break;
+					}else {
+						filterFrom += Character.toString(caracter);
+					}	
+				}
+			}
+		}
+		return filterFrom;
+	}
+	
+//	public void storeAllMessages() {
+//		try {
+//			for (int counter = 0; counter < messages.length; counter++) {
+//				Message objectMessage = messages[counter];
+//
+//				//attachments = new ArrayList();
+//				Multipart multipart = (Multipart) objectMessage.getContent();
+//				
+//				String bodyTextSave = getBodyText(objectMessage);
+//				String filterName = "";
+//				if(attachments.size() != 0) {
+//					for(int counterAttachments = 0; counterAttachments < attachments.size(); counterAttachments++) {
+//						filterName = searchOnlyNameAttachment(attachments.get(counterAttachments).toString());
+//						bodyTextSave.replace(attachments.get(counterAttachments).toString(), "");
+//						bodyTextSave += "<a href=file:///'"+attachments.get(counterAttachments).toString()+"'>" + filterName + " </a>";
+//					}
+//				}
+//				JEditorPane editor = new JEditorPane("text/html", bodyTextSave);
+//				editor.setEditable(false);
+//				editor.addHyperlinkListener(new HyperlinkListener() {
+//
+//					@Override
+//					public void hyperlinkUpdate(HyperlinkEvent e) {
+//						if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+//							if (Desktop.isDesktopSupported()) {
+//								try {
+//									Desktop.getDesktop().browse(e.getURL().toURI());
+//								} catch (IOException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								} catch (URISyntaxException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//							}
+//						}
+//					}
+//				});
+//				JScrollPane pane = new JScrollPane(editor);
+//				JFrame f = new JFrame("HTML Demo");
+//				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//				f.getContentPane().add(pane);
+//				f.setSize(800, 600);
+//				f.setVisible(true);
+//				// break;
+//			}
+//		} catch (Exception e) {
+//			System.out.println("Error reading content about messages");
+//		}
+//	}
 
 	public String searchOnlyNameAttachment(String ruteAttachment) {
 		try {
@@ -202,7 +273,7 @@ public class MailMethods {
 		}
 	}
 
-	public void receiveAllEmails() {
+	public void receiveAndSaveAllEmails() {
 		try {
 			messages = emailFolder.getMessages();
 			System.out.println("you have " + messages.length + " messages");

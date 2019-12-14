@@ -67,16 +67,45 @@ public class NewMailView extends JFrame {
 	}
 	
 	public void refreshUploadedFiles(JPanel uploadedFilesPanel, GridBagConstraints gblc_uploadedFilesPanel) {
-		int contador = 0;
-		for (String key : fileList.keySet()) {
+		int contador = 0;	
+		for (HashMap.Entry<String, String> entry : fileList.entrySet()) {
+		    String key = entry.getKey();
+		    String value = entry.getValue();
+		    
+		    //String extension = FilenameUtils.getExtension(value);
+		    String extension = "pdf";
+		    obtainExtension(contador, extension);
+		    
 			JLabel newFile = new JLabel(key);
 			newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			gblc_uploadedFilesPanel.gridx = 0;
+			gblc_uploadedFilesPanel.gridx = 1;
 			gblc_uploadedFilesPanel.gridy = contador;
 			uploadedFilesPanel.add(newFile, gblc_uploadedFilesPanel);
 			contador++;
 		}
+		
 		uploadedFilesPanel.revalidate();
+	}
+	
+	public void obtainExtension(int contador, String extension) {
+		if (extension.equals("pdf")) {
+			// poner icono del archivo
+		}
+		else if (extension.equals("png") || extension.equals("jpg")) {
+			// poner icono del archivo
+		}
+		else if (extension.equals("docx")) {
+			// poner icono del archivo
+		}
+		else if (extension.equals("mp4") || extension.equals("mp3") || extension.equals("webm") || extension.equals("gif")) {
+			// poner icono del archivo
+		}
+		else if (extension.equals("txt")) {
+			// poner icono del archivo
+		}
+		else {
+			// poner icono del archivo
+		}
 	}
 	
 	/**

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class ErrorRoyalView extends JFrame {
 	
@@ -23,6 +24,7 @@ public class ErrorRoyalView extends JFrame {
 		setIconImage(royal.getImage());
 		setTitle("Error");
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

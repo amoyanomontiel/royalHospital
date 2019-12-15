@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.Color;
 
 public class RoyalLoginView extends JFrame {
 
@@ -44,6 +45,7 @@ public class RoyalLoginView extends JFrame {
 		setIconImage(royal.getImage());
 		setTitle("Login");
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

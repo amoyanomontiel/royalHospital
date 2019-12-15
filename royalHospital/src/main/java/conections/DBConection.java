@@ -10,14 +10,8 @@ public class DBConection {
 	public DBConection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e1) {
-			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar a la Base de Datos");
-			error.setVisible(true);
-			error.setLocationRelativeTo(null);
-		}
-		try {
 			conect = DriverManager.getConnection("jdbc:mysql://localhost/royalhospital", "root", "");
-		} catch (Exception e) {
+		} catch (ClassNotFoundException | SQLException e1) {
 			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar a la Base de Datos");
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);

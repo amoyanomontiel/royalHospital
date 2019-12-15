@@ -37,18 +37,11 @@ public class LoginListener implements ActionListener {
 			} else {
 				FTPConection ftpConect = new FTPConection(userText, passwordText);
 				FTPClient ftpClient = ftpConect.createFTPClient();
-				System.out.println("conectado a server ");
 				MainRoyalView mainRoyal = new MainRoyalView(ftpClient);
 				mainRoyal.setLocationRelativeTo(null);
 				mainRoyal.setVisible(true);
 			}
 		} else {
-			FTPConection ftpConect = new FTPConection(userText, passwordText);
-			FTPClient ftpClient = ftpConect.createFTPClient();
-				System.out.println("conectado a server ");
-			MainRoyalView mainRoyal = new MainRoyalView(ftpClient);
-			mainRoyal.setLocationRelativeTo(null);
-			mainRoyal.setVisible(true);
 			ErrorRoyalView error = new ErrorRoyalView("El campo usuario y/o contraseña no pueden estar vacios");
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);

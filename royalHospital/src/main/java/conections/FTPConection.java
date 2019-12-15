@@ -20,10 +20,9 @@ public class FTPConection {
 		try {
 			client.connect(ftpServer, port);
 			if (client.login(ftpUser, ftpPassword)) {
-				// consola.append("Conectado con el servidor\n");
-				System.out.println("Conectado con el servidor\n");
+				
 			} else {
-				ErrorRoyalView error = new ErrorRoyalView("");
+				ErrorRoyalView error = new ErrorRoyalView("La conexión con el servidor de Royal Hospital ha fallado");
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 			}
@@ -32,9 +31,6 @@ public class FTPConection {
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}
-	
-		
-	
 		
 		return client;
 	}

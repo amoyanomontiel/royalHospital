@@ -34,8 +34,7 @@ public class MainRoyalView extends JFrame {
 	 * Create the frame.
 	 * @param ftpClient 
 	 */
-	public MainRoyalView(FTPClient ftpClient) {//Hay que pasarle por parametro la direccion(path) de la carpeta raiz que le pertenece 
-		//segun los permisos que tenga
+	public MainRoyalView(FTPClient ftpClient) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
@@ -43,6 +42,7 @@ public class MainRoyalView extends JFrame {
 		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
 		setIconImage(royal.getImage());
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -77,9 +77,9 @@ public class MainRoyalView extends JFrame {
 		buttons.add(new JButton("Crear Directorio"));
 		buttons.add(new JButton("Crear Fichero"));
 		
-		buttons.get(0).setBounds(64,13, BTN_WIDTH, BTN_HEIGHT);
-		buttons.get(1).setBounds(240,13, BTN_WIDTH, BTN_HEIGHT);
-		buttons.get(2).setBounds(604,13, BTN_WIDTH, BTN_HEIGHT);
+		buttons.get(0).setBounds(64,20, BTN_WIDTH, BTN_HEIGHT);
+		buttons.get(1).setBounds(240,20, BTN_WIDTH, BTN_HEIGHT);
+		buttons.get(2).setBounds(604,20, BTN_WIDTH, BTN_HEIGHT);
 		buttons.get(3).setBounds(64,585, BTN_WIDTH, BTN_HEIGHT);
 		buttons.get(4).setBounds(240,585, BTN_WIDTH, BTN_HEIGHT);
 		buttons.get(5).setBounds(425,585, BTN_WIDTH, BTN_HEIGHT);

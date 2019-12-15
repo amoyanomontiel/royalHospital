@@ -106,5 +106,4 @@ public class RoyalLoginView extends JFrame {
 	public void setBtnLogin(JButton btnLogin) {
 		this.btnLogin = btnLogin;
 	}
-	
 }

@@ -24,6 +24,8 @@ import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class NewMailView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -110,11 +112,11 @@ public class NewMailView extends JFrame {
 		boolean emptyaddressee = false;
 		boolean emptysubject = false;
 		boolean emptybody = false;
-		if (addressee.isBlank() || addressee.isEmpty())
+		if (StringUtils.isBlank(addressee) || addressee.isEmpty())
 			emptyaddressee = true;
-		if (subject.isBlank() || subject.isEmpty())
+		if (StringUtils.isBlank(subject) || subject.isEmpty())
 			emptysubject = true;
-		if (body.isBlank() || body.isEmpty())
+		if (StringUtils.isBlank(body) || body.isEmpty())
 			emptybody = true;
 
 		if (action.equals("send")) {

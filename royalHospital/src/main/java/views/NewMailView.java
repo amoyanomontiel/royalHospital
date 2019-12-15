@@ -212,7 +212,6 @@ public class NewMailView extends JFrame {
 		newFileButton.setBounds(67, 503, 150, 40);
 		ImageIcon fileIcon = new ImageIcon("src//main//java//views//download.png");
 		Icon newFileIcon = new ImageIcon(fileIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-
 		newFileButton.setIcon(newFileIcon);
 		contentPane.add(newFileButton);
 

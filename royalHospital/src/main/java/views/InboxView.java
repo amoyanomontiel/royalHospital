@@ -45,13 +45,13 @@ public class InboxView extends JFrame {
 		});
 	}
 	
-	public void showInbox(JButton returnInboxButton, JButton newMessageButton, JButton closeInboxButton) {
+	public void showInbox(JButton returnInboxButton, JButton newMessageButton, JButton closeInboxButton, JPanel inboxMailsPanel, JPanel messagePanel) {
 		returnInboxButton.setVisible(false);
 		newMessageButton.setVisible(true);
 		closeInboxButton.setVisible(true);
 	}
 	
-	public void showMessage(JButton returnInboxButton, JButton newMessageButton, JButton closeInboxButton) {
+	public void showMessage(JButton returnInboxButton, JButton newMessageButton, JButton closeInboxButton, JPanel inboxMailsPanel, JPanel messagePanel) {
 		returnInboxButton.setVisible(true);
 		newMessageButton.setVisible(false);
 		closeInboxButton.setVisible(false);
@@ -84,7 +84,7 @@ public class InboxView extends JFrame {
 		newMessageButton = new JButton("Redactar");
 		newMessageButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showMessage(returnInboxButton, newMessageButton, closeInboxButton);
+				showMessage(returnInboxButton, newMessageButton, closeInboxButton, inboxMailsPanel, messagePanel);
 			}
 		});
 		newMessageButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -110,7 +110,7 @@ public class InboxView extends JFrame {
 		returnInboxButton = new JButton("Volver");
 		returnInboxButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showInbox(returnInboxButton, newMessageButton, closeInboxButton);
+				showInbox(returnInboxButton, newMessageButton, closeInboxButton, inboxMailsPanel, messagePanel);
 			}
 		});
 		returnInboxButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -126,7 +126,7 @@ public class InboxView extends JFrame {
 		dividingLine.setBounds(0, 60, 836, 2);
 		contentPane.add(dividingLine);
 		
-		showInbox(returnInboxButton, newMessageButton, closeInboxButton);
+		showInbox(returnInboxButton, newMessageButton, closeInboxButton, inboxMailsPanel, messagePanel);
 		
 		inboxMailsPanel = new JPanel();
 		inboxMailsPanel.setBounds(0, 90, 836, 605);
@@ -134,7 +134,7 @@ public class InboxView extends JFrame {
 		inboxMailsPanel.setLayout(null);
 		
 		messagePanel = new JPanel();
-		messagePanel.setBounds(0, 0, 836, 605);
+		messagePanel.setBounds(0, 90, 836, 605);
 		contentPane.add(messagePanel);
 		messagePanel.setLayout(null);
 	}

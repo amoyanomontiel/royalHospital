@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 
@@ -23,23 +24,23 @@ public class RoyalLoginView extends JFrame {
 	private JLabel lblIcon;
 	
 
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					RoyalLoginView frame = new RoyalLoginView();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RoyalLoginView frame = new RoyalLoginView("Correo Electrónico", "/views/mailIcon.jpg", 100, 40, 183, 117);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public RoyalLoginView(String user_email, String iconRoute) {
+	public RoyalLoginView(String user_email, String iconRoute, int xPosition, int yPosition, int width, int height) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 410, 500);
@@ -78,7 +79,7 @@ public class RoyalLoginView extends JFrame {
 		loginPanel.add(btnLogin);	
 		
 		lblIcon = new JLabel();
-		lblIcon.setBounds(70, 40, 268, 117);
+		lblIcon.setBounds(xPosition, yPosition, width, height);
 		Icon in = new ImageIcon(img.getImage().getScaledInstance(lblIcon.getWidth(), lblIcon.getHeight(), Image.SCALE_DEFAULT));
 		lblIcon.setIcon(in);
 		loginPanel.add(lblIcon);

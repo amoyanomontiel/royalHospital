@@ -3,7 +3,11 @@ package views;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
+
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
@@ -26,7 +30,7 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 import java.awt.Font;
 
-public class MainRoyalView extends JFrame {
+public class MainRoyalView extends JFrame implements TreeSelectionListener{
 
 	private static final int BTN_HEIGHT = 40;
 	private static final int IMG_HEIGHT = 30;
@@ -37,7 +41,7 @@ public class MainRoyalView extends JFrame {
 	private static JTextArea txtaHistorial;
 	private static JTree tree;
 	private static JScrollPane scrollPane;
-	
+	private static String selectionPath;
 	/**
 	 * Create the frame.
 	 * @param ftpClient 
@@ -81,6 +85,7 @@ public class MainRoyalView extends JFrame {
 				error.setLocationRelativeTo(null);
 			}
 			tree = new JTree(raiz);
+			tree.addTreeSelectionListener(this);
 			scrollPane.setViewportView(tree);
 			
 		}
@@ -100,7 +105,7 @@ public class MainRoyalView extends JFrame {
 		contentPane.add(btnDownload);
 		btnDownload.setBackground(Color.WHITE);
 		btnDownload.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnDownload.addActionListener(new DownloadListener(this, ftpClient));
+		btnDownload.addActionListener(new DownloadListener(this, ftpClient, selectionPath));
 
 		JButton btnRemove = new JButton("Borrar");
 		contentPane.add(btnRemove);
@@ -229,6 +234,15 @@ public class MainRoyalView extends JFrame {
 	}
 	public static void setTxtaHistorial(JTextArea txtaHistorial) {
 		MainRoyalView.txtaHistorial = txtaHistorial;
+	}
+
+	@Override
+	public void valueChanged(TreeSelectionEvent e) {
+		JTree atree = (JTree) e.getSource();
+		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) atree
+		        .getLastSelectedPathComponent();
+		    selectionPath = selectedNode.toString();
+		    System.out.println(selectionPath);
 	}
 	
 }

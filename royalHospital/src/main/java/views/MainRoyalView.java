@@ -7,10 +7,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
-import Listeners.DocumentsListener;
-import Listeners.DownloadListener;
-import Listeners.PatientsListener;
-import Listeners.UploadListener;
+import listeners.DocumentsListener;
+import listeners.DownloadListener;
+import listeners.PatientsListener;
+import listeners.RemoveListener;
+import listeners.UploadListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -33,13 +34,13 @@ public class MainRoyalView extends JFrame {
 	private static final int IMG_WIDTH = 30;
 	private JPanel contentPane;
 	private static DefaultMutableTreeNode raiz;
+	private static JTextArea txtaHistorial;
 	private static JTree tree;
 	private static JScrollPane scrollPane;
-
+	
 	/**
 	 * Create the frame.
-	 * 
-	 * @param ftpClient
+	 * @param ftpClient 
 	 */
 	public MainRoyalView() {
 
@@ -81,30 +82,32 @@ public class MainRoyalView extends JFrame {
 			}
 			tree = new JTree(raiz);
 			scrollPane.setViewportView(tree);
+			
 		}
-
-		JTextArea txtaHistorial = new JTextArea();
+		
+		txtaHistorial = new JTextArea();
 		txtaHistorial.setEditable(false);
 		txtaHistorial.setBounds(64, 363, 691, 134);
 		contentPane.add(txtaHistorial);
-
+		
 		JButton btnUpload = new JButton("Cargar");
 		contentPane.add(btnUpload);
 		btnUpload.setBackground(Color.WHITE);
 		btnUpload.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnUpload.addActionListener(new UploadListener());
-
+		btnUpload.addActionListener(new UploadListener(this, ftpClient));
+		
 		JButton btnDownload = new JButton("Descargar");
 		contentPane.add(btnDownload);
 		btnDownload.setBackground(Color.WHITE);
 		btnDownload.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnDownload.addActionListener(new DownloadListener());
+		btnDownload.addActionListener(new DownloadListener(this, ftpClient));
 
 		JButton btnRemove = new JButton("Borrar");
 		contentPane.add(btnRemove);
 		btnRemove.setBackground(Color.WHITE);
 		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 15));
-
+		btnRemove.addActionListener(new RemoveListener(this, ftpClient));
+		
 		JButton btnCreateDir = new JButton("Crear Directorio");
 		contentPane.add(btnCreateDir);
 		btnCreateDir.setBackground(Color.WHITE);
@@ -218,8 +221,14 @@ public class MainRoyalView extends JFrame {
 	public DefaultMutableTreeNode getRaiz() {
 		return raiz;
 	}
-
 	public void setRaiz(DefaultMutableTreeNode raiz) {
 		this.raiz = raiz;
 	}
+	public JTextArea getTxtaHistorial() {
+		return txtaHistorial;
+	}
+	public static void setTxtaHistorial(JTextArea txtaHistorial) {
+		MainRoyalView.txtaHistorial = txtaHistorial;
+	}
+	
 }

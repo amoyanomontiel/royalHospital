@@ -22,8 +22,8 @@ public class RoyalLoginView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUserName;
-	private JTextField txtPassword;
 	private JButton btnLogin;
+	private JPasswordField txtPassword;
 
 	/**
 	 * Create the frame.
@@ -45,11 +45,6 @@ public class RoyalLoginView extends JFrame {
 		txtUserName.setBounds(191, 220, 116, 22);
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
-		
-		txtPassword = new JTextField();
-		txtPassword.setBounds(191, 278, 116, 22);
-		contentPane.add(txtPassword);
-		txtPassword.setColumns(10);
 		
 		JLabel lblUserName = new JLabel("Usuario");
 		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -74,6 +69,10 @@ public class RoyalLoginView extends JFrame {
 		Icon in = new ImageIcon(img.getImage().getScaledInstance(lblRoyalIcon.getWidth(), lblRoyalIcon.getHeight(), Image.SCALE_DEFAULT));
 		lblRoyalIcon.setIcon(in);
 		contentPane.add(lblRoyalIcon);
+		
+		txtPassword = new JPasswordField();
+		txtPassword.setBounds(191, 278, 116, 22);
+		contentPane.add(txtPassword);
 	}
 
 	public JTextField getTxtUserName() {
@@ -88,7 +87,7 @@ public class RoyalLoginView extends JFrame {
 		return txtPassword;
 	}
 
-	public void setTxtPassword(JTextField txtPassword) {
+	public void setTxtPassword(JPasswordField txtPassword) {
 		this.txtPassword = txtPassword;
 	}
 

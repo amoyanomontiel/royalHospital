@@ -10,13 +10,11 @@ import javax.swing.tree.TreePath;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
-
 import listeners.DocumentsListener;
 import listeners.DownloadListener;
 import listeners.PatientsListener;
 import listeners.RemoveListener;
 import listeners.UploadListener;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -66,29 +64,6 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(64, 86, 691, 259);
 		contentPane.add(scrollPane);
-
-		raiz = new DefaultMutableTreeNode("Royal Hospital");
-		if (ftpClient.isConnected()) {
-			try {
-				if (roll.equalsIgnoreCase("MEDICO")) {
-					ftpClient.changeWorkingDirectory("/Medicos/" + user);
-					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
-					ftpClient.changeWorkingDirectory("/Medicos/" + user);
-				} else if (roll.equalsIgnoreCase("PACIENTE")) {
-					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
-					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
-					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
-				}
-			} catch (IOException | NullPointerException e) {
-				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
-				error.setVisible(true);
-				error.setLocationRelativeTo(null);
-			}
-			tree = new JTree(raiz);
-			tree.addTreeSelectionListener(this);
-			scrollPane.setViewportView(tree);
-			
-		}
 		
 		txtaHistorial = new JTextArea();
 		txtaHistorial.setEditable(false);
@@ -178,6 +153,34 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		Icon mydocIcon5 = new ImageIcon(
 				mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnDownload.setIcon(mydocIcon5);
+		
+		raiz = new DefaultMutableTreeNode("Royal Hospital");
+		if (ftpClient.isConnected()) {
+			try {
+				if (roll.equalsIgnoreCase("MEDICO")) {
+					ftpClient.changeWorkingDirectory("/Medicos/" + user);
+					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
+					ftpClient.changeWorkingDirectory("/Medicos/" + user);
+				} else if (roll.equalsIgnoreCase("PACIENTE")) {
+					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
+					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
+					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
+					
+					btnCreateDir.setEnabled(false);
+					btnCreateFile.setEnabled(false);
+					btnDocuments.setEnabled(false);
+					btnPatient.setEnabled(false);
+					btnRemove.setEnabled(false);
+					btnRename.setEnabled(false);
+				}
+			} catch (IOException | NullPointerException e) {
+				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+				error.setVisible(true);
+				error.setLocationRelativeTo(null);
+			}
+			tree = new JTree(raiz);
+			scrollPane.setViewportView(tree);
+		}
 	}
 
 	/**

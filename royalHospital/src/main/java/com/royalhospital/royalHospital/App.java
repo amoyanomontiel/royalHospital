@@ -23,6 +23,5 @@ public class App
         objetoMail.connectMailServer();
         objetoMail.setFolderEmails();
         objetoMail.receiveAndSaveAllEmails();
-        objetoMail.generateJComboBoxWithEmails();
     }
 }

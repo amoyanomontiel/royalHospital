@@ -10,6 +10,7 @@ import com.royalhospital.royalHospital.MailMethods;
 
 import java.awt.Color;
 import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
@@ -31,7 +32,9 @@ public class InboxView extends JFrame {
 	private JButton returnInboxButton;
 	private JPanel inboxMailsPanel;
 	private JPanel messagePanel;
+	private static JPanel contextMail;
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -77,13 +80,13 @@ public class InboxView extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		//contentPane.setLayout(null);
 		
 		JPanel headPanel = new JPanel();
 		headPanel.setBorder(null);
 		headPanel.setBounds(0, 0, 836, 60);
 		contentPane.add(headPanel);
-		headPanel.setLayout(null);
+		//headPanel.setLayout(null);
 		
 		JLabel inboxLabel = new JLabel("Buzón De Entrada");
 		inboxLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
@@ -138,14 +141,15 @@ public class InboxView extends JFrame {
 		
 		showInbox(returnInboxButton, newMessageButton, closeInboxButton, inboxMailsPanel, messagePanel);
 		
-		inboxMailsPanel = objectMail.generateJComboBoxWithEmails();
+		contextMail = new JPanel();
+		contextMail.setBounds(12, 329, 810, 353);
+		contentPane.add(contextMail);
+		
+		inboxMailsPanel = objectMail.generateJComboBoxWithEmails(contextMail, contentPane);
 		inboxMailsPanel.setBounds(0, 90, 836, 605);
 		contentPane.add(inboxMailsPanel);
-		//inboxMailsPanel.setLayout(null);
-		
-		messagePanel = new JPanel();
-		messagePanel.setBounds(0, 90, 836, 605);
-		contentPane.add(messagePanel);
-		messagePanel.setLayout(null);
+
+
 	}
+	
 }

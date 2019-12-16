@@ -1,5 +1,6 @@
 package com.royalhospital.royalHospital;
 
+import java.awt.Window;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -15,12 +16,14 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import org.apache.commons.lang3.StringUtils;
 
 import Listeners.ScrollEmailListener;
+import views.InboxView;
 
 public class MailMethods {
 	private String host;
@@ -88,7 +91,7 @@ public class MailMethods {
 		}
 	}
 
-	public JPanel generateJComboBoxWithEmails() {
+	public JPanel generateJComboBoxWithEmails(JPanel mailPanelBox, JPanel contenPane) {
 		try {
 
 			JPanel viewScroll = new JPanel();
@@ -105,8 +108,7 @@ public class MailMethods {
 
 				scrollEmails.addItem(informationEmail);
 			}
-
-			ScrollEmailListener.addScrollEmailListener(scrollEmails);
+			ScrollEmailListener.addScrollEmailListener(scrollEmails, mailPanelBox, contenPane);
 			viewScroll.add(scrollEmails);
 			return viewScroll;
 		} catch (Exception e) {

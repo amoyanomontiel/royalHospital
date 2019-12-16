@@ -10,12 +10,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class ErrorRoyalView extends JFrame {
 	
 	private JPanel contentPane;
 	
-	public ErrorRoyalView(String error) {
+	public ErrorRoyalView(String error, int i) {
 		setResizable(false);
 		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 480, 220);
@@ -23,6 +24,7 @@ public class ErrorRoyalView extends JFrame {
 		setIconImage(royal.getImage());
 		setTitle("Error");
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -34,9 +36,16 @@ public class ErrorRoyalView extends JFrame {
 		JLabel img_error = new JLabel();
 		img_error.setBounds(34, 48, 49, 46);
 		
-		ImageIcon img = new ImageIcon(ErrorRoyalView.class.getResource("/views/errorIcono.png"));
-		Icon icon = new ImageIcon(img.getImage().getScaledInstance(img_error.getWidth(), img_error.getHeight(), Image.SCALE_DEFAULT));
-		img_error.setIcon(icon);
+		if(i == 0) {
+			ImageIcon img = new ImageIcon(ErrorRoyalView.class.getResource("/views/errorIcono.png"));
+			Icon icon = new ImageIcon(img.getImage().getScaledInstance(img_error.getWidth(), img_error.getHeight(), Image.SCALE_DEFAULT));
+			img_error.setIcon(icon);
+		}else {
+			ImageIcon img_warning = new ImageIcon(ErrorRoyalView.class.getResource("/views/warning.png"));
+			Icon icon_warning = new ImageIcon(img_warning.getImage().getScaledInstance(img_error.getWidth(), img_error.getHeight(), Image.SCALE_DEFAULT));
+			img_error.setIcon(icon_warning);
+		}
+		
 		
 		contentPane.add(img_error);
 		

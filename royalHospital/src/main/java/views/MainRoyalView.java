@@ -37,15 +37,15 @@ public class MainRoyalView extends JFrame {
 	 * Create the frame.
 	 * @param ftpClient 
 	 */
-	public MainRoyalView(FTPClient ftpClient) {//Hay que pasarle por parametro la direccion(path) de la carpeta raiz que le pertenece 
-		//segun los permisos que tenga
+	public MainRoyalView(FTPClient ftpClient) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
-		setTitle("Royal Hospital");
+		setTitle("Royal Hospital - Main");
 		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
 		setIconImage(royal.getImage());
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(204, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -59,14 +59,23 @@ public class MainRoyalView extends JFrame {
 			try {			
 				seekFile(raiz, ftpClient.listFiles(), ftpClient);
 			} catch (IOException e) {
-				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP");
+				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 			}
 			JTree tree = new JTree(raiz);
 			scrollPane.setViewportView(tree);
 		}		
-		
+
+		try {			
+			seekFile(raiz, ftpClient.listFiles(), ftpClient);
+		} catch (IOException e) {
+			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+			error.setVisible(true);
+			error.setLocationRelativeTo(null);
+		}
+		JTree tree = new JTree(raiz);
+		scrollPane.setViewportView(tree);		
 		JTextArea txtaHistorial = new JTextArea();
 		txtaHistorial.setEditable(false);
 		txtaHistorial.setBounds(64, 363, 691, 134);
@@ -169,7 +178,7 @@ public class MainRoyalView extends JFrame {
 						ftpClient.changeWorkingDirectory(fil.getName());
 						list2 = ftpClient.listFiles();
 					} catch (IOException e) {
-						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP");
+						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
 					}

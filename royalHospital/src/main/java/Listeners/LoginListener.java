@@ -29,7 +29,7 @@ public class LoginListener implements ActionListener {
 
 		if (!userText.equals("") && !passwordText.equals("")) {
 			if (!checkCredentials(userText, passwordText)) {
-				ErrorRoyalView error = new ErrorRoyalView("El usuario y la contraseña no coinciden.");
+				ErrorRoyalView error = new ErrorRoyalView("El usuario y/o la contraseña no son correctos.");
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 				loginView.getTxtPassword().setText("");

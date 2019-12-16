@@ -20,7 +20,6 @@ public class FTPConection {
 		try {
 			client.connect(ftpServer, port);
 			if (client.login(ftpUser, ftpPassword)) {
-				// consola.append("Conectado con el servidor\n");
 				System.out.println("Conectado con el servidor\n");
 			} else {
 				ErrorRoyalView error = new ErrorRoyalView("");

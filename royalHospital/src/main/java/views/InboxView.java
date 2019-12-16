@@ -29,7 +29,6 @@ public class InboxView extends JFrame {
 	private JPanel contentPane;
 	private final int width = 30;
 	private final int height = 30;
-	private JPanel inboxMailsPanel;
 	private JPanel messagePanel;
 	private JPanel headPanel;
 
@@ -41,13 +40,13 @@ public class InboxView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-			        MailMethods objetoMail = new MailMethods();
-			        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
-			        objetoMail.setProperties();
-			        objetoMail.connectMailServer();
-			        objetoMail.setFolderEmails();
-			        objetoMail.receiveAndSaveAllEmails();
-					InboxView frame = new InboxView(objetoMail);
+//			        MailMethods objetoMail = new MailMethods();
+//			        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
+//			        objetoMail.setProperties();
+//			        objetoMail.connectMailServer();
+//			        objetoMail.setFolderEmails();
+//			        objetoMail.receiveAndSaveAllEmails();
+					InboxView frame = new InboxView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,22 +58,14 @@ public class InboxView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InboxView(MailMethods objectMail) {
+	public InboxView() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		ImageIcon newMailIcon = new ImageIcon("src/main/java/views/newGmail.png");
-		Icon newIcon = new ImageIcon(newMailIcon.getImage().getScaledInstance((width+10), height, Image.SCALE_DEFAULT));
-		ImageIcon newHomeIcon = new ImageIcon("src/main/java/views/homeIcon.png");
-		Icon newHome = new ImageIcon(newHomeIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-		ImageIcon newReturnIcon = new ImageIcon("src/main/java/views/return.png");
-		Icon newReturn = new ImageIcon(newReturnIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		inboxMailsPanel.setBounds(0, 90, 836, 605);
-		contentPane.add(inboxMailsPanel);
 		
 		headPanel = new JPanel();
 		contentPane.add(headPanel, BorderLayout.NORTH);

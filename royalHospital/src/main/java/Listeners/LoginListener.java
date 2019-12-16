@@ -28,7 +28,6 @@ public class LoginListener implements ActionListener {
 		String passwordText = loginView.getPasswordField().getText();
 
 		if (!userText.equals("") && !passwordText.equals("")) {
-			
 			if (!checkCredentials(userText, passwordText)) {
 				ErrorRoyalView error = new ErrorRoyalView("El usuario y la contraseña no coinciden.", 1);
 				error.setVisible(true);
@@ -38,8 +37,9 @@ public class LoginListener implements ActionListener {
 			} else {
 				FTPConection ftpConect = new FTPConection();
 				FTPClient ftpClient = ftpConect.createFTPClient();
-				if (ftpClient.isConnected()) {
-					MainRoyalView mainRoyal = new MainRoyalView(ftpClient, userText);
+				String roll = getRoll(userText);
+				if (ftpClient.isConnected() && roll != null) {
+					MainRoyalView mainRoyal = new MainRoyalView(ftpClient, userText, roll);
 					mainRoyal.setLocationRelativeTo(null);
 					mainRoyal.setVisible(true);
 				}
@@ -51,6 +51,32 @@ public class LoginListener implements ActionListener {
 			error.setLocationRelativeTo(null);
 		}
 	}
+	private String getRoll(String userText) {
+		DBConection con = new DBConection();
+		Statement st = null;
+		String roll = null;
+		try {
+			st = con.getConect().createStatement();
+		} catch (SQLException e) {
+			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar a la Base de Datos", 0);
+			error.setVisible(true);
+			error.setLocationRelativeTo(null);
+		}
+		
+		try {
+			ResultSet rs = st.executeQuery("Select nameRoll from roll  where codRoll in ( Select codRoll from usuarios "
+					+ "where nameUser like '"+ userText.toString() +"');");
+			rs.next();
+			roll = rs.getString(1);
+		} catch (SQLException e) {
+			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar a la Base de Datos", 0);
+			error.setVisible(true);
+			error.setLocationRelativeTo(null);
+		}
+		
+		return roll;
+	}
+
 	private boolean checkCredentials(String userText, String passwordText) {
 		DBConection conectToDB = new DBConection();
 		Statement state = null;
@@ -71,21 +97,6 @@ public class LoginListener implements ActionListener {
 		} catch (SQLException | NullPointerException e) {
 			isCorrect = false;
 		}
-			try {
-				state = conectToDB.getConect().createStatement();
-			} catch (SQLException | NullPointerException e) {
-				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar a la Base de Datos", 0);
-				error.setVisible(true);
-				error.setLocationRelativeTo(null);
-			}
-			try {
-				ResultSet result = state.executeQuery("Select nameUser, password from usuarios where nameUser like '"
-						+ userText.toString() + "' and password like '" + passwordText.toString() + "'");
-				result.next();
-				isCorrect = true;
-			} catch (SQLException | NullPointerException e) {
-				isCorrect = false;
-			}	
 		return isCorrect;
 	}
 }

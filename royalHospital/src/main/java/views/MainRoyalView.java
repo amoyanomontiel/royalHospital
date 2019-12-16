@@ -9,6 +9,7 @@ import org.apache.commons.net.ftp.FTPFile;
 
 import Listeners.DocumentsListener;
 import Listeners.DownloadListener;
+import Listeners.PatientsListener;
 import Listeners.UploadListener;
 
 import javax.swing.Icon;
@@ -34,16 +35,17 @@ public class MainRoyalView extends JFrame {
 	private static DefaultMutableTreeNode raiz;
 	private static JTree tree;
 	private static JScrollPane scrollPane;
-	
+
 	/**
 	 * Create the frame.
-	 * @param ftpClient 
+	 * 
+	 * @param ftpClient
 	 */
 	public MainRoyalView() {
-		
+
 	}
-	
-	public MainRoyalView(FTPClient ftpClient, String user) {
+
+	public MainRoyalView(FTPClient ftpClient, String user, String roll) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
@@ -55,36 +57,43 @@ public class MainRoyalView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(64, 86, 691, 259);
 		contentPane.add(scrollPane);
-		
+
 		raiz = new DefaultMutableTreeNode("Royal Hospital");
-		if(ftpClient.isConnected()) {
-			try {			
-				ftpClient.changeWorkingDirectory("/Medicos/" + user);
-				seekFile(raiz, ftpClient.listFiles(), ftpClient);
-			} catch (IOException e) {
+		if (ftpClient.isConnected()) {
+			try {
+				if (roll.equalsIgnoreCase("MEDICO")) {
+					ftpClient.changeWorkingDirectory("/Medicos/" + user);
+					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
+					ftpClient.changeWorkingDirectory("/Medicos/" + user);
+				} else if (roll.equalsIgnoreCase("PACIENTE")) {
+					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
+					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
+					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
+				}
+			} catch (IOException | NullPointerException e) {
 				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 			}
 			tree = new JTree(raiz);
 			scrollPane.setViewportView(tree);
-		}		
+		}
 
 		JTextArea txtaHistorial = new JTextArea();
 		txtaHistorial.setEditable(false);
 		txtaHistorial.setBounds(64, 363, 691, 134);
 		contentPane.add(txtaHistorial);
-		
+
 		JButton btnUpload = new JButton("Cargar");
 		contentPane.add(btnUpload);
 		btnUpload.setBackground(Color.WHITE);
 		btnUpload.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnUpload.addActionListener(new UploadListener());
-		
+
 		JButton btnDownload = new JButton("Descargar");
 		contentPane.add(btnDownload);
 		btnDownload.setBackground(Color.WHITE);
@@ -95,99 +104,112 @@ public class MainRoyalView extends JFrame {
 		contentPane.add(btnRemove);
 		btnRemove.setBackground(Color.WHITE);
 		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
+
 		JButton btnCreateDir = new JButton("Crear Directorio");
 		contentPane.add(btnCreateDir);
 		btnCreateDir.setBackground(Color.WHITE);
 		btnCreateDir.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
+
 		JButton btnCreateFile = new JButton("Crear Fichero");
 		contentPane.add(btnCreateFile);
 		btnCreateFile.setBackground(Color.WHITE);
 		btnCreateFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
+
 		JButton btnRename = new JButton("Renombrar");
 		contentPane.add(btnRename);
 		btnRename.setBackground(Color.WHITE);
 		btnRename.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
+
 		JButton btnDocuments = new JButton("Documentos");
 		contentPane.add(btnDocuments);
 		btnDocuments.setBackground(Color.WHITE);
 		btnDocuments.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnDocuments.addActionListener(new DocumentsListener(user, ftpClient, this));
-		
+
 		JButton btnPatient = new JButton("Pacientes");
 		contentPane.add(btnPatient);
 		btnPatient.setBackground(Color.WHITE);
 		btnPatient.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
+		btnPatient.addActionListener(new PatientsListener(ftpClient, this));
+
 		JButton btnMail = new JButton("Correo");
 		contentPane.add(btnMail);
 		btnMail.setBackground(Color.WHITE);
 		btnMail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
-		btnDocuments.setBounds(64,13, BTN_WIDTH, BTN_HEIGHT);
-		btnPatient.setBounds(240,13, BTN_WIDTH, BTN_HEIGHT);
-		btnMail.setBounds(604,13, BTN_WIDTH, BTN_HEIGHT);
-		btnUpload.setBounds(64,585, BTN_WIDTH, BTN_HEIGHT);
-		btnDownload.setBounds(240,585, BTN_WIDTH, BTN_HEIGHT);
-		btnRemove.setBounds(425,585, BTN_WIDTH, BTN_HEIGHT);
-		btnRename.setBounds(604,585, BTN_WIDTH, BTN_HEIGHT);
+
+		btnDocuments.setBounds(64, 13, BTN_WIDTH, BTN_HEIGHT);
+		btnPatient.setBounds(240, 13, BTN_WIDTH, BTN_HEIGHT);
+		btnMail.setBounds(604, 13, BTN_WIDTH, BTN_HEIGHT);
+		btnUpload.setBounds(64, 585, BTN_WIDTH, BTN_HEIGHT);
+		btnDownload.setBounds(240, 585, BTN_WIDTH, BTN_HEIGHT);
+		btnRemove.setBounds(425, 585, BTN_WIDTH, BTN_HEIGHT);
+		btnRename.setBounds(604, 585, BTN_WIDTH, BTN_HEIGHT);
 		btnCreateDir.setBounds(425, 524, BTN_WIDTH, BTN_HEIGHT);
 		btnCreateFile.setBounds(604, 524, BTN_WIDTH, BTN_HEIGHT);
-		
+
 		ImageIcon mydoc = new ImageIcon("src\\main\\java\\views\\doc4.png");
 		Icon mydocIcon = new ImageIcon(mydoc.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnDocuments.setIcon(mydocIcon);
-		
+
 		ImageIcon mydoc2 = new ImageIcon("src\\main\\java\\views\\doc_patient.png");
-		Icon mydocIcon2 = new ImageIcon(mydoc2.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
+		Icon mydocIcon2 = new ImageIcon(
+				mydoc2.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnPatient.setIcon(mydocIcon2);
-		
+
 		ImageIcon mydoc3 = new ImageIcon("src\\main\\java\\views\\gmail.png");
-		Icon mydocIcon3 = new ImageIcon(mydoc3.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
+		Icon mydocIcon3 = new ImageIcon(
+				mydoc3.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnMail.setIcon(mydocIcon3);
-	
+
 		ImageIcon mydoc4 = new ImageIcon("src\\main\\java\\views\\upload3.png");
-		Icon mydocIcon4 = new ImageIcon(mydoc4.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
+		Icon mydocIcon4 = new ImageIcon(
+				mydoc4.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnUpload.setIcon(mydocIcon4);
-		
+
 		ImageIcon mydoc5 = new ImageIcon("src\\main\\java\\views\\download2.png");
-		Icon mydocIcon5 = new ImageIcon(mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
+		Icon mydocIcon5 = new ImageIcon(
+				mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnDownload.setIcon(mydocIcon5);
 	}
+
 	/**
 	 * Metodo que rellena el JTree con los nodos correspondientes
 	 * 
 	 * @param raiz2
 	 * @param files
-	 * @param ftpClient 
+	 * @param ftpClient
+	 * @param roll
+	 * @param user
 	 */
-	private void seekFile(DefaultMutableTreeNode raiz2,FTPFile[] files, FTPClient ftpClient){
+	private void seekFile(DefaultMutableTreeNode raiz2, FTPFile[] files, FTPClient ftpClient, String roll, String user) {
 		FTPFile[] list = files;
-		if(list!=null)
-			for (FTPFile fil : list){
-				if (fil.isDirectory()){
-					DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode(fil.getName());
-					raiz2.add(carpeta);
-					FTPFile[] list2 = null;
+		if (list != null)
+			for (FTPFile fil : list) {
+				if (fil.isDirectory()) {
+					DefaultMutableTreeNode directory = new DefaultMutableTreeNode(fil.getName());
+					raiz2.add(directory);
 					try {
 						ftpClient.changeWorkingDirectory(fil.getName());
-						list2 = ftpClient.listFiles();
+						FTPFile[] list2 = ftpClient.listFiles();
+						seekFile(directory, list2, ftpClient, roll, user);
 					} catch (IOException e) {
 						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
 					}
-					seekFile(carpeta,list2, ftpClient);
-					}
-				else {
-					DefaultMutableTreeNode archivo = new DefaultMutableTreeNode(fil.getName());
-					raiz2.add(archivo);
-	            }
-	        }
+				} else {
+					DefaultMutableTreeNode file = new DefaultMutableTreeNode(fil.getName());
+					raiz2.add(file);
+				}
+			}
+		try {
+			ftpClient.changeToParentDirectory();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+
 	public void changedJTree(DefaultMutableTreeNode arbol) {
 		tree = new JTree(arbol);
 		scrollPane.setViewportView(tree);
@@ -196,6 +218,7 @@ public class MainRoyalView extends JFrame {
 	public DefaultMutableTreeNode getRaiz() {
 		return raiz;
 	}
+
 	public void setRaiz(DefaultMutableTreeNode raiz) {
 		this.raiz = raiz;
 	}

@@ -23,7 +23,7 @@ public class DownloadListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String path = "/";
+		String path = "/Pacientes/Juan/";
 		try {
 			ftpClient.changeWorkingDirectory(path);
 		} catch (IOException e2) {
@@ -31,8 +31,8 @@ public class DownloadListener implements ActionListener {
 			e2.printStackTrace();
 		}
 		try {
-			BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream("C:\\Users\\Cristina\\Documents\\Proyecto Imagine Dev"));
-			if(ftpClient.retrieveFile("royalhistorial.txt", output)) {
+			FileOutputStream out = new FileOutputStream("D:\\peval3/Juan.txt");
+			if(ftpClient.retrieveFile("Juan.txt", out)) {
 				mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito");
 			}
 		} catch (IOException e1) {

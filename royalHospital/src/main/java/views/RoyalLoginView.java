@@ -9,17 +9,20 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+
 import java.awt.Font;
+import javax.swing.JPasswordField;
 
 public class RoyalLoginView extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField txtUserName;
-	private JTextField txtPassword;
-	private JButton btnLogin;
-	/**
-	 * Launch the application.
-	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel loginPanel;
+	private JTextField user_email_Text;
+	private JButton login_Button;
+	private JPasswordField password_Text;
+	private JLabel icon;
+	
+
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
@@ -36,72 +39,88 @@ public class RoyalLoginView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RoyalLoginView() {
+	public RoyalLoginView(String user_email, String iconRoute) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 410, 500);
 		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
 		setIconImage(royal.getImage());
 		setTitle("Login");
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		loginPanel = new JPanel();
+		loginPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(loginPanel);
+		loginPanel.setLayout(null);
 		
-		txtUserName = new JTextField();
-		txtUserName.setBounds(191, 220, 116, 22);
-		contentPane.add(txtUserName);
-		txtUserName.setColumns(10);
+		JLabel user_email_Label = new JLabel(user_email);
+		user_email_Label.setFont(new Font("Tahoma", Font.BOLD, 15));
+		user_email_Label.setBounds(35, 222, 150, 16);
+		loginPanel.add(user_email_Label);
 		
-		txtPassword = new JTextField();
-		txtPassword.setBounds(191, 278, 116, 22);
-		contentPane.add(txtPassword);
-		txtPassword.setColumns(10);
+		user_email_Text = new JTextField();
+		user_email_Text.setBounds(191, 220, 140, 22);
+		loginPanel.add(user_email_Text);
+		user_email_Text.setColumns(10);
 		
-		JLabel lblUserName = new JLabel("Usuario");
-		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblUserName.setBounds(98, 222, 71, 16);
-		contentPane.add(lblUserName);
+		JLabel password_Label = new JLabel("Contraseña");
+		password_Label.setFont(new Font("Tahoma", Font.BOLD, 15));
+		password_Label.setBounds(35, 280, 91, 16);
+		loginPanel.add(password_Label);
 		
-		JLabel lblPassword = new JLabel("Contraseña");
-		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblPassword.setBounds(98, 280, 91, 16);
-		contentPane.add(lblPassword);
+		ImageIcon img = new ImageIcon(RoyalLoginView.class.getResource(iconRoute));
 		
-		btnLogin = new JButton("Entrar");
-		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnLogin.setBounds(144, 367, 116, 32);
-		contentPane.add(btnLogin);	
+		password_Text = new JPasswordField();
+		password_Text.setBounds(191, 280, 140, 22);
+		loginPanel.add(password_Text);
 		
-		JLabel lblRoyalIcon = new JLabel();
-		lblRoyalIcon.setBounds(70, 40, 268, 117);
-		ImageIcon img = new ImageIcon(RoyalLoginView.class.getResource("/views/royalhospital.png"));
-		Icon in = new ImageIcon(img.getImage().getScaledInstance(lblRoyalIcon.getWidth(), lblRoyalIcon.getHeight(), Image.SCALE_DEFAULT));
-		lblRoyalIcon.setIcon(in);
-		contentPane.add(lblRoyalIcon);
+		login_Button = new JButton("Entrar");
+		login_Button.setFont(new Font("Tahoma", Font.BOLD, 15));
+		login_Button.setBounds(144, 367, 116, 32);
+		loginPanel.add(login_Button);	
+		
+		icon = new JLabel();
+		icon.setBounds(70, 40, 268, 117);
+		Icon in = new ImageIcon(img.getImage().getScaledInstance(icon.getWidth(), icon.getHeight(), Image.SCALE_DEFAULT));
+		icon.setIcon(in);
+		loginPanel.add(icon);
 	}
 
-	public JTextField getTxtUserName() {
-		return txtUserName;
+	public JPanel getLoginPanel() {
+		return loginPanel;
 	}
 
-	public void setTxtUserName(JTextField txtUserName) {
-		this.txtUserName = txtUserName;
+	public void setLoginPanel(JPanel loginPanel) {
+		this.loginPanel = loginPanel;
 	}
 
-	public JTextField getTxtPassword() {
-		return txtPassword;
+	public JTextField getUser_email_Text() {
+		return user_email_Text;
 	}
 
-	public void setTxtPassword(JTextField txtPassword) {
-		this.txtPassword = txtPassword;
+	public void setUser_email_Text(JTextField user_email_Text) {
+		this.user_email_Text = user_email_Text;
 	}
 
-	public JButton getBtnLogin() {
-		return btnLogin;
+	public JButton getLogin_Button() {
+		return login_Button;
 	}
 
-	public void setBtnLogin(JButton btnLogin) {
-		this.btnLogin = btnLogin;
+	public void setLogin_Button(JButton login_Button) {
+		this.login_Button = login_Button;
+	}
+
+	public JPasswordField getPassword_Text() {
+		return password_Text;
+	}
+
+	public void setPassword_Text(JPasswordField password_Text) {
+		this.password_Text = password_Text;
+	}
+
+	public JLabel getIcon() {
+		return icon;
+	}
+
+	public void setIcon(JLabel icon) {
+		this.icon = icon;
 	}
 }

@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,6 +21,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class InboxView extends JFrame {
 
@@ -79,13 +82,11 @@ public class InboxView extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		//contentPane.setLayout(null);
 		
 		JPanel headPanel = new JPanel();
+		headPanel.setBounds(5, 5, 836, 60);
 		headPanel.setBorder(null);
-		headPanel.setBounds(0, 0, 836, 60);
-		contentPane.add(headPanel);
-		//headPanel.setLayout(null);
+		headPanel.setLayout(null);
 		
 		JLabel inboxLabel = new JLabel("Buzón De Entrada");
 		inboxLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
@@ -133,22 +134,24 @@ public class InboxView extends JFrame {
 		headPanel.add(returnInboxButton);
 		
 		JSeparator dividingLine = new JSeparator();
+		dividingLine.setBounds(5, 65, 836, 2);
 		dividingLine.setForeground(new Color(255, 0, 51));
 		dividingLine.setBackground(new Color(255, 0, 51));
-		dividingLine.setBounds(0, 60, 836, 2);
-		contentPane.add(dividingLine);
 		
 		showInbox(returnInboxButton, newMessageButton, closeInboxButton, inboxMailsPanel, messagePanel);
 		
 		contextMail = new JPanel();
-		contextMail.setBounds(12, 329, 810, 353);
-		contentPane.add(contextMail);
+		contextMail.setBounds(17, 334, 810, 353);
 		
 		inboxMailsPanel = objectMail.generateJComboBoxWithEmails(contextMail, contentPane);
 		inboxMailsPanel.setBounds(0, 90, 836, 605);
 		contentPane.add(inboxMailsPanel);
+		contentPane.setLayout(null);
+		contentPane.add(headPanel);
+		contentPane.add(dividingLine);
+		contentPane.add(contextMail);
+		contextMail.setLayout(null);
 
 
 	}
-	
 }

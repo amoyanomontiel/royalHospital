@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
+import javax.swing.JComboBox;
 
 public class InboxView extends JFrame {
 
@@ -30,7 +31,7 @@ public class InboxView extends JFrame {
 	private final int width = 30;
 	private final int height = 30;
 	private JPanel messagePanel;
-	private JPanel headPanel;
+	private JPanel headPane;
 
 	
 	/**
@@ -67,27 +68,33 @@ public class InboxView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		headPanel = new JPanel();
-		contentPane.add(headPanel, BorderLayout.NORTH);
+		headPane = new JPanel();
+		contentPane.add(headPane, BorderLayout.NORTH);
 		
 		JLabel lblInbox = new JLabel("Buzón de entrada");
 		lblInbox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		headPanel.add(lblInbox);
+		headPane.add(lblInbox);
 		
 		JButton btnRefresh = new JButton("Refrescar");
 		btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		headPanel.add(btnRefresh);
+		headPane.add(btnRefresh);
 		
 		JButton btnWriteEmail = new JButton("Redactar");
 		btnWriteEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		headPanel.add(btnWriteEmail);
+		headPane.add(btnWriteEmail);
 		
 		JButton btnCloseInbox = new JButton("Volver");
 		btnCloseInbox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		headPanel.add(btnCloseInbox);
+		headPane.add(btnCloseInbox);
 		
-		JPanel contextMail = new JPanel();
-		contentPane.add(contextMail, BorderLayout.CENTER);
+		JPanel contextMailPane = new JPanel();
+		contentPane.add(contextMailPane, BorderLayout.SOUTH);
+		
+		JPanel mailListPane = new JPanel();
+		contentPane.add(mailListPane, BorderLayout.CENTER);
+		
+		JComboBox mailListComboBox = new JComboBox();
+		mailListPane.add(mailListComboBox);
 
 
 	}

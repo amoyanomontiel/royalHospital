@@ -30,7 +30,6 @@ public class MainRoyalView extends JFrame {
 	private static final int BTN_WIDTH = 150;
 	private static final int IMG_WIDTH = 30;
 	private JPanel contentPane;
-	private ArrayList<JButton> buttons = new ArrayList<>();
 	private static DefaultMutableTreeNode raiz;
 	
 	/**
@@ -190,13 +189,7 @@ public class MainRoyalView extends JFrame {
 	            }
 	        }
 	}
-	
-	public ArrayList<JButton> getButtons() {
-		return buttons;
-	}
-	public void setButtons(ArrayList<JButton> buttons) {
-		this.buttons = buttons;
-	}
+
 	public DefaultMutableTreeNode getRaiz() {
 		return raiz;
 	}

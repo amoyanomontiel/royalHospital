@@ -48,6 +48,7 @@ public class InboxView extends JFrame {
 					InboxView frame = new InboxView(objetoMail);
 					frame.setVisible(true);
 				} catch (Exception e) {
+					System.out.println(e.getMessage());
 					e.printStackTrace();
 				}
 			}

@@ -1,4 +1,4 @@
-package Listeners;
+package listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,22 +12,20 @@ import org.apache.commons.net.ftp.FTPFile;
 import views.ErrorRoyalView;
 import views.MainRoyalView;
 
-public class DocumentsListener implements ActionListener {
+public class PatientsListener implements ActionListener {
 
-	private String user;
-	private FTPClient ftpClient;
+	private FTPClient client;
 	private MainRoyalView royal;
 
-	public DocumentsListener(String user, FTPClient ftpClient, MainRoyalView mainRoyalView) {
-		this.user = user;
-		this.ftpClient = ftpClient;
+	public PatientsListener(FTPClient ftpClient, MainRoyalView mainRoyalView) {
+		this.client = ftpClient;
 		this.royal = mainRoyalView;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent arg0) {
 		try {
-			ftpClient.changeWorkingDirectory("/Medicos/" + user);
+			client.changeWorkingDirectory("/Pacientes");
 		} catch (IOException e1) {
 
 		}
@@ -36,8 +34,8 @@ public class DocumentsListener implements ActionListener {
 		raiz.removeAllChildren();
 
 		try {
-			seekFile(raiz, ftpClient.listFiles(), ftpClient);
-			ftpClient.changeWorkingDirectory("/Medicos/" + user);
+			seekFile(raiz, client.listFiles(), client);
+			client.changeWorkingDirectory("/Pacientes");
 		} catch (IOException e1) {
 
 		}
@@ -52,7 +50,6 @@ public class DocumentsListener implements ActionListener {
 				if (fil.isDirectory()) {
 					DefaultMutableTreeNode directory = new DefaultMutableTreeNode(fil.getName());
 					raiz2.add(directory);
-
 					try {
 						ftpClient.changeWorkingDirectory(fil.getName());
 						FTPFile[] list2 = ftpClient.listFiles();
@@ -74,5 +71,4 @@ public class DocumentsListener implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-
 }

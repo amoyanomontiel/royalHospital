@@ -30,7 +30,7 @@ public class RoyalLoginView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RoyalLoginView frame = new RoyalLoginView("Correo Electrónico", "/views/mailIcon.jpg", 100, 40, 183, 117);
+					RoyalLoginView frame = new RoyalLoginView("Correo Electrónico", "/views/mailIcon.png", 100, 40, 183, 117);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ public class NewMailView extends JFrame {
 	private final int width = 30;
 	private final int height = 30;
 	private HashMap<String, String> fileList;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -67,25 +69,37 @@ public class NewMailView extends JFrame {
 		}
 	}
 
-	public void refreshUploadedFiles(JPanel uploadedFilesPanel, GridBagConstraints gblc_uploadedFilesPanel) {
-		int contador = 0;
+	public void refreshUploadedFiles(JPanel uploadedFilesPane/*, GridBagConstraints gblc_uploadedFilesPanel*/) {
+		JPanel panel = null;
 		for (HashMap.Entry<String, String> entry : fileList.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue();
-
-			// String extension = FilenameUtils.getExtension(value);
-			String extension = "pdf";
-			obtainExtension(contador, extension);
+	        panel = new JPanel();
+//			String extension = FilenameUtils.getExtension(value);
+//			String extension = "pdf";
+//			obtainExtension(contador, extension);
 
 			JLabel newFile = new JLabel(key);
 			newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			gblc_uploadedFilesPanel.gridx = 1;
-			gblc_uploadedFilesPanel.gridy = contador;
-			uploadedFilesPanel.add(newFile, gblc_uploadedFilesPanel);
-			contador++;
+//			gblc_uploadedFilesPanel.gridx = 1;
+//			gblc_uploadedFilesPanel.gridy = contador;
+			panel.add(newFile);
 		}
+		
+		createScrollPane(uploadedFilesPane, panel);
+		
+		uploadedFilesPane.revalidate();
+//		uploadedFilesPane.repaint();
+	}
+	
+	public void createScrollPane(JPanel uploadedFilesPane, JPanel panel) {
+        JScrollPane scrollPane = new JScrollPane(panel);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(0, 0, 50, 60);
+        uploadedFilesPane.setPreferredSize(new Dimension(515, 61));
+        uploadedFilesPane.add(scrollPane);
 
-		uploadedFilesPanel.revalidate();
 	}
 
 	public void obtainExtension(int contador, String extension) {
@@ -193,23 +207,23 @@ public class NewMailView extends JFrame {
 		lblUploaded.setBounds(67, 416, 142, 27);
 		contentPane.add(lblUploaded);
 
-		JPanel uploadedFilesPane = new JPanel();
+		JPanel uploadedFilesPane = new JPanel(null);
 		uploadedFilesPane.setBounds(230, 405, 515, 61);
 		contentPane.add(uploadedFilesPane);
-
-		GridBagLayout gbl_uploadedFilesPane = new GridBagLayout();
-		uploadedFilesPane.setLayout(gbl_uploadedFilesPane);
-		GridBagConstraints gblc_uploadedFilesPanel = new GridBagConstraints();
-		gblc_uploadedFilesPanel.weightx = 1;
-		gblc_uploadedFilesPanel.weighty = 1;
-		gblc_uploadedFilesPanel.fill = GridBagConstraints.BOTH;
+		
+//		GridBagLayout gbl_uploadedFilesPane = new GridBagLayout();
+//		uploadedFilesPane.setLayout(gbl_uploadedFilesPane);
+//		GridBagConstraints gblc_uploadedFilesPanel = new GridBagConstraints();
+//		gblc_uploadedFilesPanel.weightx = 1;
+//		gblc_uploadedFilesPanel.weighty = 1;
+//		gblc_uploadedFilesPanel.fill = GridBagConstraints.BOTH;
 		
 
 		JButton btnNewFile = new JButton(" Adjuntar");
 		btnNewFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				createFileChooser(contentPane);
-				refreshUploadedFiles(uploadedFilesPane, gblc_uploadedFilesPanel);
+				refreshUploadedFiles(uploadedFilesPane);
 			}
 		});
 		btnNewFile.setFont(new Font("Tahoma", Font.PLAIN, 15));

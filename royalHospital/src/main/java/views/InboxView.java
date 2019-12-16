@@ -92,9 +92,6 @@ public class InboxView extends JFrame {
 		
 		JPanel mailListPane = new JPanel();
 		contentPane.add(mailListPane, BorderLayout.CENTER);
-		
-		JComboBox mailListComboBox = new JComboBox();
-		mailListPane.add(mailListComboBox);
 
 
 	}

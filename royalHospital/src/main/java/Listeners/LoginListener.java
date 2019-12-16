@@ -29,7 +29,7 @@ public class LoginListener implements ActionListener {
 
 		if (!userText.equals("") && !passwordText.equals("")) {
 			if (!checkCredentials(userText, passwordText)) {
-				ErrorRoyalView error = new ErrorRoyalView("El usuario y la contraseña no coinciden.");
+				ErrorRoyalView error = new ErrorRoyalView("El usuario y la contraseña no coinciden.", 1);
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 				loginView.getTxtPassword().setText("");
@@ -42,7 +42,7 @@ public class LoginListener implements ActionListener {
 				mainRoyal.setVisible(true);
 			}
 		} else {
-			ErrorRoyalView error = new ErrorRoyalView("El campo usuario y/o contraseña no pueden estar vacios");
+			ErrorRoyalView error = new ErrorRoyalView("El campo usuario y/o contraseña no pueden estar vacios", 1);
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}
@@ -55,7 +55,7 @@ public class LoginListener implements ActionListener {
 			try {
 				state = conectToDB.getConect().createStatement();
 			} catch (SQLException | NullPointerException e) {
-				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar a la Base de Datos");
+				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar a la Base de Datos", 0);
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 			}

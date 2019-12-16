@@ -12,7 +12,7 @@ public class DBConection {
 			Class.forName("com.mysql.jdbc.Driver");
 			conect = DriverManager.getConnection("jdbc:mysql://localhost/royalhospital", "root", "");
 		} catch (ClassNotFoundException | SQLException e1) {
-			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar a la Base de Datos");
+			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar a la Base de Datos", 0);
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}

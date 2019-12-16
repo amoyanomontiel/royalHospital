@@ -38,11 +38,11 @@ public class MainRoyalView extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
-		setTitle("Royal Hospital");
+		setTitle("Royal Hospital - Main");
 		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
 		setIconImage(royal.getImage());
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 204, 255));
+		contentPane.setBackground(new Color(204, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -55,7 +55,7 @@ public class MainRoyalView extends JFrame {
 		try {			
 			seekFile(raiz, ftpClient.listFiles(), ftpClient);
 		} catch (IOException e) {
-			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP");
+			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}
@@ -132,7 +132,7 @@ public class MainRoyalView extends JFrame {
 						ftpClient.changeWorkingDirectory(fil.getName());
 						list2 = ftpClient.listFiles();
 					} catch (IOException e) {
-						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP");
+						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
 					}

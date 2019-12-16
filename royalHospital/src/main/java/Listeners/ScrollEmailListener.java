@@ -33,8 +33,6 @@ public class ScrollEmailListener {
 					emailPanelBoxCopy = com.royalhospital.royalHospital.MailMethods.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex()-1);
 					emailPanelBoxCopy.setBounds(12, 329, 810, 353);
 					contenPaneCopy.add(emailPanelBoxCopy);
-					//emailPanelBox.updateUI();
-					//contenPaneCopy.updateUI();
 					emailPanelBox.revalidate();
 					contenPaneCopy.revalidate();
 				}

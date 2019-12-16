@@ -127,7 +127,16 @@ public class MainRoyalView extends JFrame {
 				if (fil.isDirectory()){
 					DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode(fil.getName());
 					raiz2.add(carpeta);
-					seekFTPFile(carpeta,fil, ftpClient);
+					FTPFile[] list2 = null;
+					try {
+						ftpClient.changeWorkingDirectory(fil.getName());
+						list2 = ftpClient.listFiles();
+					} catch (IOException e) {
+						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP");
+						error.setVisible(true);
+						error.setLocationRelativeTo(null);
+					}
+					seekFile(carpeta,list2, ftpClient);
 					}
 				else {
 					DefaultMutableTreeNode archivo = new DefaultMutableTreeNode(fil.getName());
@@ -136,29 +145,6 @@ public class MainRoyalView extends JFrame {
 	        }
 	}
 	
-	private void seekFTPFile(DefaultMutableTreeNode carpeta, FTPFile fil, FTPClient ftpClient) {
-		try {
-			ftpClient.changeWorkingDirectory(fil.getName());
-			FTPFile[] list = ftpClient.listFiles();
-			if(list!=null)
-				for (FTPFile file : list){
-					if (file.isDirectory()){
-						DefaultMutableTreeNode carpeta2 = new DefaultMutableTreeNode(file.getName());
-						carpeta.add(carpeta2);
-						seekFTPFile(carpeta2,file, ftpClient);
-						}
-					else {
-						DefaultMutableTreeNode archivo = new DefaultMutableTreeNode(file.getName());
-						carpeta.add(archivo);
-		            }
-		        }
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
 	public ArrayList<JButton> getButtons() {
 		return buttons;
 	}

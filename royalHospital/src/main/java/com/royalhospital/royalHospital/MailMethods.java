@@ -1,22 +1,30 @@
 package com.royalhospital.royalHospital;
 
 import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.Store;
+import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;;
+import javax.swing.event.HyperlinkListener;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class MailMethods {
 	private String host;
@@ -36,55 +44,193 @@ public class MailMethods {
 	// List of all folders in E-mail
 	private Folder[] folderList;
 
+	
+	
+	// Falta separar métodos, mostar mejor el mail, agregar metodo para abrir mail en concreto, eliminar img del e-mail a la hora de abrirlo
+	
 	private Folder emailFolder;
 
 	private Message[] messages;
 
-	//private ArrayList<ObjectEmail> listAllObjectsMail = new ArrayList<ObjectEmail>();
-
-	public void storeAllMessages() {
+	private String homeRute = System.getProperty("user.home");
+	
+	
+	public void storeAttachmentsElements(int messagePositionParam) {
+		
+		Message objectMessage = messages[messagePositionParam];
+		
 		try {
-			for (int counter = 0; counter < messages.length; counter++) {
-				// Get message one by one
-				// Check web page
-				Message objectMessage = messages[counter];
-				// Revisar pagina web para los archivos adjuntos
-				//ObjectEmail objectM = new ObjectEmail(objectMessage.getSubject(), objectMessage.getFrom()[0].toString(), getBodyText(objectMessage));
-				JEditorPane editor = new JEditorPane("text/html", getBodyText(objectMessage));
-				System.out.println(getBodyText(objectMessage));
-        	    editor.setEditable(false);
-        	    editor.addHyperlinkListener(new HyperlinkListener() {
-					
-					@Override
-					public void hyperlinkUpdate(HyperlinkEvent e) {
-						if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-							if(Desktop.isDesktopSupported()) {
-							    try {
-									Desktop.getDesktop().browse(e.getURL().toURI());
-								} catch (IOException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								} catch (URISyntaxException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-							}
-					        }
-					}
-				});
-        	    JScrollPane pane = new JScrollPane(editor);
-        	    JFrame f = new JFrame("HTML Demo");
-        	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        	    f.getContentPane().add(pane);
-        	    f.setSize(800, 600);
-        	    f.setVisible(true);
-        	    //break;
+			Multipart multipart = (Multipart) objectMessage.getContent();
+
+			File fileAttachment;
+			
+			for (int i = 0; i < multipart.getCount(); i++) {
+				BodyPart bodyPart = multipart.getBodyPart(i);
+				if (!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())
+						&& StringUtils.isBlank(bodyPart.getFileName())) {
+					continue;
+				}
+				InputStream is = bodyPart.getInputStream();
+				
+				// Save attachment on Download directory
+				fileAttachment = new File(homeRute + "\\Downloads\\" + bodyPart.getFileName());
+				FileOutputStream fos = new FileOutputStream(fileAttachment);
+				
+				// Buffer of bytes
+				byte[] buf = new byte[4096];
+				int bytesRead;
+				
+				
+				while ((bytesRead = is.read(buf)) != -1) {
+					fos.write(buf, 0, bytesRead);
+				}
+				fos.close();
 			}	
 		} catch (Exception e) {
-			System.out.println("Error reading content about messages");
+			System.out.println("Error getting attachments for Email");
+		}		
+	}
+	
+	
+	public JFrame generateJScrollPaneWithEmails() {
+		try {
+			
+			JFrame test = new JFrame("test");
+			
+			JPanel viewScroll = new JPanel();
+			
+			JComboBox scrollEmails = new JComboBox();
+			
+			for (int counter = 0; counter < messages.length; counter++) {
+				Message objectMessage = messages[counter];
+				
+				String informationEmail = "Titulo:   " + objectMessage.getSubject() + "      " + filterFromMessage(objectMessage.getFrom()[0].toString());
+				
+				scrollEmails.addItem(informationEmail);
+			}
+			
+			test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			viewScroll.add(scrollEmails);
+			test.getContentPane().add(viewScroll);
+			test.setSize(800, 600);
+			test.setVisible(true);
+			addListenerScrollMessage(scrollEmails);
+			return null;
+		} catch (Exception e) {
+			System.out.println("Error creating JScrollPane");
+			return null;
 		}
 	}
+	
+	
+	private void addListenerScrollMessage(JComboBox scrollEmails) {
+		
+	}
+	
+	
+	public String filterFromMessage(String fromParam) {
+		String filterFrom = "";
+		boolean checkCaracter = false;
+		
+		for(int counter = 0; counter < fromParam.length(); counter++) {
+			char caracter = fromParam.charAt(counter);
+			if(caracter == "<".charAt(0) || checkCaracter) {
+				if(!checkCaracter) {
+					filterFrom += "Remitente:     ";
+					checkCaracter = true;
+				}else {
+					if(caracter == ">".charAt(0)) {
+						break;
+					}else {
+						filterFrom += Character.toString(caracter);
+					}	
+				}
+			}
+		}
+		return filterFrom;
+	}
+	
+//	public void storeAllMessages() {
+//		try {
+//			for (int counter = 0; counter < messages.length; counter++) {
+//				Message objectMessage = messages[counter];
+//
+//				//attachments = new ArrayList();
+//				Multipart multipart = (Multipart) objectMessage.getContent();
+//				
+//				String bodyTextSave = getBodyText(objectMessage);
+//				String filterName = "";
+//				if(attachments.size() != 0) {
+//					for(int counterAttachments = 0; counterAttachments < attachments.size(); counterAttachments++) {
+//						filterName = searchOnlyNameAttachment(attachments.get(counterAttachments).toString());
+//						bodyTextSave.replace(attachments.get(counterAttachments).toString(), "");
+//						bodyTextSave += "<a href=file:///'"+attachments.get(counterAttachments).toString()+"'>" + filterName + " </a>";
+//					}
+//				}
+//				JEditorPane editor = new JEditorPane("text/html", bodyTextSave);
+//				editor.setEditable(false);
+//				editor.addHyperlinkListener(new HyperlinkListener() {
+//
+//					@Override
+//					public void hyperlinkUpdate(HyperlinkEvent e) {
+//						if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+//							if (Desktop.isDesktopSupported()) {
+//								try {
+//									Desktop.getDesktop().browse(e.getURL().toURI());
+//								} catch (IOException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								} catch (URISyntaxException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//							}
+//						}
+//					}
+//				});
+//				JScrollPane pane = new JScrollPane(editor);
+//				JFrame f = new JFrame("HTML Demo");
+//				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//				f.getContentPane().add(pane);
+//				f.setSize(800, 600);
+//				f.setVisible(true);
+//				// break;
+//			}
+//		} catch (Exception e) {
+//			System.out.println("Error reading content about messages");
+//		}
+//	}
 
+	public String searchOnlyNameAttachment(String ruteAttachment) {
+		try {
+			char [] allCaracters = ruteAttachment.toCharArray();
+			ArrayList<Character> allCaractersArray = new ArrayList<Character>();
+			char elementSearch = "\\'".charAt(0);
+			for(int counter = 0; counter < allCaracters.length; counter++) {
+				if(allCaracters[allCaracters.length-1 - counter] != elementSearch) {
+					allCaractersArray.add(allCaracters[allCaracters.length-1 - counter]);
+				}else {
+					break;
+				}
+			}
+			for(int i=0; i<allCaractersArray.size()/2; i++){
+	            char temp =allCaractersArray.get(i);
+	            allCaractersArray.set(i, allCaractersArray.get(allCaractersArray.size() - i - 1));
+	            allCaractersArray.set(allCaractersArray.size() - i - 1, temp);
+	        }
+			
+			StringBuilder builderName = new StringBuilder(allCaractersArray.size());
+			for(Character ch : allCaractersArray) {
+				builderName.append(ch);
+			}
+			
+			return builderName.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public String getBodyText(Part bodyPart) {
 		try {
 			if (bodyPart.isMimeType("text/*")) {
@@ -114,8 +260,9 @@ public class MailMethods {
 				Multipart mp = (Multipart) bodyPart.getContent();
 				for (int i = 0; i < mp.getCount(); i++) {
 					String bodyText = getBodyText(mp.getBodyPart(i));
-					if (bodyText != null)
-						return bodyText;
+					if (bodyText != null) {
+						return bodyText;	
+					}
 				}
 			}
 
@@ -126,7 +273,7 @@ public class MailMethods {
 		}
 	}
 
-	public void receiveAllEmails() {
+	public void receiveAndSaveAllEmails() {
 		try {
 			messages = emailFolder.getMessages();
 			System.out.println("you have " + messages.length + " messages");

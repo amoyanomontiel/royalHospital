@@ -18,7 +18,7 @@ public class App
     	//initLogin.getBtnLogin().addActionListener(new LoginListener(initLogin));
         // Test about mail
         MailMethods objetoMail = new MailMethods();
-        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
+        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "thenapo212@gmail.com", "N@pitoG@tito2");
         objetoMail.setProperties();
         objetoMail.connectMailServer();
         objetoMail.setFolderEmails();

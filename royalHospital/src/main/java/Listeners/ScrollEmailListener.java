@@ -1,26 +1,47 @@
 package Listeners;
 
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
-import com.royalhospital.royalHospital.MailMethods;
+import views.InboxView;
+
 
 public class ScrollEmailListener {
 	
-	public static void addScrollEmailListener(JComboBox JComboBoxParam) {
-		JComboBoxParam.addActionListener(new ActionListener() {
+	static JPanel emailPanelBoxCopy;
+	
+	static JPanel contenPaneCopy;
+	
+	public static void addScrollEmailListener(JComboBox JComboBoxParam, JPanel emailPanelBox, JPanel contenPane) {
+		emailPanelBoxCopy = emailPanelBox;
+		contenPaneCopy = contenPane;
+		JComboBoxParam.addItemListener(new ItemListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				if((JComboBoxParam.getSelectedIndex()-1) >= 0) {
-					com.royalhospital.royalHospital.MailMethods.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex()-1);
-					// falta añadir que cuando el usuario haga click, se muestre en la vista (Revisar vista con fernando)
+			public void itemStateChanged(ItemEvent e) {
+				if((e.getStateChange() == ItemEvent.SELECTED) && (JComboBoxParam.getSelectedIndex()-1) >= 0){
+					contenPaneCopy.remove(emailPanelBoxCopy);
+					System.out.println("pasa");
+					emailPanelBoxCopy = com.royalhospital.royalHospital.MailMethods.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex()-1);
+					emailPanelBoxCopy.setBounds(12, 329, 810, 353);
+					contenPaneCopy.add(emailPanelBoxCopy);
+					//emailPanelBox.updateUI();
+					//contenPaneCopy.updateUI();
+					emailPanelBox.revalidate();
+					contenPaneCopy.revalidate();
 				}
-				
 			}
 		});
+		
 	}
+	
 	
 }

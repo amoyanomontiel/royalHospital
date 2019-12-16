@@ -4,6 +4,9 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Listeners.LoginListener;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -58,7 +61,9 @@ public class RoyalLoginView extends JFrame {
 		btnLogin = new JButton("Entrar");
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogin.setBounds(144, 367, 116, 32);
-		contentPane.add(btnLogin);	
+		contentPane.add(btnLogin);
+    	btnLogin.addActionListener(new LoginListener(this));
+
 		
 		JLabel lblRoyalIcon = new JLabel();
 		lblRoyalIcon.setBounds(70, 40, 268, 117);

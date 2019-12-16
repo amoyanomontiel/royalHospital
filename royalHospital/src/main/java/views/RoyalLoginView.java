@@ -5,6 +5,9 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.commons.lang3.StringUtils;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -46,7 +49,7 @@ public class RoyalLoginView extends JFrame {
 		String userEmail = textFieldUser_email.getText();
 		String password = passwordField.getText();
 
-		if (userEmail.isBlank() || userEmail.isEmpty()) {
+		if (StringUtils.isBlank(userEmail) || userEmail.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Debes introducir una dirección de correo",
 					"Introduzca dirección de correo", JOptionPane.WARNING_MESSAGE);
 		}
@@ -54,7 +57,7 @@ public class RoyalLoginView extends JFrame {
 			JOptionPane.showMessageDialog(null, "Introduzca una cuenta de correo Gmail",
 					"Introduzca dirección de correo correcta", JOptionPane.WARNING_MESSAGE);
 		}
-		else if (password.isBlank() || password.isEmpty()) {
+		else if (StringUtils.isBlank(password) || password.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Debes introducir una contraseña",
 					"Introduzca contraseña", JOptionPane.WARNING_MESSAGE);
 		}

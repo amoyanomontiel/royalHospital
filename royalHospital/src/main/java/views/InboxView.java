@@ -32,6 +32,7 @@ public class InboxView extends JFrame {
 	private final int height = 30;
 	private JPanel messagePanel;
 	private JPanel headPane;
+	private static MailMethods objectMail;
 
 	
 	/**
@@ -41,12 +42,12 @@ public class InboxView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-//			        MailMethods objetoMail = new MailMethods();
-//			        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
-//			        objetoMail.setProperties();
-//			        objetoMail.connectMailServer();
-//			        objetoMail.setFolderEmails();
-//			        objetoMail.receiveAndSaveAllEmails();
+			        objectMail = new MailMethods();
+			        objectMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
+			        objectMail.setProperties();
+			        objectMail.connectMailServer();
+			        objectMail.setFolderEmails();
+			        objectMail.receiveAndSaveAllEmails();
 					InboxView frame = new InboxView();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -66,7 +67,7 @@ public class InboxView extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+//		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		headPane = new JPanel();
 		contentPane.add(headPane, BorderLayout.NORTH);
@@ -91,11 +92,9 @@ public class InboxView extends JFrame {
 		contentPane.add(contextMailPane, BorderLayout.SOUTH);
 		
 		JPanel mailListPane = new JPanel();
+		mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
 		contentPane.add(mailListPane, BorderLayout.CENTER);
 		
-		JComboBox mailListComboBox = new JComboBox();
-		mailListPane.add(mailListComboBox);
-
 
 	}
 	

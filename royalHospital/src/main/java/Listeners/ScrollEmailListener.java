@@ -1,5 +1,6 @@
 package Listeners;
 
+import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,12 +30,12 @@ public class ScrollEmailListener {
 			public void itemStateChanged(ItemEvent e) {
 				if((e.getStateChange() == ItemEvent.SELECTED) && (JComboBoxParam.getSelectedIndex()-1) >= 0){
 					contenPaneCopy.remove(emailPanelBoxCopy);
-					System.out.println("pasa");
 					emailPanelBoxCopy = com.royalhospital.royalHospital.MailMethods.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex()-1);
 					emailPanelBoxCopy.setBounds(12, 329, 810, 353);
 					contenPaneCopy.add(emailPanelBoxCopy);
-					emailPanelBox.revalidate();
+					contenPaneCopy.setLayout(new BorderLayout(0, 0));
 					contenPaneCopy.revalidate();
+					contenPaneCopy.repaint();
 				}
 			}
 		});

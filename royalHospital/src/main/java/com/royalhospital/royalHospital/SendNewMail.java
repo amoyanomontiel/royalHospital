@@ -31,7 +31,7 @@ public class SendNewMail {
 
 	private static void enviarConGMail(String destinatario, String asunto) {
 		String remitente = "thenapo212@gmail.com"; // Qui�n manda el correo
-		String clave = ""; // Contrase�a del correo (cambiar por tu contrase�a)
+		String clave = "N"; // Contrase�a del correo (cambiar por tu contrase�a)
 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", "smtp.gmail.com"); // El servidor SMTP de Google

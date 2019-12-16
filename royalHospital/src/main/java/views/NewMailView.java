@@ -25,6 +25,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
 import org.apache.commons.lang3.StringUtils;
+import javax.swing.JScrollPane;
 
 public class NewMailView extends JFrame {
 
@@ -193,7 +194,7 @@ public class NewMailView extends JFrame {
 		contentPane.add(lblUploaded);
 
 		JPanel uploadedFilesPane = new JPanel();
-		uploadedFilesPane.setBounds(230, 406, 515, 61);
+		uploadedFilesPane.setBounds(230, 405, 515, 61);
 		contentPane.add(uploadedFilesPane);
 
 		GridBagLayout gbl_uploadedFilesPane = new GridBagLayout();

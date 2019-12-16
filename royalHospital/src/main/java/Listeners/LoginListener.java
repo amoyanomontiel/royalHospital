@@ -39,7 +39,7 @@ public class LoginListener implements ActionListener {
 				FTPConection ftpConect = new FTPConection(userText, passwordText);
 				FTPClient ftpClient = ftpConect.createFTPClient();
 				if (ftpClient.isConnected()) {
-					MainRoyalView mainRoyal = new MainRoyalView(ftpClient);
+					MainRoyalView mainRoyal = new MainRoyalView(ftpClient, userText);
 					mainRoyal.setLocationRelativeTo(null);
 					mainRoyal.setVisible(true);
 				}

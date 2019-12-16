@@ -7,6 +7,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
+import Listeners.DocumentsListener;
 import Listeners.DownloadListener;
 import Listeners.UploadListener;
 
@@ -37,7 +38,11 @@ public class MainRoyalView extends JFrame {
 	 * Create the frame.
 	 * @param ftpClient 
 	 */
-	public MainRoyalView(FTPClient ftpClient) {
+	public MainRoyalView() {
+		
+	}
+	
+	public MainRoyalView(FTPClient ftpClient, String user) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
@@ -118,6 +123,7 @@ public class MainRoyalView extends JFrame {
 		contentPane.add(btnDocuments);
 		btnDocuments.setBackground(Color.WHITE);
 		btnDocuments.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnDocuments.addActionListener(new DocumentsListener(raiz, user));
 		
 		JButton btnPatient = new JButton("Pacientes");
 		contentPane.add(btnPatient);

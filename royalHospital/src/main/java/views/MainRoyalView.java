@@ -32,6 +32,8 @@ public class MainRoyalView extends JFrame {
 	private static final int IMG_WIDTH = 30;
 	private JPanel contentPane;
 	private static DefaultMutableTreeNode raiz;
+	private static JTree tree;
+	private static JScrollPane scrollPane;
 	
 	/**
 	 * Create the frame.
@@ -54,32 +56,24 @@ public class MainRoyalView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(64, 86, 691, 259);
 		contentPane.add(scrollPane);
 		
 		raiz = new DefaultMutableTreeNode("Royal Hospital");
 		if(ftpClient.isConnected()) {
 			try {			
+				ftpClient.changeWorkingDirectory("/Medicos/" + user);
 				seekFile(raiz, ftpClient.listFiles(), ftpClient);
 			} catch (IOException e) {
 				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 			}
-			JTree tree = new JTree(raiz);
+			tree = new JTree(raiz);
 			scrollPane.setViewportView(tree);
 		}		
 
-		try {			
-			seekFile(raiz, ftpClient.listFiles(), ftpClient);
-		} catch (IOException e) {
-			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
-			error.setVisible(true);
-			error.setLocationRelativeTo(null);
-		}
-		JTree tree = new JTree(raiz);
-		scrollPane.setViewportView(tree);		
 		JTextArea txtaHistorial = new JTextArea();
 		txtaHistorial.setEditable(false);
 		txtaHistorial.setBounds(64, 363, 691, 134);
@@ -97,7 +91,6 @@ public class MainRoyalView extends JFrame {
 		btnDownload.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnDownload.addActionListener(new DownloadListener());
 
-		
 		JButton btnRemove = new JButton("Borrar");
 		contentPane.add(btnRemove);
 		btnRemove.setBackground(Color.WHITE);
@@ -122,7 +115,7 @@ public class MainRoyalView extends JFrame {
 		contentPane.add(btnDocuments);
 		btnDocuments.setBackground(Color.WHITE);
 		btnDocuments.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnDocuments.addActionListener(new DocumentsListener(raiz, user));
+		btnDocuments.addActionListener(new DocumentsListener(user, ftpClient, this));
 		
 		JButton btnPatient = new JButton("Pacientes");
 		contentPane.add(btnPatient);
@@ -194,6 +187,10 @@ public class MainRoyalView extends JFrame {
 					raiz2.add(archivo);
 	            }
 	        }
+	}
+	public void changedJTree(DefaultMutableTreeNode arbol) {
+		tree = new JTree(arbol);
+		scrollPane.setViewportView(tree);
 	}
 
 	public DefaultMutableTreeNode getRaiz() {

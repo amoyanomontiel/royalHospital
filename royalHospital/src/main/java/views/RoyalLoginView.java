@@ -1,4 +1,5 @@
 package views;
+
 import java.awt.Image;
 
 import javax.swing.JFrame;
@@ -12,81 +13,96 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+
 import java.awt.Font;
-import java.awt.Color;
+import javax.swing.JPasswordField;
 
 public class RoyalLoginView extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField txtUserName;
-	private JTextField txtPassword;
+	private static final long serialVersionUID = 1L;
+	private JPanel loginPanel;
+	private JTextField textFieldUser_email;
 	private JButton btnLogin;
+	private JPasswordField passwordField;
+	private JLabel lblIcon;
+
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					RoyalLoginView frame = new RoyalLoginView();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public RoyalLoginView() {
+	public RoyalLoginView(String user_email, String iconRoute) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 410, 500);
 		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
 		setIconImage(royal.getImage());
-		setTitle("Royal Hospital - Login");
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(204, 204, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		txtUserName = new JTextField();
-		txtUserName.setBounds(191, 220, 116, 22);
-		contentPane.add(txtUserName);
-		txtUserName.setColumns(10);
-		
-		txtPassword = new JTextField();
-		txtPassword.setBounds(191, 278, 116, 22);
-		contentPane.add(txtPassword);
-		txtPassword.setColumns(10);
-		
-		JLabel lblUserName = new JLabel("Usuario");
-		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblUserName.setBounds(98, 222, 71, 16);
-		contentPane.add(lblUserName);
-		
+		setTitle("Login");
+		loginPanel = new JPanel();
+		loginPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(loginPanel);
+		loginPanel.setLayout(null);
+
+		JLabel lblUser_email = new JLabel(user_email);
+		lblUser_email.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblUser_email.setBounds(35, 222, 150, 16);
+		loginPanel.add(lblUser_email);
+
+		textFieldUser_email = new JTextField();
+		textFieldUser_email.setBounds(191, 220, 140, 22);
+		loginPanel.add(textFieldUser_email);
+		textFieldUser_email.setColumns(10);
+
 		JLabel lblPassword = new JLabel("Contraseña");
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblPassword.setBounds(98, 280, 91, 16);
-		contentPane.add(lblPassword);
-		
+		lblPassword.setBounds(35, 280, 91, 16);
+		loginPanel.add(lblPassword);
+
+		ImageIcon img = new ImageIcon(RoyalLoginView.class.getResource(iconRoute));
+
+		passwordField = new JPasswordField();
+		passwordField.setBounds(191, 280, 140, 22);
+		loginPanel.add(passwordField);
+
 		btnLogin = new JButton("Entrar");
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogin.setBounds(144, 367, 116, 32);
-		contentPane.add(btnLogin);
-    	btnLogin.addActionListener(new LoginListener(this));
+		btnLogin.addActionListener(new LoginListener(this));
+		loginPanel.add(btnLogin);
 
-		
-		JLabel lblRoyalIcon = new JLabel();
-		lblRoyalIcon.setBounds(70, 40, 268, 117);
-		ImageIcon img = new ImageIcon(RoyalLoginView.class.getResource("/views/royalhospital.png"));
-		Icon in = new ImageIcon(img.getImage().getScaledInstance(lblRoyalIcon.getWidth(), lblRoyalIcon.getHeight(), Image.SCALE_DEFAULT));
-		lblRoyalIcon.setIcon(in);
-		contentPane.add(lblRoyalIcon);
+		lblIcon = new JLabel();
+		lblIcon.setBounds(70, 40, 268, 117);
+		Icon in = new ImageIcon(
+				img.getImage().getScaledInstance(lblIcon.getWidth(), lblIcon.getHeight(), Image.SCALE_DEFAULT));
+		lblIcon.setIcon(in);
+		loginPanel.add(lblIcon);
 	}
 
-	public JTextField getTxtUserName() {
-		return txtUserName;
+	public JPanel getLoginPanel() {
+		return loginPanel;
 	}
 
-	public void setTxtUserName(JTextField txtUserName) {
-		this.txtUserName = txtUserName;
+	public void setLoginPanel(JPanel loginPanel) {
+		this.loginPanel = loginPanel;
 	}
 
-	public JTextField getTxtPassword() {
-		return txtPassword;
+	public JTextField getTextFieldUser_email() {
+		return textFieldUser_email;
 	}
 
-	public void setTxtPassword(JTextField txtPassword) {
-		this.txtPassword = txtPassword;
+	public void setTextFieldUser_email(JTextField textFieldUser_email) {
+		this.textFieldUser_email = textFieldUser_email;
 	}
 
 	public JButton getBtnLogin() {
@@ -96,4 +112,21 @@ public class RoyalLoginView extends JFrame {
 	public void setBtnLogin(JButton btnLogin) {
 		this.btnLogin = btnLogin;
 	}
+
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public void setPasswordField(JPasswordField passwordField) {
+		this.passwordField = passwordField;
+	}
+
+	public JLabel getLblIcon() {
+		return lblIcon;
+	}
+
+	public void setLblIcon(JLabel lblIcon) {
+		this.lblIcon = lblIcon;
+	}
+	
 }

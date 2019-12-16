@@ -113,11 +113,11 @@ public class NewMailView extends JFrame {
 		boolean emptyaddressee = false;
 		boolean emptysubject = false;
 		boolean emptybody = false;
-		if (StringUtils.isBlank(addressee) || addressee.isEmpty())
+		if (addressee.isEmpty())
 			emptyaddressee = true;
-		if (StringUtils.isBlank(subject) || subject.isEmpty())
+		if (subject.isEmpty())
 			emptysubject = true;
-		if (StringUtils.isBlank(body) || body.isEmpty())
+		if (body.isEmpty())
 			emptybody = true;
 
 		if (action.equals("send")) {
@@ -203,6 +203,7 @@ public class NewMailView extends JFrame {
 		gblc_uploadedFilesPanel.weightx = 1;
 		gblc_uploadedFilesPanel.weighty = 1;
 		gblc_uploadedFilesPanel.fill = GridBagConstraints.BOTH;
+		
 
 		JButton btnNewFile = new JButton(" Adjuntar");
 		btnNewFile.addActionListener(new ActionListener() {

@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
 
 public class InboxView extends JFrame {
 
@@ -79,11 +80,11 @@ public class InboxView extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		//contentPane.setLayout(null);
 		
 		JPanel headPanel = new JPanel();
 		headPanel.setBorder(null);
-		headPanel.setBounds(0, 0, 836, 60);
 		contentPane.add(headPanel);
 		//headPanel.setLayout(null);
 		
@@ -135,13 +136,11 @@ public class InboxView extends JFrame {
 		JSeparator dividingLine = new JSeparator();
 		dividingLine.setForeground(new Color(255, 0, 51));
 		dividingLine.setBackground(new Color(255, 0, 51));
-		dividingLine.setBounds(0, 60, 836, 2);
 		contentPane.add(dividingLine);
 		
 		showInbox(returnInboxButton, newMessageButton, closeInboxButton, inboxMailsPanel, messagePanel);
 		
 		contextMail = new JPanel();
-		contextMail.setBounds(12, 329, 810, 353);
 		contentPane.add(contextMail);
 		
 		inboxMailsPanel = objectMail.generateJComboBoxWithEmails(contextMail, contentPane);

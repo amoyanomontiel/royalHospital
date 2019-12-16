@@ -1,4 +1,5 @@
 package views;
+
 import java.awt.Image;
 
 import javax.swing.JFrame;
@@ -12,8 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import java.awt.Font;
+
 import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JPasswordField;
 
 public class RoyalLoginView extends JFrame {
 
@@ -25,7 +28,7 @@ public class RoyalLoginView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RoyalLoginView() {
+	public RoyalLoginView(String user_email, String iconRoute) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 410, 500);

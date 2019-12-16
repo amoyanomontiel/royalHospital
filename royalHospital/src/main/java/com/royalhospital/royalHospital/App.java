@@ -10,7 +10,7 @@ public class App
 {
     public static void main( String[] args )
     {        
-    	RoyalLoginView initLogin = new RoyalLoginView();
+    	RoyalLoginView initLogin = new RoyalLoginView("Usuario", "/views/royalhospital.png");
     	initLogin.setLocationRelativeTo(null);
     	initLogin.setVisible(true);
     	

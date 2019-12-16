@@ -17,13 +17,13 @@ public class App
     	
     	initLogin.getBtnLogin().addActionListener(new LoginListener(initLogin));
         // Test about mail
-        MailMethods objetoMail = new MailMethods();
-        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
-        objetoMail.setProperties();
-        objetoMail.connectMailServer();
-        objetoMail.setFolderEmails();
-        objetoMail.receiveAndSaveAllEmails();
-        objetoMail.generateJScrollPaneWithEmails();
+//        MailMethods objetoMail = new MailMethods();
+//        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
+//        objetoMail.setProperties();
+//        objetoMail.connectMailServer();
+//        objetoMail.setFolderEmails();
+//        objetoMail.receiveAndSaveAllEmails();
+//        objetoMail.generateJScrollPaneWithEmails();
         //objetoMail.storeAllMessages();
     }
 }

@@ -17,21 +17,6 @@ public class RoyalLoginView extends JFrame {
 	private JTextField txtUserName;
 	private JTextField txtPassword;
 	private JButton btnLogin;
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					RoyalLoginView frame = new RoyalLoginView();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.

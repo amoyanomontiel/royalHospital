@@ -7,6 +7,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
+import Listeners.DownloadListener;
+import Listeners.UploadListener;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -52,66 +55,100 @@ public class MainRoyalView extends JFrame {
 		contentPane.add(scrollPane);
 		
 		raiz = new DefaultMutableTreeNode("Royal Hospital");
-		try {			
-			seekFile(raiz, ftpClient.listFiles(), ftpClient);
-		} catch (IOException e) {
-			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP");
-			error.setVisible(true);
-			error.setLocationRelativeTo(null);
-		}
-		JTree tree = new JTree(raiz);
-		scrollPane.setViewportView(tree);
+		if(ftpClient.isConnected()) {
+			try {			
+				seekFile(raiz, ftpClient.listFiles(), ftpClient);
+			} catch (IOException e) {
+				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP");
+				error.setVisible(true);
+				error.setLocationRelativeTo(null);
+			}
+			JTree tree = new JTree(raiz);
+			scrollPane.setViewportView(tree);
+		}		
 		
 		JTextArea txtaHistorial = new JTextArea();
 		txtaHistorial.setEditable(false);
 		txtaHistorial.setBounds(64, 363, 691, 134);
 		contentPane.add(txtaHistorial);
 		
-		buttons.add(new JButton("Documentos"));
-		buttons.add(new JButton("Pacientes"));
-		buttons.add(new JButton("Correo"));
-		buttons.add(new JButton("Cargar"));
-		buttons.add(new JButton("Descargar"));
-		buttons.add(new JButton("Borrar"));
-		buttons.add(new JButton("Renombrar"));
-		buttons.add(new JButton("Crear Directorio"));
-		buttons.add(new JButton("Crear Fichero"));
+		JButton btnUpload = new JButton("Cargar");
+		contentPane.add(btnUpload);
+		btnUpload.setBackground(Color.WHITE);
+		btnUpload.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnUpload.addActionListener(new UploadListener());
 		
-		buttons.get(0).setBounds(64,13, BTN_WIDTH, BTN_HEIGHT);
-		buttons.get(1).setBounds(240,13, BTN_WIDTH, BTN_HEIGHT);
-		buttons.get(2).setBounds(604,13, BTN_WIDTH, BTN_HEIGHT);
-		buttons.get(3).setBounds(64,585, BTN_WIDTH, BTN_HEIGHT);
-		buttons.get(4).setBounds(240,585, BTN_WIDTH, BTN_HEIGHT);
-		buttons.get(5).setBounds(425,585, BTN_WIDTH, BTN_HEIGHT);
-		buttons.get(6).setBounds(604,585, BTN_WIDTH, BTN_HEIGHT);
-		buttons.get(7).setBounds(425, 524, BTN_WIDTH, BTN_HEIGHT);
-		buttons.get(8).setBounds(604, 524, BTN_WIDTH, BTN_HEIGHT);
+		JButton btnDownload = new JButton("Descargar");
+		contentPane.add(btnDownload);
+		btnDownload.setBackground(Color.WHITE);
+		btnDownload.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnDownload.addActionListener(new DownloadListener());
+
+		
+		JButton btnRemove = new JButton("Borrar");
+		contentPane.add(btnRemove);
+		btnRemove.setBackground(Color.WHITE);
+		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		JButton btnCreateDir = new JButton("Crear Directorio");
+		contentPane.add(btnCreateDir);
+		btnCreateDir.setBackground(Color.WHITE);
+		btnCreateDir.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		JButton btnCreateFile = new JButton("Crear Fichero");
+		contentPane.add(btnCreateFile);
+		btnCreateFile.setBackground(Color.WHITE);
+		btnCreateFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		JButton btnRename = new JButton("Renombrar");
+		contentPane.add(btnRename);
+		btnRename.setBackground(Color.WHITE);
+		btnRename.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		JButton btnDocuments = new JButton("Documentos");
+		contentPane.add(btnDocuments);
+		btnDocuments.setBackground(Color.WHITE);
+		btnDocuments.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		JButton btnPatient = new JButton("Pacientes");
+		contentPane.add(btnPatient);
+		btnPatient.setBackground(Color.WHITE);
+		btnPatient.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		JButton btnMail = new JButton("Correo");
+		contentPane.add(btnMail);
+		btnMail.setBackground(Color.WHITE);
+		btnMail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		btnDocuments.setBounds(64,13, BTN_WIDTH, BTN_HEIGHT);
+		btnPatient.setBounds(240,13, BTN_WIDTH, BTN_HEIGHT);
+		btnMail.setBounds(604,13, BTN_WIDTH, BTN_HEIGHT);
+		btnUpload.setBounds(64,585, BTN_WIDTH, BTN_HEIGHT);
+		btnDownload.setBounds(240,585, BTN_WIDTH, BTN_HEIGHT);
+		btnRemove.setBounds(425,585, BTN_WIDTH, BTN_HEIGHT);
+		btnRename.setBounds(604,585, BTN_WIDTH, BTN_HEIGHT);
+		btnCreateDir.setBounds(425, 524, BTN_WIDTH, BTN_HEIGHT);
+		btnCreateFile.setBounds(604, 524, BTN_WIDTH, BTN_HEIGHT);
 		
 		ImageIcon mydoc = new ImageIcon("src\\main\\java\\views\\doc4.png");
 		Icon mydocIcon = new ImageIcon(mydoc.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
-		buttons.get(0).setIcon(mydocIcon);
+		btnDocuments.setIcon(mydocIcon);
 		
 		ImageIcon mydoc2 = new ImageIcon("src\\main\\java\\views\\doc_patient.png");
 		Icon mydocIcon2 = new ImageIcon(mydoc2.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
-		buttons.get(1).setIcon(mydocIcon2);
+		btnPatient.setIcon(mydocIcon2);
 		
 		ImageIcon mydoc3 = new ImageIcon("src\\main\\java\\views\\gmail.png");
 		Icon mydocIcon3 = new ImageIcon(mydoc3.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
-		buttons.get(2).setIcon(mydocIcon3);
-		
+		btnMail.setIcon(mydocIcon3);
+	
 		ImageIcon mydoc4 = new ImageIcon("src\\main\\java\\views\\upload3.png");
 		Icon mydocIcon4 = new ImageIcon(mydoc4.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
-		buttons.get(3).setIcon(mydocIcon4);
+		btnUpload.setIcon(mydocIcon4);
 		
 		ImageIcon mydoc5 = new ImageIcon("src\\main\\java\\views\\download2.png");
 		Icon mydocIcon5 = new ImageIcon(mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
-		buttons.get(4).setIcon(mydocIcon5);
-		
-		for(JButton a: buttons) {
-			a.setBackground(Color.WHITE);
-			a.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			contentPane.add(a);
-		}
+		btnDownload.setIcon(mydocIcon5);
 	}
 	/**
 	 * Metodo que rellena el JTree con los nodos correspondientes

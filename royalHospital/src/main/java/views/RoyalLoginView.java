@@ -13,6 +13,8 @@ import javax.swing.ImageIcon;
 import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RoyalLoginView extends JFrame {
 
@@ -74,6 +76,11 @@ public class RoyalLoginView extends JFrame {
 		loginPanel.add(passwordField);
 		
 		btnLogin = new JButton("Entrar");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogin.setBounds(144, 367, 116, 32);
 		loginPanel.add(btnLogin);	

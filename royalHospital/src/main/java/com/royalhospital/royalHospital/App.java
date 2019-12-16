@@ -1,6 +1,5 @@
 package com.royalhospital.royalHospital;
 
-import listeners.LoginListener;
 import views.RoyalLoginView;
 
 /**

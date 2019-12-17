@@ -29,6 +29,8 @@ import javax.swing.JComboBox;
 
 public class InboxView extends JFrame {
 
+	// Al variables of class
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final int width = 30;
@@ -41,7 +43,7 @@ public class InboxView extends JFrame {
 	private static ThreadAutoRefresh objectThreadAutoRefresh;
 	
 	/**
-	 * Launch the application
+	 * Launch the View
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -72,7 +74,6 @@ public class InboxView extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-//		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		headPane = new JPanel();
 		contentPane.add(headPane, BorderLayout.NORTH);
@@ -97,13 +98,29 @@ public class InboxView extends JFrame {
 		contentPane.add(contextMailPane, BorderLayout.SOUTH);
 		
 		mailListPane = new JPanel();
+		
+		/*
+		 * Generate 2 JPanels:
+		 * 1. JPanel = JPanel with JComboBox with all emails
+		 * 2. JPanel = JPanel that show the context of message
+		 */
 		mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
+		
+		/**
+		 * Add listener to the Refresh button
+		 */
 		RefreshEmail.addRefreshButtonListener(btnRefresh, contentPane, contextMailPane);
 		contentPane.add(mailListPane);
+		
+		/**
+		 * Create and start Thread that auto refresh the JComboBox with emails
+		 */
 		objectThreadAutoRefresh = new ThreadAutoRefresh(contentPane, contextMailPane);
 		objectThreadAutoRefresh.start();
 	}
 
+	// All get and set
+	
 	public static MailMethods getObjectMail() {
 		return objectMail;
 	}

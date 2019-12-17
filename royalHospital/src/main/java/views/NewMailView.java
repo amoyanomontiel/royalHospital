@@ -25,7 +25,11 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 
@@ -37,7 +41,6 @@ public class NewMailView extends JFrame {
 	private final int width = 30;
 	private final int height = 30;
 	private HashMap<String, String> fileList;
-	private String[] knownExtensions = {"mp4", "mp3", "webm", "gif", "docx", "png", "jpg", "txt"};
 
 	/**
 	 * Launch the application.
@@ -66,7 +69,7 @@ public class NewMailView extends JFrame {
 
 			for (int i = 0; i < selectedFiles.length; i++) {
 				if (!fileList.containsKey(selectedFiles[i].getName()))
-				fileList.put(selectedFiles[i].getName(), selectedFiles[i].getAbsolutePath());
+					fileList.put(selectedFiles[i].getName(), selectedFiles[i].getAbsolutePath());
 			}
 		}
 	}
@@ -76,39 +79,41 @@ public class NewMailView extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(fileList.size(), cellsNumber));
 
-		Object [][] listUploadedFiles = refillArrays(cellsNumber);
-		
+		Object[][] listUploadedFiles = refillArrays(cellsNumber);
+
 		for (int i = 0; i < fileList.size(); i++) {
 			for (int j = 0; j < cellsNumber; j++) {
 				panel.add((Component) listUploadedFiles[i][j]);
 			}
 		}
-		
+
 		createScrollPane(uploadedFilesPane, panel);
 
 		uploadedFilesPane.revalidate();
 //		obtainExtension(contador, extension);
 	}
-	
-	public Object [][] refillArrays(int cellsNumber) {
-		Object [][] listUploadedFiles = new Object [fileList.size()][cellsNumber];
+
+	public Object[][] refillArrays(int cellsNumber) {
+		Object[][] listUploadedFiles = new Object[fileList.size()][cellsNumber];
 		int i = 0;
 		for (HashMap.Entry<String, String> entry : fileList.entrySet()) {
 			String key = entry.getKey();
-			String value = entry.getValue();
-			System.out.println(value);
 			String extension = FilenameUtils.getExtension(key);
-			System.out.println(extension);
 			for (int j = 0; j < cellsNumber; j++) {
 				if (j == 0) {
+					JLabel newFile = new JLabel();
+					String route = searchImage(extension);
 					
-				}
-				else if (j == 1) {
+					ImageIcon extensionIcon = new ImageIcon(route);
+					Icon newExtensionIcon = new ImageIcon(
+							extensionIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+					newFile.setIcon(newExtensionIcon);
+					listUploadedFiles[i][j] = newFile;
+				} else if (j == 1) {
 					JLabel newFile = new JLabel(key);
 					newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					listUploadedFiles[i][j] = newFile;
-				}
-				else if (j == 2) {
+				} else if (j == 2) {
 					JCheckBox newDelete = new JCheckBox("Cancelar");
 					newDelete.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					listUploadedFiles[i][j] = newDelete;
@@ -117,6 +122,43 @@ public class NewMailView extends JFrame {
 			i++;
 		}
 		return listUploadedFiles;
+	}
+	
+	private String searchImage (String extension) {
+		switch (extension) {
+		case "mp4":
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			
+		case "mp3":
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			
+		case "webm":
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			
+		case "gif":
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			
+		case "docx":
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			
+		case "png":
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			
+		case "jpg":
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			
+		case "txt":
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			
+		case "pdf":
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			
+		case "jpeg":
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+
+		default:
+			return "src//main//java//views//mp4_mp3_webm_gif.png";
+		}
 	}
 
 	public void createScrollPane(JPanel uploadedFilesPane, JPanel panel) {
@@ -178,7 +220,7 @@ public class NewMailView extends JFrame {
 
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 850, 617);
+		setBounds(100, 100, 850, 700);
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -214,11 +256,11 @@ public class NewMailView extends JFrame {
 
 		JLabel lblUploaded = new JLabel("Archivos Adjuntos");
 		lblUploaded.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblUploaded.setBounds(67, 416, 142, 27);
+		lblUploaded.setBounds(340, 392, 142, 27);
 		contentPane.add(lblUploaded);
 
 		JPanel uploadedFilesPane = new JPanel(null);
-		uploadedFilesPane.setBounds(230, 405, 515, 61);
+		uploadedFilesPane.setBounds(67, 441, 678, 105);
 		contentPane.add(uploadedFilesPane);
 		uploadedFilesPane.setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -230,7 +272,7 @@ public class NewMailView extends JFrame {
 			}
 		});
 		btnNewFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewFile.setBounds(67, 503, 150, 40);
+		btnNewFile.setBounds(67, 593, 150, 40);
 		ImageIcon fileIcon = new ImageIcon("src//main//java//views//download.png");
 		Icon newFileIcon = new ImageIcon(fileIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 		btnNewFile.setIcon(newFileIcon);
@@ -243,7 +285,7 @@ public class NewMailView extends JFrame {
 			}
 		});
 		btnSend.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnSend.setBounds(595, 503, 150, 40);
+		btnSend.setBounds(595, 593, 150, 40);
 		ImageIcon sendIcon = new ImageIcon("src//main//java//views//send.png");
 		Icon newSendIcon = new ImageIcon(sendIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 		btnSend.setIcon(newSendIcon);
@@ -256,7 +298,7 @@ public class NewMailView extends JFrame {
 			}
 		});
 		btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCancel.setBounds(384, 503, 150, 40);
+		btnCancel.setBounds(381, 593, 150, 40);
 		ImageIcon cancelIcon = new ImageIcon("src//main//java//views//cancel.png");
 		Icon newCancelIcon = new ImageIcon(cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 		btnCancel.setIcon(newCancelIcon);

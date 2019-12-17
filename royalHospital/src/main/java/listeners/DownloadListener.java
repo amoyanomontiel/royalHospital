@@ -51,6 +51,18 @@ public class DownloadListener implements ActionListener {
 				}
 			} else {
 				mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero en la lista");
+		String path = "/Medicos/Cesar";
+		try {
+			ftpClient.changeWorkingDirectory(path);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			System.out.println(DataModel.selectedPath);
+			FileOutputStream out = new FileOutputStream("C:\\peval3/" + DataModel.selectedPath);
+			if(ftpClient.retrieveFile(DataModel.selectedPath, out)) {
+				mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito");
 			}
 		}
 	}

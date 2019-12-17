@@ -31,7 +31,7 @@ import Listeners.ScrollEmailListener;
  *
  */
 public class MailMethods {
-	
+
 	/**
 	 * Parameters necessary for to connect to Gmail
 	 */
@@ -57,13 +57,13 @@ public class MailMethods {
 
 	// Scroll that containts all emails received
 	private static JComboBox scrollEmails;
-	
+
 	// List of messages received
 	private static Message[] messages;
 
 	// View for to show scroll object
 	private static JPanel viewScroll;
-	
+
 	// List of attachents that containts the (selected) email
 	private static ArrayList<File> attachments;
 
@@ -71,10 +71,11 @@ public class MailMethods {
 	private static String homeRute = System.getProperty("user.home");
 
 	/**
-	 * This method store all attachments of the email
-	 * This method get the specific email with the param
+	 * This method store all attachments of the email This method get the specific
+	 * email with the param
 	 * 
-	 * @param messagePositionParam Integer, This param is a number for to select the specific email on list
+	 * @param messagePositionParam Integer, This param is a number for to select the
+	 *                             specific email on list
 	 */
 	public static void storeAttachmentsElements(int messagePositionParam) {
 
@@ -118,8 +119,9 @@ public class MailMethods {
 	 * This method generate JPanel with the scroll of Emails
 	 * 
 	 * @param mailPanelBox JPanel, JPanel of view that it will have
-	 * @param contenPane JPanel, JPanel that containts all elements of view
-	 * @return JPanel with all elements (Scroll emails and container that show the context of specific email)
+	 * @param contenPane   JPanel, JPanel that containts all elements of view
+	 * @return JPanel with all elements (Scroll emails and container that show the
+	 *         context of specific email)
 	 */
 	public JPanel generateJComboBoxWithEmails(JPanel mailPanelBox, JPanel contenPane) {
 		try {
@@ -157,7 +159,7 @@ public class MailMethods {
 			System.out.println("error updating JScroll");
 		}
 	}
-	
+
 	/**
 	 * This method generate JPanel with the content of specific email
 	 * 
@@ -173,7 +175,8 @@ public class MailMethods {
 			String bodyTextSave = "";
 			bodyTextSave += "<p align= 'left'>Subject:   " + objectMessage.getSubject() + "</p>";
 			bodyTextSave += "<p></p>";
-			bodyTextSave += "<p align= 'left'>From:   " + filterFromMessage(objectMessage.getFrom()[0].toString()) + "</p>";
+			bodyTextSave += "<p align= 'left'>From:   " + filterFromMessage(objectMessage.getFrom()[0].toString())
+					+ "</p>";
 			bodyTextSave += "<p></p>";
 			bodyTextSave += getBodyText(objectMessage);
 			String filterName = "";
@@ -316,7 +319,8 @@ public class MailMethods {
 	}
 
 	/**
-	 * This method receive the all messages of the Folder emails and save those emails
+	 * This method receive the all messages of the Folder emails and save those
+	 * emails
 	 */
 	public void receiveAndSaveAllEmails() {
 		try {
@@ -346,10 +350,10 @@ public class MailMethods {
 	 * Connect with gmail and save the store
 	 * 
 	 * @return Boolean
-	 * <ul>
-	 * <li> True, if this method can connect with the server
-	 * <li> False, if this method cannot connect with the server
-	 * </ul>
+	 *         <ul>
+	 *         <li>True, if this method can connect with the server
+	 *         <li>False, if this method cannot connect with the server
+	 *         </ul>
 	 */
 	public boolean connectMailServer() {
 		try {
@@ -365,10 +369,10 @@ public class MailMethods {
 	/**
 	 * Establish all params for to connect with the Email server
 	 * 
-	 * @param hostParam String, host of emails
+	 * @param hostParam          String, host of emails
 	 * @param mailStoreTypeParam String, type of mails in this server
-	 * @param userNameParam String, User name param
-	 * @param passwdParam String, Password param
+	 * @param userNameParam      String, User name param
+	 * @param passwdParam        String, Password param
 	 */
 	public void setAllDataConnection(String hostParam, String mailStoreTypeParam, String userNameParam,
 			String passwdParam) {
@@ -393,7 +397,7 @@ public class MailMethods {
 	}
 
 	// All get and set
-	
+
 	public String getHost() {
 		return host;
 	}
@@ -505,5 +509,5 @@ public class MailMethods {
 	public static void setViewScroll(JPanel viewScroll) {
 		MailMethods.viewScroll = viewScroll;
 	}
-	
+
 }

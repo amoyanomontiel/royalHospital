@@ -2,18 +2,11 @@ package Listeners;
 
 // All imports
 import java.awt.BorderLayout;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import views.InboxView;
 
 /**
  * Class that controll the scroll of emails
@@ -23,28 +16,29 @@ import views.InboxView;
  *
  */
 public class ScrollEmailListener {
-	
+
 	// All variables
 	static JPanel emailPanelBoxCopy;
 	static JPanel contenPaneCopy;
-	
+
 	/**
 	 * Add ItemListener to Scroll
 	 * 
 	 * @param JComboBoxParam JComboBox, this JCombo contains all emails of user
-	 * @param emailPanelBox JPanel, this JPanel contain all elements of emails
-	 * @param contenPane JPanel, this JPanel contain all view elements
+	 * @param emailPanelBox  JPanel, this JPanel contain all elements of emails
+	 * @param contenPane     JPanel, this JPanel contain all view elements
 	 */
 	public static void addScrollEmailListener(JComboBox JComboBoxParam, JPanel emailPanelBox, JPanel contenPane) {
 		emailPanelBoxCopy = emailPanelBox;
 		contenPaneCopy = contenPane;
 		JComboBoxParam.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if((e.getStateChange() == ItemEvent.SELECTED) && (JComboBoxParam.getSelectedIndex()-1) >= 0){
+				if ((e.getStateChange() == ItemEvent.SELECTED) && (JComboBoxParam.getSelectedIndex() - 1) >= 0) {
 					contenPaneCopy.remove(emailPanelBoxCopy);
-					emailPanelBoxCopy = com.royalhospital.royalHospital.MailMethods.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex()-1);
+					emailPanelBoxCopy = com.royalhospital.royalHospital.MailMethods
+							.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex() - 1);
 					emailPanelBoxCopy.setBounds(12, 329, 810, 353);
 					contenPaneCopy.add(emailPanelBoxCopy);
 					contenPaneCopy.setLayout(new BorderLayout(0, 0));
@@ -54,7 +48,7 @@ public class ScrollEmailListener {
 				}
 			}
 		});
-		
+
 	}
 
 	// All get and set
@@ -65,5 +59,5 @@ public class ScrollEmailListener {
 	public static void setEmailPanelBoxCopy(JPanel emailPanelBoxCopy) {
 		ScrollEmailListener.emailPanelBoxCopy = emailPanelBoxCopy;
 	}
-	
+
 }

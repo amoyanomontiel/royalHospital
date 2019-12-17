@@ -10,7 +10,8 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 /**
- * Class that add listener to links of content emails, for to access to attachments
+ * Class that add listener to links of content emails, for to access to
+ * attachments
  * 
  * @author Javier
  * @version 1.0
@@ -20,11 +21,12 @@ public class LinksEmailListener {
 	/**
 	 * Add listener to links
 	 * 
-	 * @param mail JEditorPane, this element containt the context of email in HTML code
+	 * @param mail JEditorPane, this element containt the context of email in HTML
+	 *             code
 	 */
 	public static void addListenerLink(JEditorPane mail) {
 		mail.addHyperlinkListener(new HyperlinkListener() {
-			
+
 			@Override
 			public void hyperlinkUpdate(HyperlinkEvent e) {
 				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
@@ -41,5 +43,5 @@ public class LinksEmailListener {
 			}
 		});
 	}
-	
+
 }

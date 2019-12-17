@@ -60,7 +60,6 @@ public class NewMailView extends JFrame {
 
 			for (int i = 0; i < selectedFiles.length; i++) {
 				if (!fileList.containsKey(selectedFiles[i].getName()))
-					;
 				fileList.put(selectedFiles[i].getName(), selectedFiles[i].getAbsolutePath());
 			}
 		}
@@ -69,17 +68,15 @@ public class NewMailView extends JFrame {
 	public void refreshUploadedFiles(JPanel uploadedFilesPane) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(fileList.size(), 1));
+
+		Object [][] listUploadedFiles = refillArrays();
 		
-		for (HashMap.Entry<String, String> entry : fileList.entrySet()) {
-			String key = entry.getKey();
-			String value = entry.getValue();
-			JButton newFile = new JButton(key);
-			newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel.add(newFile);
+		for (int i = 0; i < listUploadedFiles.length; i++) {
+			
 		}
 		
 		createScrollPane(uploadedFilesPane, panel);
-		
+
 		uploadedFilesPane.revalidate();
 //		uploadedFilesPane.repaint();
 //		String extension = FilenameUtils.getExtension(value);
@@ -87,13 +84,37 @@ public class NewMailView extends JFrame {
 //		obtainExtension(contador, extension);
 	}
 	
+	public Object [][] refillArrays() {
+		Object [][] listUploadedFiles = new Object [fileList.size()][2];
+		int i = 0;
+		for (HashMap.Entry<String, String> entry : fileList.entrySet()) {
+			String key = entry.getKey();
+			//String value = entry.getValue();
+			JLabel newFile = new JLabel(key);
+			newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			
+			JButton newDelete = new JButton("Borrar");
+			newDelete.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			for (int j = 0; j < 2; j++) {
+				if (j == 0) {
+					listUploadedFiles[i][j] = newFile;
+				}
+				else {
+					listUploadedFiles[i][j] = newDelete;
+				}
+			}
+			i++;
+		}
+		return listUploadedFiles;
+	}
+
 	public void createScrollPane(JPanel uploadedFilesPane, JPanel panel) {
-        JScrollPane scrollPane = new JScrollPane(panel);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBounds(0, 0, 515, 61);
-        uploadedFilesPane.setPreferredSize(new Dimension(515, 61));
-        uploadedFilesPane.add(scrollPane);
+		JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBounds(0, 0, 515, 61);
+		uploadedFilesPane.setPreferredSize(new Dimension(515, 61));
+		uploadedFilesPane.add(scrollPane);
 	}
 
 	public void obtainExtension(int contador, String extension) {
@@ -139,8 +160,7 @@ public class NewMailView extends JFrame {
 				if (answer == 0) {
 					// enviar mensaje
 				}
-			}
-			else {
+			} else {
 				// enviar mensaje
 			}
 		} else {
@@ -203,7 +223,7 @@ public class NewMailView extends JFrame {
 
 		JPanel uploadedFilesPane = new JPanel(null);
 		uploadedFilesPane.setBounds(230, 405, 515, 61);
-		contentPane.add(uploadedFilesPane);	
+		contentPane.add(uploadedFilesPane);
 		uploadedFilesPane.setLayout(new GridLayout(1, 0, 0, 0));
 
 		JButton btnNewFile = new JButton(" Adjuntar");

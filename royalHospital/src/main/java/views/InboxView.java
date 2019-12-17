@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.royalhospital.royalHospital.MailMethods;
 
+import Listeners.RefreshEmail;
+
 import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
@@ -32,7 +34,9 @@ public class InboxView extends JFrame {
 	private final int height = 30;
 	private JPanel messagePanel;
 	private JPanel headPane;
+	private static JPanel contextMailPane;
 	private static MailMethods objectMail;
+	private static JPanel mailListPane;
 
 	
 	/**
@@ -88,13 +92,39 @@ public class InboxView extends JFrame {
 		btnCloseInbox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		headPane.add(btnCloseInbox);
 		
-		JPanel contextMailPane = new JPanel();
+		contextMailPane = new JPanel();
 		contentPane.add(contextMailPane, BorderLayout.SOUTH);
 		
-		JPanel mailListPane = new JPanel();
+		mailListPane = new JPanel();
 		mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
+		RefreshEmail.addRefreshButtonListener(btnRefresh, contentPane, contextMailPane);
 		contentPane.add(mailListPane);
 
 	}
+
+	public static MailMethods getObjectMail() {
+		return objectMail;
+	}
+
+	public static void setObjectMail(MailMethods objectMail) {
+		InboxView.objectMail = objectMail;
+	}
+
+	public static JPanel getContextMailPane() {
+		return contextMailPane;
+	}
+
+	public static void setContextMailPane(JPanel contextMailPane) {
+		InboxView.contextMailPane = contextMailPane;
+	}
+
+	public static JPanel getMailListPane() {
+		return mailListPane;
+	}
+
+	public static void setMailListPane(JPanel mailListPane) {
+		InboxView.mailListPane = mailListPane;
+	}
+	
 	
 }

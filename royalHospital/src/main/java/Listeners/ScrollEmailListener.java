@@ -36,11 +36,19 @@ public class ScrollEmailListener {
 					contenPaneCopy.setLayout(new BorderLayout(0, 0));
 					contenPaneCopy.revalidate();
 					contenPaneCopy.repaint();
+					System.out.println("scroll");
 				}
 			}
 		});
 		
 	}
-	
+
+	public static JPanel getEmailPanelBoxCopy() {
+		return emailPanelBoxCopy;
+	}
+
+	public static void setEmailPanelBoxCopy(JPanel emailPanelBoxCopy) {
+		ScrollEmailListener.emailPanelBoxCopy = emailPanelBoxCopy;
+	}
 	
 }

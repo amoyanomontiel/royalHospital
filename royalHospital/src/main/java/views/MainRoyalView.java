@@ -6,7 +6,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeNode;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -22,9 +22,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.swing.JTree;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -240,11 +238,17 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
+		String path = "";
 		JTree atree = (JTree) e.getSource();
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) atree
 		        .getLastSelectedPathComponent();
 		    DataModel.selectedPath = selectedNode.toString();
-		    System.out.println(DataModel.selectedPath);
+		    TreeNode[] route = selectedNode.getPath();
+		    for(int i = 0;i< route.length;i++){
+			    path += "\\" + route[i];
+		    }
+		    DataModel.actualUserPath = path;
+		    System.out.println(path);
 	}
 	
 }

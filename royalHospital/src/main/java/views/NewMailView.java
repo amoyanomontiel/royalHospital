@@ -22,10 +22,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 
-import org.apache.commons.lang3.StringUtils;
 import javax.swing.JScrollPane;
 
 public class NewMailView extends JFrame {
@@ -34,7 +32,6 @@ public class NewMailView extends JFrame {
 	private final int width = 30;
 	private final int height = 30;
 	private HashMap<String, String> fileList;
-	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -69,20 +66,15 @@ public class NewMailView extends JFrame {
 		}
 	}
 
-	public void refreshUploadedFiles(JPanel uploadedFilesPane/*, GridBagConstraints gblc_uploadedFilesPanel*/) {
-		JPanel panel = null;
+	public void refreshUploadedFiles(JPanel uploadedFilesPane) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(fileList.size(), 1));
+		
 		for (HashMap.Entry<String, String> entry : fileList.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue();
-	        panel = new JPanel();
-//			String extension = FilenameUtils.getExtension(value);
-//			String extension = "pdf";
-//			obtainExtension(contador, extension);
-
-			JLabel newFile = new JLabel(key);
+			JButton newFile = new JButton(key);
 			newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//			gblc_uploadedFilesPanel.gridx = 1;
-//			gblc_uploadedFilesPanel.gridy = contador;
 			panel.add(newFile);
 		}
 		
@@ -90,16 +82,18 @@ public class NewMailView extends JFrame {
 		
 		uploadedFilesPane.revalidate();
 //		uploadedFilesPane.repaint();
+//		String extension = FilenameUtils.getExtension(value);
+//		String extension = "pdf";
+//		obtainExtension(contador, extension);
 	}
 	
 	public void createScrollPane(JPanel uploadedFilesPane, JPanel panel) {
         JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(0, 0, 50, 60);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(0, 0, 515, 61);
         uploadedFilesPane.setPreferredSize(new Dimension(515, 61));
         uploadedFilesPane.add(scrollPane);
-
 	}
 
 	public void obtainExtension(int contador, String extension) {
@@ -209,15 +203,8 @@ public class NewMailView extends JFrame {
 
 		JPanel uploadedFilesPane = new JPanel(null);
 		uploadedFilesPane.setBounds(230, 405, 515, 61);
-		contentPane.add(uploadedFilesPane);
-		
-//		GridBagLayout gbl_uploadedFilesPane = new GridBagLayout();
-//		uploadedFilesPane.setLayout(gbl_uploadedFilesPane);
-//		GridBagConstraints gblc_uploadedFilesPanel = new GridBagConstraints();
-//		gblc_uploadedFilesPanel.weightx = 1;
-//		gblc_uploadedFilesPanel.weighty = 1;
-//		gblc_uploadedFilesPanel.fill = GridBagConstraints.BOTH;
-		
+		contentPane.add(uploadedFilesPane);	
+		uploadedFilesPane.setLayout(new GridLayout(1, 0, 0, 0));
 
 		JButton btnNewFile = new JButton(" Adjuntar");
 		btnNewFile.addActionListener(new ActionListener() {

@@ -11,18 +11,18 @@ import java.io.OutputStream;
 
 import org.apache.commons.net.ftp.FTPClient;
 
+import com.royalhospital.royalHospital.DataModel;
+
 import views.MainRoyalView;
 
 public class DownloadListener implements ActionListener {
 
 	MainRoyalView mainRoyal;
 	FTPClient ftpClient;
-	String selectionPath;
 
-	public DownloadListener(MainRoyalView mainRoyal, FTPClient ftpClient, String selectionPath) {
+	public DownloadListener(MainRoyalView mainRoyal, FTPClient ftpClient) {
 		this.mainRoyal = mainRoyal;
 		this.ftpClient = ftpClient;
-		this.selectionPath = selectionPath;
 	}
 	
 	@Override
@@ -35,8 +35,9 @@ public class DownloadListener implements ActionListener {
 			e2.printStackTrace();
 		}
 		try {
-			FileOutputStream out = new FileOutputStream("D:\\peval3/" + selectionPath);
-			if(ftpClient.retrieveFile(selectionPath, out)) {
+			System.out.println(DataModel.selectedPath);
+			FileOutputStream out = new FileOutputStream("C:\\peval3/" + DataModel.selectedPath);
+			if(ftpClient.retrieveFile(DataModel.selectedPath, out)) {
 				mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito");
 			}
 		} catch (IOException e1) {

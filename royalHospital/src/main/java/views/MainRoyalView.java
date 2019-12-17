@@ -10,6 +10,9 @@ import javax.swing.tree.TreePath;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
+
+import com.royalhospital.royalHospital.DataModel;
+
 import listeners.DocumentsListener;
 import listeners.DownloadListener;
 import listeners.PatientsListener;
@@ -39,7 +42,6 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 	private static JTextArea txtaHistorial;
 	private static JTree tree;
 	private static JScrollPane scrollPane;
-	private static String selectionPath;
 	/**
 	 * Create the frame.
 	 * @param ftpClient 
@@ -80,7 +82,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		contentPane.add(btnDownload);
 		btnDownload.setBackground(Color.WHITE);
 		btnDownload.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnDownload.addActionListener(new DownloadListener(this, ftpClient, selectionPath));
+		btnDownload.addActionListener(new DownloadListener(this, ftpClient));
 
 		JButton btnRemove = new JButton("Borrar");
 		contentPane.add(btnRemove);
@@ -237,8 +239,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		JTree atree = (JTree) e.getSource();
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) atree
 		        .getLastSelectedPathComponent();
-		    selectionPath = selectedNode.toString();
-		    System.out.println(selectionPath);
+		    DataModel.selectedPath = selectedNode.toString();
 	}
 	
 }

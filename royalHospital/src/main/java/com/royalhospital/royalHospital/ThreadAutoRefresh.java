@@ -1,19 +1,37 @@
 package com.royalhospital.royalHospital;
 
+// All imports
 import javax.swing.JPanel;
 
 import views.InboxView;
 
+/**
+ * Class that control the function of autoRefresh email
+ * 
+ * @author Javier
+ * @version 1.0
+ *
+ */
 public class ThreadAutoRefresh extends Thread{
 
+	// Al variables of class
 	private JPanel contentView;
 	private JPanel contenMailPane;
 	
+	/**
+	 * Constructor of class
+	 * 
+	 * @param contentViewParam JPanel, this JPanel contain the all view elements
+	 * @param contentMailPaneParam JPanel, this JPanel contain all elements of emails
+	 */
 	public ThreadAutoRefresh(JPanel contentViewParam, JPanel contentMailPaneParam) {
 		contentView = contentViewParam;
 		contenMailPane = contentMailPaneParam; 
 	}
 	
+	/**
+	 * Run of Thread
+	 */
 	public void run() {
 		try {
 			while(true) {

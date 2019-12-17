@@ -1,5 +1,6 @@
 package Listeners;
 
+// All imports
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -14,13 +15,26 @@ import javax.swing.SwingUtilities;
 
 import views.InboxView;
 
-
+/**
+ * Class that controll the scroll of emails
+ * 
+ * @author Javier
+ * @version 1.0
+ *
+ */
 public class ScrollEmailListener {
 	
+	// All variables
 	static JPanel emailPanelBoxCopy;
-	
 	static JPanel contenPaneCopy;
 	
+	/**
+	 * Add ItemListener to Scroll
+	 * 
+	 * @param JComboBoxParam JComboBox, this JCombo contains all emails of user
+	 * @param emailPanelBox JPanel, this JPanel contain all elements of emails
+	 * @param contenPane JPanel, this JPanel contain all view elements
+	 */
 	public static void addScrollEmailListener(JComboBox JComboBoxParam, JPanel emailPanelBox, JPanel contenPane) {
 		emailPanelBoxCopy = emailPanelBox;
 		contenPaneCopy = contenPane;
@@ -43,6 +57,7 @@ public class ScrollEmailListener {
 		
 	}
 
+	// All get and set
 	public static JPanel getEmailPanelBoxCopy() {
 		return emailPanelBoxCopy;
 	}

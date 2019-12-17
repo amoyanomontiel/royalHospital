@@ -21,8 +21,7 @@ public class RemoveListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		int replay = ftpClient.getReplyCode();
-		if (FTPReply.isPositiveCompletion(replay)) {
+		if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 			try {
 				boolean deleted = ftpClient.deleteFile("");//Poner la seleccion del JTree
 				if (deleted) {

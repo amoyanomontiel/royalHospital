@@ -249,6 +249,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) atree
 		        .getLastSelectedPathComponent();
 		    DataModel.selectedPath = selectedNode.toString();
+		    System.out.println(DataModel.selectedPath);
 	}
 	
 }

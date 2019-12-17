@@ -30,9 +30,8 @@ public class UploadListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		int reply = ftpClient.getReplyCode();
-
-		if (FTPReply.isPositiveCompletion(reply)) {
+		
+		if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 			JFileChooser chooserFrame = new JFileChooser();
 			chooserFrame.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			chooserFrame.setDialogTitle("Cargar fichero");

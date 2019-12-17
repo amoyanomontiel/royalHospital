@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 
 import com.royalhospital.royalHospital.DataModel;
 
@@ -24,26 +25,33 @@ public class DownloadListener implements ActionListener {
 		this.mainRoyal = mainRoyal;
 		this.ftpClient = ftpClient;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String path = "/Medicos/cesar";
-		try {
-			ftpClient.changeWorkingDirectory(path);
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		try {
-			System.out.println(DataModel.selectedPath);
-			FileOutputStream out = new FileOutputStream("C:\\peval3/" + DataModel.selectedPath);
-			if(ftpClient.retrieveFile(DataModel.selectedPath, out)) {
-				mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito");
+		if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
+			if (DataModel.selectedPath != "") {
+				String path = "/Medicos/cesar";
+				try {
+					ftpClient.changeWorkingDirectory(path);
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				try {
+					System.out.println(DataModel.selectedPath);
+					FileOutputStream out = new FileOutputStream("C:\\peval3/" + DataModel.selectedPath);
+					if (ftpClient.retrieveFile(DataModel.selectedPath, out)) {
+						mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito");
+					} else {
+						mainRoyal.getTxtaHistorial().append("No es posible descargar el fichero");
+					}
+				} catch (IOException e1) {
+					// Error
+					e1.printStackTrace();
+				}
+			} else {
+				mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero en la lista");
 			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 	}
-
 }

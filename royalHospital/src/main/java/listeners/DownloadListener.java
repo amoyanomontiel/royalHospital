@@ -23,16 +23,14 @@ public class DownloadListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 			if (DataModel.selectedPath != "") {
-				String path = DataModel.directionPath;
 				try {
-					ftpClient.changeWorkingDirectory(path);
+					ftpClient.changeWorkingDirectory(DataModel.actualUserPath);
 				} catch (IOException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
+					//Error
 				}
 				try {
-					System.out.println(DataModel.selectedPath);
 					String sDirectoryWork = System.getProperty("user.home") + "/Downloads/";
+					System.out.println(sDirectoryWork);
 					FileOutputStream out = new FileOutputStream(sDirectoryWork + DataModel.selectedPath);
 					if (ftpClient.retrieveFile(DataModel.selectedPath, out)) {
 						mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito \n");
@@ -41,7 +39,6 @@ public class DownloadListener implements ActionListener {
 					}
 				} catch (IOException e1) {
 					// Error
-					e1.printStackTrace();
 				}
 			} else {
 				mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero en la lista \n");

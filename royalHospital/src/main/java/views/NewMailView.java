@@ -90,7 +90,6 @@ public class NewMailView extends JFrame {
 		createScrollPane(uploadedFilesPane, panel);
 
 		uploadedFilesPane.revalidate();
-//		obtainExtension(contador, extension);
 	}
 
 	public Object[][] refillArrays(int cellsNumber) {
@@ -139,25 +138,25 @@ public class NewMailView extends JFrame {
 			return "src//main//java//views//mp4_mp3_webm_gif.png";
 			
 		case "docx":
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return "src//main//java//views//docx.png";
 			
 		case "png":
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return "src//main//java//views//png_jpg_jpeg.png";
 			
 		case "jpg":
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return "src//main//java//views//png_jpg_jpeg.png";
 			
 		case "txt":
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return "src//main//java//views//txt.png";
 			
 		case "pdf":
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return "src//main//java//views//pdf.png";
 			
 		case "jpeg":
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return "src//main//java//views//png_jpg_jpeg.png";
 
 		default:
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return "src//main//java//views//general icon.png";
 		}
 	}
 

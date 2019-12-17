@@ -27,7 +27,7 @@ public class DownloadListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String path = "/Medicos/cesar";
+		String path = "/Medicos/Cesar";
 		try {
 			ftpClient.changeWorkingDirectory(path);
 		} catch (IOException e2) {

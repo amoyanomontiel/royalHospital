@@ -180,18 +180,10 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 			}
 			tree = new JTree(raiz);
 			scrollPane.setViewportView(tree);
+			tree.addTreeSelectionListener(this);
 		}
 	}
 
-	/**
-	 * Metodo que rellena el JTree con los nodos correspondientes
-	 * 
-	 * @param raiz2
-	 * @param files
-	 * @param ftpClient
-	 * @param roll
-	 * @param user
-	 */
 	private void seekFile(DefaultMutableTreeNode raiz2, FTPFile[] files, FTPClient ftpClient, String roll, String user) {
 		FTPFile[] list = files;
 		if (list != null)
@@ -224,6 +216,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 	public void changedJTree(DefaultMutableTreeNode arbol) {
 		tree = new JTree(arbol);
 		scrollPane.setViewportView(tree);
+		tree.addTreeSelectionListener(this);
 	}
 
 	public DefaultMutableTreeNode getRaiz() {

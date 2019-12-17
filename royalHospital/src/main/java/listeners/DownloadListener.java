@@ -4,12 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-
 import com.royalhospital.royalHospital.DataModel;
-
 import views.MainRoyalView;
 
 public class DownloadListener implements ActionListener {

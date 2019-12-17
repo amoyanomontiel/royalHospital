@@ -10,9 +10,7 @@ import javax.swing.tree.TreeNode;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
-
 import com.royalhospital.royalHospital.DataModel;
-
 import listeners.DocumentsListener;
 import listeners.DownloadListener;
 import listeners.PatientsListener;
@@ -162,10 +160,12 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 			try {
 				if (roll.equalsIgnoreCase("MEDICO")) {
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
+					DataModel.directionPath = ftpClient.printWorkingDirectory();
 					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
 				} else if (roll.equalsIgnoreCase("PACIENTE")) {
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
+					DataModel.directionPath = ftpClient.printWorkingDirectory();
 					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
 					

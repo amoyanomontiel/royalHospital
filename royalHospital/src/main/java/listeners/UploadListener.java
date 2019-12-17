@@ -2,23 +2,15 @@ package listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.JFileChooser;
-
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
-
 import com.royalhospital.royalHospital.DataModel;
-
 import views.MainRoyalView;
 
 public class UploadListener implements ActionListener {
@@ -50,20 +42,20 @@ public class UploadListener implements ActionListener {
 							FileInputStream input = new FileInputStream(file);
 							FTPFile[] files = ftpClient.listFiles();
 							boolean exist = false;
-							for(FTPFile f : files) {
-								if(f.getName() == file.getName()) {
+							for (FTPFile f : files) {
+								if (f.getName() == file.getName()) {
 									exist = true;
 								}
 							}
-							if(exist) {
+							if (exist) {
 								mainRoyal.getTxtaHistorial().append("El fichero ya existe en el directorio actual\n");
-							}else {
+							} else {
 								if (ftpClient.storeFile(file.getName(), input)) {
 									mainRoyal.getTxtaHistorial().append("Cargó satisfactoriamente el archivo\n");
-								}else {
+								} else {
 									mainRoyal.getTxtaHistorial().append("No se pudo cargar el archivo\n");
 								}
-							}	
+							}
 							input.close();
 						} catch (IOException ex) {
 							// Error
@@ -73,7 +65,7 @@ public class UploadListener implements ActionListener {
 				}
 			}
 			// Error
-		}else {
+		} else {
 			mainRoyal.getTxtaHistorial().append("Seleccione primero un directorio de la lista\n");
 		}
 	}

@@ -1,11 +1,15 @@
 package views;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.commons.io.FilenameUtils;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -15,6 +19,7 @@ import java.awt.Image;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -32,6 +37,7 @@ public class NewMailView extends JFrame {
 	private final int width = 30;
 	private final int height = 30;
 	private HashMap<String, String> fileList;
+	private String[] knownExtensions = {"mp4", "mp3", "webm", "gif", "docx", "png", "jpg", "txt"};
 
 	/**
 	 * Launch the application.
@@ -66,40 +72,45 @@ public class NewMailView extends JFrame {
 	}
 
 	public void refreshUploadedFiles(JPanel uploadedFilesPane) {
+		int cellsNumber = 3;
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(fileList.size(), 1));
+		panel.setLayout(new GridLayout(fileList.size(), cellsNumber));
 
-		Object [][] listUploadedFiles = refillArrays();
+		Object [][] listUploadedFiles = refillArrays(cellsNumber);
 		
-		for (int i = 0; i < listUploadedFiles.length; i++) {
-			
+		for (int i = 0; i < fileList.size(); i++) {
+			for (int j = 0; j < cellsNumber; j++) {
+				panel.add((Component) listUploadedFiles[i][j]);
+			}
 		}
 		
 		createScrollPane(uploadedFilesPane, panel);
 
 		uploadedFilesPane.revalidate();
-//		uploadedFilesPane.repaint();
-//		String extension = FilenameUtils.getExtension(value);
-//		String extension = "pdf";
 //		obtainExtension(contador, extension);
 	}
 	
-	public Object [][] refillArrays() {
-		Object [][] listUploadedFiles = new Object [fileList.size()][2];
+	public Object [][] refillArrays(int cellsNumber) {
+		Object [][] listUploadedFiles = new Object [fileList.size()][cellsNumber];
 		int i = 0;
 		for (HashMap.Entry<String, String> entry : fileList.entrySet()) {
 			String key = entry.getKey();
-			//String value = entry.getValue();
-			JLabel newFile = new JLabel(key);
-			newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			
-			JButton newDelete = new JButton("Borrar");
-			newDelete.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			for (int j = 0; j < 2; j++) {
+			String value = entry.getValue();
+			System.out.println(value);
+			String extension = FilenameUtils.getExtension(key);
+			System.out.println(extension);
+			for (int j = 0; j < cellsNumber; j++) {
 				if (j == 0) {
+					
+				}
+				else if (j == 1) {
+					JLabel newFile = new JLabel(key);
+					newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					listUploadedFiles[i][j] = newFile;
 				}
-				else {
+				else if (j == 2) {
+					JCheckBox newDelete = new JCheckBox("Cancelar");
+					newDelete.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					listUploadedFiles[i][j] = newDelete;
 				}
 			}
@@ -115,23 +126,6 @@ public class NewMailView extends JFrame {
 		scrollPane.setBounds(0, 0, 515, 61);
 		uploadedFilesPane.setPreferredSize(new Dimension(515, 61));
 		uploadedFilesPane.add(scrollPane);
-	}
-
-	public void obtainExtension(int contador, String extension) {
-		if (extension.equals("pdf")) {
-			// poner icono del archivo
-		} else if (extension.equals("png") || extension.equals("jpg")) {
-			// poner icono del archivo
-		} else if (extension.equals("docx")) {
-			// poner icono del archivo
-		} else if (extension.equals("mp4") || extension.equals("mp3") || extension.equals("webm")
-				|| extension.equals("gif")) {
-			// poner icono del archivo
-		} else if (extension.equals("txt")) {
-			// poner icono del archivo
-		} else {
-			// poner icono del archivo
-		}
 	}
 
 	public void checkTextBoxes(JTextField addresseeText, JTextField subjectText, JTextArea bodyText, String action) {
@@ -214,6 +208,8 @@ public class NewMailView extends JFrame {
 
 		JTextArea textAreaBody = new JTextArea();
 		textAreaBody.setBounds(67, 160, 678, 200);
+		textAreaBody.setWrapStyleWord(true);
+		textAreaBody.setLineWrap(true);
 		contentPane.add(textAreaBody);
 
 		JLabel lblUploaded = new JLabel("Archivos Adjuntos");

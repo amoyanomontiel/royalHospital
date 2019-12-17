@@ -41,7 +41,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 	private static DefaultMutableTreeNode raiz;
 	private static JTextArea txtaHistorial;
 	private static JTree tree;
-	private static JScrollPane scrollPane;
+	private static JScrollPane scrollPane, scrollHistory;
 	/**
 	 * Create the frame.
 	 * @param ftpClient 
@@ -69,8 +69,11 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		
 		txtaHistorial = new JTextArea();
 		txtaHistorial.setEditable(false);
-		txtaHistorial.setBounds(64, 363, 691, 134);
-		contentPane.add(txtaHistorial);
+		
+		scrollHistory = new JScrollPane();
+		scrollHistory.setBounds(64, 363, 691, 134);
+		scrollHistory.setViewportView(txtaHistorial);
+		contentPane.add(scrollHistory);
 		
 		JButton btnUpload = new JButton("Cargar");
 		contentPane.add(btnUpload);
@@ -174,6 +177,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 					btnPatient.setEnabled(false);
 					btnRemove.setEnabled(false);
 					btnRename.setEnabled(false);
+					btnDownload.setEnabled(false);
 				}
 			} catch (IOException | NullPointerException e) {
 				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);

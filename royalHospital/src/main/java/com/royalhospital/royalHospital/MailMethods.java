@@ -38,17 +38,21 @@ public class MailMethods {
 	private Session session;
 
 	// POP3 object that is used for this connection with Server
-	private Store store;
+	private static Store store;
 
 	// List of all folders in E-mail
-	private Folder[] folderList;
+	private static Folder[] folderList;
 
 	// Falta eliminar img del e-mail a la hora de abrirlo
 
-	private Folder emailFolder;
+	private static Folder emailFolder;
 
+	private static JComboBox scrollEmails;
+	
 	private static Message[] messages;
 
+	private static JPanel viewScroll;
+	
 	private static ArrayList<File> attachments;
 
 	private static String homeRute = System.getProperty("user.home");
@@ -94,20 +98,12 @@ public class MailMethods {
 	public JPanel generateJComboBoxWithEmails(JPanel mailPanelBox, JPanel contenPane) {
 		try {
 
-			JPanel viewScroll = new JPanel();
+			viewScroll = new JPanel();
 
-			JComboBox scrollEmails = new JComboBox();
+			scrollEmails = new JComboBox();
 
-			scrollEmails.addItem("EMAILS");
+			updateJComboBox();
 
-			for (int counter = 0; counter < messages.length; counter++) {
-				Message objectMessage = messages[counter];
-
-				String informationEmail = "Titulo:   " + objectMessage.getSubject() + "      "
-						+ filterFromMessage(objectMessage.getFrom()[0].toString());
-
-				scrollEmails.addItem(informationEmail);
-			}
 			ScrollEmailListener.addScrollEmailListener(scrollEmails, mailPanelBox, contenPane);
 			viewScroll.add(scrollEmails);
 			return viewScroll;
@@ -117,6 +113,22 @@ public class MailMethods {
 		}
 	}
 
+	public static void updateJComboBox() {
+		try {
+			scrollEmails.addItem("EMAILS");
+			for (int counter = 0; counter < messages.length; counter++) {
+				Message objectMessage = messages[counter];
+
+				String informationEmail = "Titulo:   " + objectMessage.getSubject() + "      "
+						+ filterFromMessage(objectMessage.getFrom()[0].toString());
+				System.out.println(informationEmail);
+				scrollEmails.addItem(informationEmail);
+			}
+		} catch (Exception e) {
+			System.out.println("error updating JScroll");
+		}
+	}
+	
 	public static JPanel generateJEditorPaneEmail(int position) {
 		try {
 			Message objectMessage = messages[position];
@@ -263,7 +275,7 @@ public class MailMethods {
 		}
 	}
 
-	public void setFolderEmails() {
+	public static void setFolderEmails() {
 		try {
 			folderList = store.getDefaultFolder().list();
 
@@ -400,4 +412,21 @@ public class MailMethods {
 	public static void setHomeRute(String homeRute) {
 		MailMethods.homeRute = homeRute;
 	}
+
+	public static JComboBox getScrollEmails() {
+		return scrollEmails;
+	}
+
+	public static void setScrollEmails(JComboBox scrollEmails) {
+		MailMethods.scrollEmails = scrollEmails;
+	}
+
+	public static JPanel getViewScroll() {
+		return viewScroll;
+	}
+
+	public static void setViewScroll(JPanel viewScroll) {
+		MailMethods.viewScroll = viewScroll;
+	}
+	
 }

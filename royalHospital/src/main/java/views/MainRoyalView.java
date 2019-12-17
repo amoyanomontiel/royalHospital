@@ -6,13 +6,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreePath;
-
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
-
 import com.royalhospital.royalHospital.DataModel;
-
 import listeners.DocumentsListener;
 import listeners.DownloadListener;
 import listeners.PatientsListener;
@@ -22,9 +18,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.swing.JTree;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -164,10 +158,12 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 			try {
 				if (roll.equalsIgnoreCase("MEDICO")) {
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
+					DataModel.directionPath = ftpClient.printWorkingDirectory();
 					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
 				} else if (roll.equalsIgnoreCase("PACIENTE")) {
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
+					DataModel.directionPath = ftpClient.printWorkingDirectory();
 					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
 					

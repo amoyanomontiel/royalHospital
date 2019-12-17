@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.royalhospital.royalHospital.MailMethods;
+import com.royalhospital.royalHospital.ThreadAutoRefresh;
 
 import Listeners.RefreshEmail;
 
@@ -37,7 +38,7 @@ public class InboxView extends JFrame {
 	private static JPanel contextMailPane;
 	private static MailMethods objectMail;
 	private static JPanel mailListPane;
-
+	private static ThreadAutoRefresh objectThreadAutoRefresh;
 	
 	/**
 	 * Launch the application
@@ -99,7 +100,8 @@ public class InboxView extends JFrame {
 		mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
 		RefreshEmail.addRefreshButtonListener(btnRefresh, contentPane, contextMailPane);
 		contentPane.add(mailListPane);
-
+		objectThreadAutoRefresh = new ThreadAutoRefresh(contentPane, contextMailPane);
+		objectThreadAutoRefresh.start();
 	}
 
 	public static MailMethods getObjectMail() {

@@ -7,6 +7,8 @@ import java.io.IOException;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
+import com.royalhospital.royalHospital.DataModel;
+
 import views.MainRoyalView;
 
 public class RemoveListener implements ActionListener {
@@ -21,22 +23,25 @@ public class RemoveListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
-			try {
-				boolean deleted = ftpClient.deleteFile("");//Poner la seleccion del JTree
-				if (deleted) {
-					mainRoyal.getTxtaHistorial().append("Se borró el archivo satisfactoriamente\n");
-				} else {
-					mainRoyal.getTxtaHistorial().append("No se pudo borrar el archivo\n");
-					System.out.println("No se pudo borrar el archivo\n");
-				}
+		if(DataModel.actualUserPath !="") {
+			if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
+				try {
+					if (ftpClient.deleteFile(DataModel.selectedPath)) {
+						mainRoyal.getTxtaHistorial().append("Se borró el archivo satisfactoriamente\n");
+					} else {
+						mainRoyal.getTxtaHistorial().append("No se pudo borrar el archivo\n");
+					}
 
-			} catch (IOException ex) {
-				// Error
+				} catch (IOException ex) {
+					// Error
+				}
+			} else {
+				mainRoyal.getTxtaHistorial()
+						.append("No se pudo borrar el archivo verifica que estás conectado al servidor\n");
 			}
-		} else {
-			mainRoyal.getTxtaHistorial()
-					.append("No se pudo borrar el archivo verifica que estás conectado al servidor\n");
+		}else {
+			mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero de la lista\n");
 		}
+		
 	}
 }

@@ -36,6 +36,7 @@ public class DownloadListener implements ActionListener {
 					} else {
 						mainRoyal.getTxtaHistorial().append("No es posible descargar el fichero \n");
 					}
+					out.close();
 				} catch (IOException e1) {
 					// Error
 				}

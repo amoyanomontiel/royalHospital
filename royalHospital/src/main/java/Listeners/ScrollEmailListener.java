@@ -1,26 +1,63 @@
 package Listeners;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+// All imports
+import java.awt.BorderLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 
-import com.royalhospital.royalHospital.MailMethods;
-
+/**
+ * Class that controll the scroll of emails
+ * 
+ * @author Javier
+ * @version 1.0
+ *
+ */
 public class ScrollEmailListener {
-	
-	public static void addScrollEmailListener(JComboBox JComboBoxParam) {
-		JComboBoxParam.addActionListener(new ActionListener() {
-			
+
+	// All variables
+	static JPanel emailPanelBoxCopy;
+	static JPanel contenPaneCopy;
+
+	/**
+	 * Add ItemListener to Scroll
+	 * 
+	 * @param JComboBoxParam JComboBox, this JCombo contains all emails of user
+	 * @param emailPanelBox  JPanel, this JPanel contain all elements of emails
+	 * @param contenPane     JPanel, this JPanel contain all view elements
+	 */
+	public static void addScrollEmailListener(JComboBox JComboBoxParam, JPanel emailPanelBox, JPanel contenPane) {
+		emailPanelBoxCopy = emailPanelBox;
+		contenPaneCopy = contenPane;
+		JComboBoxParam.addItemListener(new ItemListener() {
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				if((JComboBoxParam.getSelectedIndex()-1) >= 0) {
-					com.royalhospital.royalHospital.MailMethods.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex()-1);
-					// falta añadir que cuando el usuario haga click, se muestre en la vista (Revisar vista con fernando)
+			public void itemStateChanged(ItemEvent e) {
+				if ((e.getStateChange() == ItemEvent.SELECTED) && (JComboBoxParam.getSelectedIndex() - 1) >= 0) {
+					contenPaneCopy.remove(emailPanelBoxCopy);
+					emailPanelBoxCopy = com.royalhospital.royalHospital.MailMethods
+							.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex() - 1);
+					emailPanelBoxCopy.setBounds(12, 329, 810, 353);
+					contenPaneCopy.add(emailPanelBoxCopy);
+					contenPaneCopy.setLayout(new BorderLayout(0, 0));
+					contenPaneCopy.revalidate();
+					contenPaneCopy.repaint();
+					System.out.println("scroll");
 				}
-				
 			}
 		});
+
 	}
-	
+
+	// All get and set
+	public static JPanel getEmailPanelBoxCopy() {
+		return emailPanelBoxCopy;
+	}
+
+	public static void setEmailPanelBoxCopy(JPanel emailPanelBoxCopy) {
+		ScrollEmailListener.emailPanelBoxCopy = emailPanelBoxCopy;
+	}
+
 }

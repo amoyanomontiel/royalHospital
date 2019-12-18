@@ -30,7 +30,6 @@ public class DownloadListener implements ActionListener {
 				}
 				try {
 					String sDirectoryWork = System.getProperty("user.home") + "/Downloads/";
-					System.out.println(sDirectoryWork);
 					FileOutputStream out = new FileOutputStream(sDirectoryWork + DataModel.selectedPath);
 					if (ftpClient.retrieveFile(DataModel.selectedPath, out)) {
 						mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito \n");

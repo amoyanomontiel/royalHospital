@@ -15,7 +15,8 @@ public class ScrollEmailListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if((JComboBoxParam.getSelectedIndex()-1) >= 0) {
-					com.royalhospital.royalHospital.MailMethods.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex()-1);	
+					com.royalhospital.royalHospital.MailMethods.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex()-1);
+					// falta añadir que cuando el usuario haga click, se muestre en la vista (Revisar vista con fernando)
 				}
 				
 			}

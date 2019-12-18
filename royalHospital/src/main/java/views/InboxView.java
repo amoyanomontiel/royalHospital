@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.royalhospital.royalHospital.MailMethods;
+
 import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
@@ -36,7 +39,13 @@ public class InboxView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InboxView frame = new InboxView();
+			        MailMethods objetoMail = new MailMethods();
+			        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
+			        objetoMail.setProperties();
+			        objetoMail.connectMailServer();
+			        objetoMail.setFolderEmails();
+			        objetoMail.receiveAndSaveAllEmails();
+					InboxView frame = new InboxView(objetoMail);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +69,7 @@ public class InboxView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InboxView() {
+	public InboxView(MailMethods objectMail) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
@@ -128,10 +137,10 @@ public class InboxView extends JFrame {
 		
 		showInbox(returnInboxButton, newMessageButton, closeInboxButton, inboxMailsPanel, messagePanel);
 		
-		inboxMailsPanel = new JPanel();
+		inboxMailsPanel = objectMail.generateJComboBoxWithEmails();
 		inboxMailsPanel.setBounds(0, 90, 836, 605);
 		contentPane.add(inboxMailsPanel);
-		inboxMailsPanel.setLayout(null);
+		//inboxMailsPanel.setLayout(null);
 		
 		messagePanel = new JPanel();
 		messagePanel.setBounds(0, 90, 836, 605);

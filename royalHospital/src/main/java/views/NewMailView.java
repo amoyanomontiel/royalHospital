@@ -24,6 +24,8 @@ import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class NewMailView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -110,13 +112,13 @@ public class NewMailView extends JFrame {
 		boolean emptyaddressee = false;
 		boolean emptysubject = false;
 		boolean emptybody = false;
-//		if (addressee.isBlank() || addressee.isEmpty())
-//			emptyaddressee = true;
-//		if (subject.isBlank() || subject.isEmpty())
-//			emptysubject = true;
-//		if (body.isBlank() || body.isEmpty())
-//			emptybody = true;
-
+		if (StringUtils.isBlank(addressee) || addressee.isEmpty())
+			emptyaddressee = true;
+		if (StringUtils.isBlank(subject) || subject.isEmpty())
+			emptysubject = true;
+		if (StringUtils.isBlank(body) || body.isEmpty())
+			emptybody = true;
+		
 		if (action.equals("send")) {
 			if (emptyaddressee) {
 				JOptionPane.showMessageDialog(null, "Debes introducir un destinatario", "Introduzca Destinatario",
@@ -159,86 +161,86 @@ public class NewMailView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel addresseeLabel = new JLabel("Destinatario");
-		addresseeLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		addresseeLabel.setBounds(67, 29, 102, 27);
-		contentPane.add(addresseeLabel);
+		JLabel lblAddressee = new JLabel("Destinatario");
+		lblAddressee.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblAddressee.setBounds(67, 29, 102, 27);
+		contentPane.add(lblAddressee);
 
-		JTextField addresseeText = new JTextField();
-		addresseeText.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		addresseeText.setBounds(230, 29, 515, 27);
-		contentPane.add(addresseeText);
-		addresseeText.setColumns(10);
+		JTextField textFieldAddressee = new JTextField();
+		textFieldAddressee.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textFieldAddressee.setBounds(230, 29, 515, 27);
+		contentPane.add(textFieldAddressee);
+		textFieldAddressee.setColumns(10);
 
-		JLabel subjectLabel = new JLabel("Asunto");
-		subjectLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		subjectLabel.setBounds(67, 87, 62, 27);
-		contentPane.add(subjectLabel);
+		JLabel lblSubject = new JLabel("Asunto");
+		lblSubject.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblSubject.setBounds(67, 87, 62, 27);
+		contentPane.add(lblSubject);
 
-		JTextField subjectText = new JTextField();
-		subjectText.setFont(new Font("Times New Roman", Font.PLAIN, 18));
-		subjectText.setColumns(10);
-		subjectText.setBounds(230, 87, 515, 27);
-		contentPane.add(subjectText);
+		JTextField textFieldSubjectText = new JTextField();
+		textFieldSubjectText.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		textFieldSubjectText.setColumns(10);
+		textFieldSubjectText.setBounds(230, 87, 515, 27);
+		contentPane.add(textFieldSubjectText);
 
-		JTextArea bodyText = new JTextArea();
-		bodyText.setBounds(67, 160, 678, 200);
-		contentPane.add(bodyText);
+		JTextArea textAreaBody = new JTextArea();
+		textAreaBody.setBounds(67, 160, 678, 200);
+		contentPane.add(textAreaBody);
 
-		JLabel uploadedLabel = new JLabel("Archivos Adjuntos");
-		uploadedLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		uploadedLabel.setBounds(67, 416, 142, 27);
-		contentPane.add(uploadedLabel);
+		JLabel lblUploaded = new JLabel("Archivos Adjuntos");
+		lblUploaded.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblUploaded.setBounds(67, 416, 142, 27);
+		contentPane.add(lblUploaded);
 
-		JPanel uploadedFilesPanel = new JPanel();
-		uploadedFilesPanel.setBounds(230, 406, 515, 61);
-		contentPane.add(uploadedFilesPanel);
+		JPanel uploadedFilesPane = new JPanel();
+		uploadedFilesPane.setBounds(230, 406, 515, 61);
+		contentPane.add(uploadedFilesPane);
 
-		GridBagLayout gbl_uploadedFilesPanel = new GridBagLayout();
-		uploadedFilesPanel.setLayout(gbl_uploadedFilesPanel);
+		GridBagLayout gbl_uploadedFilesPane = new GridBagLayout();
+		uploadedFilesPane.setLayout(gbl_uploadedFilesPane);
 		GridBagConstraints gblc_uploadedFilesPanel = new GridBagConstraints();
 		gblc_uploadedFilesPanel.weightx = 1;
 		gblc_uploadedFilesPanel.weighty = 1;
 		gblc_uploadedFilesPanel.fill = GridBagConstraints.BOTH;
 
-		JButton newFileButton = new JButton(" Adjuntar");
-		newFileButton.addActionListener(new ActionListener() {
+		JButton btnNewFile = new JButton(" Adjuntar");
+		btnNewFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				createFileChooser(contentPane);
-				refreshUploadedFiles(uploadedFilesPanel, gblc_uploadedFilesPanel);
+				refreshUploadedFiles(uploadedFilesPane, gblc_uploadedFilesPanel);
 			}
 		});
-		newFileButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		newFileButton.setBounds(67, 503, 150, 40);
+		btnNewFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnNewFile.setBounds(67, 503, 150, 40);
 		ImageIcon fileIcon = new ImageIcon("src//main//java//views//download.png");
 		Icon newFileIcon = new ImageIcon(fileIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-		newFileButton.setIcon(newFileIcon);
-		contentPane.add(newFileButton);
+		btnNewFile.setIcon(newFileIcon);
+		contentPane.add(btnNewFile);
 
-		JButton sendButton = new JButton(" Enviar");
-		sendButton.addActionListener(new ActionListener() {
+		JButton btnSend = new JButton(" Enviar");
+		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				checkTextBoxes(addresseeText, subjectText, bodyText, "send");
+				checkTextBoxes(textFieldAddressee, textFieldSubjectText, textAreaBody, "send");
 			}
 		});
-		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		sendButton.setBounds(595, 503, 150, 40);
+		btnSend.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnSend.setBounds(595, 503, 150, 40);
 		ImageIcon sendIcon = new ImageIcon("src//main//java//views//send.png");
 		Icon newSendIcon = new ImageIcon(sendIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-		sendButton.setIcon(newSendIcon);
-		contentPane.add(sendButton);
+		btnSend.setIcon(newSendIcon);
+		contentPane.add(btnSend);
 
-		JButton CancelButton = new JButton(" Cancelar");
-		CancelButton.addActionListener(new ActionListener() {
+		JButton btnCancel = new JButton(" Cancelar");
+		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				checkTextBoxes(addresseeText, subjectText, bodyText, "cancel");
+				checkTextBoxes(textFieldAddressee, textFieldSubjectText, textAreaBody, "cancel");
 			}
 		});
-		CancelButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		CancelButton.setBounds(384, 503, 150, 40);
+		btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCancel.setBounds(384, 503, 150, 40);
 		ImageIcon cancelIcon = new ImageIcon("src//main//java//views//cancel.png");
 		Icon newCancelIcon = new ImageIcon(cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-		CancelButton.setIcon(newCancelIcon);
-		contentPane.add(CancelButton);
+		btnCancel.setIcon(newCancelIcon);
+		contentPane.add(btnCancel);
 	}
 }

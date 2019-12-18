@@ -24,16 +24,16 @@ public class LoginListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String userText = loginView.getTxtUserName().getText();
-		String passwordText = loginView.getTxtPassword().getText();
+		String userText = loginView.getUser_email_Text().getText();
+		String passwordText = loginView.getPassword_Text().getText();
 
 		if (!userText.equals("") && !passwordText.equals("")) {
 			if (!checkCredentials(userText, passwordText)) {
 				ErrorRoyalView error = new ErrorRoyalView("El usuario y la contraseña no coinciden.");
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
-				loginView.getTxtPassword().setText("");
-				loginView.getTxtUserName().setText("");
+				loginView.getPassword_Text().setText("");
+				loginView.getUser_email_Text().setText("");
 			} else {
 				FTPConection ftpConect = new FTPConection(userText, passwordText);
 				FTPClient ftpClient = ftpConect.createFTPClient();

@@ -76,6 +76,9 @@ public class NewMailView extends JFrame {
 
 	public void refreshUploadedFiles(JPanel uploadedFilesPane) {
 		int cellsNumber = 3;
+		if (uploadedFilesPane.getComponentCount() != 0) {
+			uploadedFilesPane.removeAll();
+		}
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(fileList.size(), cellsNumber));
 
@@ -101,14 +104,16 @@ public class NewMailView extends JFrame {
 			String basename = FilenameUtils.getBaseName(key);
 			for (int j = 0; j < cellsNumber; j++) {
 				if (j == 0) {
-					JLabel newFile = new JLabel();
+					JLabel newIcon = new JLabel();
 					String route = searchImage(extension);
 					
 					ImageIcon extensionIcon = new ImageIcon(route);
 					Icon newExtensionIcon = new ImageIcon(
 							extensionIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-					newFile.setIcon(newExtensionIcon);
-					listUploadedFiles[i][j] = newFile;
+					newIcon.setIcon(newExtensionIcon);
+					newIcon.putClientProperty("id", "ic" + i);
+					listUploadedFiles[i][j] = newIcon;
+					
 				} else if (j == 1) {
 					JLabel newFile;
 					if (basename.length() > 15) {
@@ -119,10 +124,14 @@ public class NewMailView extends JFrame {
 						newFile = new JLabel(key);
 					}
 					newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					newFile.putClientProperty("id", "jl" + i);
 					listUploadedFiles[i][j] = newFile;
+					
 				} else if (j == 2) {
-					JCheckBox newDelete = new JCheckBox("No mandar");
+					JCheckBox newDelete = new JCheckBox("Cancelar");
+					newDelete.putClientProperty("id", "cb" + i);
 					newDelete.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					
 					listUploadedFiles[i][j] = newDelete;
 				}
 			}
@@ -162,6 +171,27 @@ public class NewMailView extends JFrame {
 			
 		case "jpeg":
 			return "src//main//java//views//png_jpg_jpeg.png";
+			
+		case "bmp":
+			return "src//main//java//views//png_jpg_jpeg.png";
+			
+		case "zip":
+			return "src//main//java//views//compressed.png";
+			
+		case "7z":
+			return "src//main//java//views//compressed.png";
+			
+		case "rar":
+			return "src//main//java//views//compressed.png";
+			
+		case "sql":
+			return "src//main//java//views//sql.png";
+			
+		case "jar":
+			return "src//main//java//views//jar.png";
+			
+		case "java":
+			return "src//main//java//views//jar.png";
 
 		default:
 			return "src//main//java//views//general icon.png";

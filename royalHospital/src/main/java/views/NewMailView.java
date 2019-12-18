@@ -110,12 +110,12 @@ public class NewMailView extends JFrame {
 		boolean emptyaddressee = false;
 		boolean emptysubject = false;
 		boolean emptybody = false;
-		if (addressee.isBlank() || addressee.isEmpty())
-			emptyaddressee = true;
-		if (subject.isBlank() || subject.isEmpty())
-			emptysubject = true;
-		if (body.isBlank() || body.isEmpty())
-			emptybody = true;
+//		if (addressee.isBlank() || addressee.isEmpty())
+//			emptyaddressee = true;
+//		if (subject.isBlank() || subject.isEmpty())
+//			emptysubject = true;
+//		if (body.isBlank() || body.isEmpty())
+//			emptybody = true;
 
 		if (action.equals("send")) {
 			if (emptyaddressee) {

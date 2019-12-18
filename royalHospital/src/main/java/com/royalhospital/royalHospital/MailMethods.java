@@ -106,7 +106,7 @@ public class MailMethods {
 				scrollEmails.addItem(informationEmail);
 			}
 
-			ScrollEmailListener.addScrollEmailListener(scrollEmails);
+			//ScrollEmailListener.addScrollEmailListener(scrollEmails);
 			viewScroll.add(scrollEmails);
 			return viewScroll;
 		} catch (Exception e) {

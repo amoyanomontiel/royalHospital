@@ -93,7 +93,7 @@ public class InboxView extends JFrame {
 		 * Generate 2 JPanels: 1. JPanel = JPanel with JComboBox with all emails 2.
 		 * JPanel = JPanel that show the context of message
 		 */
-		mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
+		//mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
 
 		/**
 		 * Add listener to the Refresh button

@@ -98,6 +98,7 @@ public class NewMailView extends JFrame {
 		for (HashMap.Entry<String, String> entry : fileList.entrySet()) {
 			String key = entry.getKey();
 			String extension = FilenameUtils.getExtension(key);
+			String basename = FilenameUtils.getBaseName(key);
 			for (int j = 0; j < cellsNumber; j++) {
 				if (j == 0) {
 					JLabel newFile = new JLabel();
@@ -109,11 +110,18 @@ public class NewMailView extends JFrame {
 					newFile.setIcon(newExtensionIcon);
 					listUploadedFiles[i][j] = newFile;
 				} else if (j == 1) {
-					JLabel newFile = new JLabel(key);
+					JLabel newFile;
+					if (basename.length() > 15) {
+						String fileName = basename.substring(0, 16) + "..." + extension;
+						newFile = new JLabel(fileName);
+					}
+					else {
+						newFile = new JLabel(key);
+					}
 					newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					listUploadedFiles[i][j] = newFile;
 				} else if (j == 2) {
-					JCheckBox newDelete = new JCheckBox("Cancelar");
+					JCheckBox newDelete = new JCheckBox("No mandar");
 					newDelete.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					listUploadedFiles[i][j] = newDelete;
 				}

@@ -118,7 +118,7 @@ public class NewMailView extends JFrame {
 			emptysubject = true;
 		if (StringUtils.isBlank(body) || body.isEmpty())
 			emptybody = true;
-		
+
 		if (action.equals("send")) {
 			if (emptyaddressee) {
 				JOptionPane.showMessageDialog(null, "Debes introducir un destinatario", "Introduzca Destinatario",

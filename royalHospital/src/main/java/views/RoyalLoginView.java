@@ -13,8 +13,6 @@ import javax.swing.ImageIcon;
 import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JPasswordField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class RoyalLoginView extends JFrame {
 
@@ -30,7 +28,7 @@ public class RoyalLoginView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RoyalLoginView frame = new RoyalLoginView("Correo Electrónico", "/views/mailIcon.png", 100, 40, 183, 117);
+					RoyalLoginView frame = new RoyalLoginView("Correo Electrónico", "/views/mailIcon.jpg", 100, 40, 183, 117);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -76,11 +74,6 @@ public class RoyalLoginView extends JFrame {
 		loginPanel.add(passwordField);
 		
 		btnLogin = new JButton("Entrar");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogin.setBounds(144, 367, 116, 32);
 		loginPanel.add(btnLogin);	

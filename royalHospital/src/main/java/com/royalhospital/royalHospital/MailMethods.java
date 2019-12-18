@@ -1,5 +1,6 @@
 package com.royalhospital.royalHospital;
 
+// All imports
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -22,7 +23,18 @@ import org.apache.commons.lang3.StringUtils;
 
 import Listeners.ScrollEmailListener;
 
+/**
+ * Contail all methods about connect and receive all messages
+ * 
+ * @author Javier
+ * @version 1.0
+ *
+ */
 public class MailMethods {
+
+	/**
+	 * Parameters necessary for to connect to Gmail
+	 */
 	private String host;
 	private String mailStoreType;
 	private String userName;
@@ -35,21 +47,36 @@ public class MailMethods {
 	private Session session;
 
 	// POP3 object that is used for this connection with Server
-	private Store store;
+	private static Store store;
 
 	// List of all folders in E-mail
-	private Folder[] folderList;
+	private static Folder[] folderList;
 
 	// Falta eliminar img del e-mail a la hora de abrirlo
+	private static Folder emailFolder;
 
-	private Folder emailFolder;
+	// Scroll that containts all emails received
+	private static JComboBox scrollEmails;
 
+	// List of messages received
 	private static Message[] messages;
 
+	// View for to show scroll object
+	private static JPanel viewScroll;
+
+	// List of attachents that containts the (selected) email
 	private static ArrayList<File> attachments;
 
+	// Containts the home rute of user
 	private static String homeRute = System.getProperty("user.home");
 
+	/**
+	 * This method store all attachments of the email This method get the specific
+	 * email with the param
+	 * 
+	 * @param messagePositionParam Integer, This param is a number for to select the
+	 *                             specific email on list
+	 */
 	public static void storeAttachmentsElements(int messagePositionParam) {
 
 		Message objectMessage = messages[messagePositionParam];
@@ -88,25 +115,24 @@ public class MailMethods {
 		}
 	}
 
-	public JPanel generateJComboBoxWithEmails() {
+	/**
+	 * This method generate JPanel with the scroll of Emails
+	 * 
+	 * @param mailPanelBox JPanel, JPanel of view that it will have
+	 * @param contenPane   JPanel, JPanel that containts all elements of view
+	 * @return JPanel with all elements (Scroll emails and container that show the
+	 *         context of specific email)
+	 */
+	public JPanel generateJComboBoxWithEmails(JPanel mailPanelBox, JPanel contenPane) {
 		try {
 
-			JPanel viewScroll = new JPanel();
+			viewScroll = new JPanel();
 
-			JComboBox scrollEmails = new JComboBox();
+			scrollEmails = new JComboBox();
 
-			scrollEmails.addItem("EMAILS");
+			updateJComboBox();
 
-			for (int counter = 0; counter < messages.length; counter++) {
-				Message objectMessage = messages[counter];
-
-				String informationEmail = "Titulo:   " + objectMessage.getSubject() + "      "
-						+ filterFromMessage(objectMessage.getFrom()[0].toString());
-
-				scrollEmails.addItem(informationEmail);
-			}
-
-			ScrollEmailListener.addScrollEmailListener(scrollEmails);
+			ScrollEmailListener.addScrollEmailListener(scrollEmails, mailPanelBox, contenPane);
 			viewScroll.add(scrollEmails);
 			return viewScroll;
 		} catch (Exception e) {
@@ -115,6 +141,31 @@ public class MailMethods {
 		}
 	}
 
+	/**
+	 * This method fill the JComboBox with the emails
+	 */
+	public static void updateJComboBox() {
+		try {
+			scrollEmails.addItem("EMAILS");
+			for (int counter = 0; counter < messages.length; counter++) {
+				Message objectMessage = messages[counter];
+
+				String informationEmail = "Titulo:   " + objectMessage.getSubject() + "      "
+						+ filterFromMessage(objectMessage.getFrom()[0].toString());
+				System.out.println(informationEmail);
+				scrollEmails.addItem(informationEmail);
+			}
+		} catch (Exception e) {
+			System.out.println("error updating JScroll");
+		}
+	}
+
+	/**
+	 * This method generate JPanel with the content of specific email
+	 * 
+	 * @param position Integer, say the position of the email list
+	 * @return JPanel with the content of specific email
+	 */
 	public static JPanel generateJEditorPaneEmail(int position) {
 		try {
 			Message objectMessage = messages[position];
@@ -124,7 +175,8 @@ public class MailMethods {
 			String bodyTextSave = "";
 			bodyTextSave += "<p align= 'left'>Subject:   " + objectMessage.getSubject() + "</p>";
 			bodyTextSave += "<p></p>";
-			bodyTextSave += "<p align= 'left'>From:   " + filterFromMessage(objectMessage.getFrom()[0].toString()) + "</p>";
+			bodyTextSave += "<p align= 'left'>From:   " + filterFromMessage(objectMessage.getFrom()[0].toString())
+					+ "</p>";
 			bodyTextSave += "<p></p>";
 			bodyTextSave += getBodyText(objectMessage);
 			String filterName = "";
@@ -157,6 +209,9 @@ public class MailMethods {
 		}
 	}
 
+	/*
+	 * get the sender of Email
+	 */
 	public static String filterFromMessage(String fromParam) {
 		String filterFrom = "";
 		boolean checkCaracter = false;
@@ -179,7 +234,12 @@ public class MailMethods {
 		return filterFrom;
 	}
 
-
+	/**
+	 * This method search the name of attachment
+	 * 
+	 * @param ruteAttachment, text that containt the rute of the attachment
+	 * @return StringBuilder, the name of attachment in your pc
+	 */
 	public static String searchOnlyNameAttachment(String ruteAttachment) {
 		try {
 			char[] allCaracters = ruteAttachment.toCharArray();
@@ -210,6 +270,12 @@ public class MailMethods {
 		}
 	}
 
+	/**
+	 * This method return the body part of the email
+	 * 
+	 * @param bodyPart Part, Part of the body
+	 * @return String, the content of the email (Usually, text)
+	 */
 	public static String getBodyText(Part bodyPart) {
 		try {
 			if (bodyPart.isMimeType("text/*")) {
@@ -252,6 +318,10 @@ public class MailMethods {
 		}
 	}
 
+	/**
+	 * This method receive the all messages of the Folder emails and save those
+	 * emails
+	 */
 	public void receiveAndSaveAllEmails() {
 		try {
 			messages = emailFolder.getMessages();
@@ -261,7 +331,10 @@ public class MailMethods {
 		}
 	}
 
-	public void setFolderEmails() {
+	/**
+	 * This method establishes the folder of emails
+	 */
+	public static void setFolderEmails() {
 		try {
 			folderList = store.getDefaultFolder().list();
 
@@ -273,6 +346,15 @@ public class MailMethods {
 
 	}
 
+	/**
+	 * Connect with gmail and save the store
+	 * 
+	 * @return Boolean
+	 *         <ul>
+	 *         <li>True, if this method can connect with the server
+	 *         <li>False, if this method cannot connect with the server
+	 *         </ul>
+	 */
 	public boolean connectMailServer() {
 		try {
 			store = session.getStore("imaps");
@@ -284,6 +366,14 @@ public class MailMethods {
 
 	}
 
+	/**
+	 * Establish all params for to connect with the Email server
+	 * 
+	 * @param hostParam          String, host of emails
+	 * @param mailStoreTypeParam String, type of mails in this server
+	 * @param userNameParam      String, User name param
+	 * @param passwdParam        String, Password param
+	 */
 	public void setAllDataConnection(String hostParam, String mailStoreTypeParam, String userNameParam,
 			String passwdParam) {
 		host = hostParam;
@@ -292,6 +382,9 @@ public class MailMethods {
 		passwd = passwdParam;
 	}
 
+	/**
+	 * Establish the properties of connection
+	 */
 	public void setProperties() {
 		try {
 			properties.put("mail.pop3.host", host);
@@ -302,6 +395,8 @@ public class MailMethods {
 			System.out.println("Error setting properties about E-mail");
 		}
 	}
+
+	// All get and set
 
 	public String getHost() {
 		return host;
@@ -398,4 +493,21 @@ public class MailMethods {
 	public static void setHomeRute(String homeRute) {
 		MailMethods.homeRute = homeRute;
 	}
+
+	public static JComboBox getScrollEmails() {
+		return scrollEmails;
+	}
+
+	public static void setScrollEmails(JComboBox scrollEmails) {
+		MailMethods.scrollEmails = scrollEmails;
+	}
+
+	public static JPanel getViewScroll() {
+		return viewScroll;
+	}
+
+	public static void setViewScroll(JPanel viewScroll) {
+		MailMethods.viewScroll = viewScroll;
+	}
+
 }

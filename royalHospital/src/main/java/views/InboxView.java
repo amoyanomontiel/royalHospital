@@ -1,51 +1,51 @@
 package views;
 
+import java.awt.BorderLayout;
+// All imports
 import java.awt.EventQueue;
+import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.royalhospital.royalHospital.MailMethods;
+import com.royalhospital.royalHospital.ThreadAutoRefresh;
 
-import java.awt.Color;
-import javax.swing.JSeparator;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Image;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import Listeners.RefreshEmail;
 
 public class InboxView extends JFrame {
+
+	// Al variables of class
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final int width = 30;
 	private final int height = 30;
-	private JButton newMessageButton;
-	private JButton closeInboxButton;
-	private JButton returnInboxButton;
-	private JPanel inboxMailsPanel;
 	private JPanel messagePanel;
+	private JPanel headPane;
+	private static JPanel contextMailPane;
+	private static MailMethods objectMail;
+	private static JPanel mailListPane;
+	private static ThreadAutoRefresh objectThreadAutoRefresh;
 
 	/**
-	 * Launch the application.
+	 * Launch the View
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-			        MailMethods objetoMail = new MailMethods();
-			        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
-			        objetoMail.setProperties();
-			        objetoMail.connectMailServer();
-			        objetoMail.setFolderEmails();
-			        objetoMail.receiveAndSaveAllEmails();
-					InboxView frame = new InboxView(objetoMail);
+					objectMail = new MailMethods();
+					objectMail.setAllDataConnection("pop.gmail.com", "pop3",
+							"jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
+					objectMail.setProperties();
+					objectMail.connectMailServer();
+					objectMail.setFolderEmails();
+					objectMail.receiveAndSaveAllEmails();
+					InboxView frame = new InboxView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,98 +53,85 @@ public class InboxView extends JFrame {
 			}
 		});
 	}
-	
-	public void showInbox(JButton returnInboxButton, JButton newMessageButton, JButton closeInboxButton, JPanel inboxMailsPanel, JPanel messagePanel) {
-		returnInboxButton.setVisible(false);
-		newMessageButton.setVisible(true);
-		closeInboxButton.setVisible(true);
-	}
-	
-	public void showMessage(JButton returnInboxButton, JButton newMessageButton, JButton closeInboxButton, JPanel inboxMailsPanel, JPanel messagePanel) {
-		returnInboxButton.setVisible(true);
-		newMessageButton.setVisible(false);
-		closeInboxButton.setVisible(false);
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public InboxView(MailMethods objectMail) {
+	public InboxView() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JPanel headPanel = new JPanel();
-		headPanel.setBorder(null);
-		headPanel.setBounds(0, 0, 836, 60);
-		contentPane.add(headPanel);
-		headPanel.setLayout(null);
-		
-		JLabel inboxLabel = new JLabel("Buzón De Entrada");
-		inboxLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		inboxLabel.setBounds(45, 16, 142, 27);
-		headPanel.add(inboxLabel);
 
-		
-		newMessageButton = new JButton("Redactar");
-		newMessageButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showMessage(returnInboxButton, newMessageButton, closeInboxButton, inboxMailsPanel, messagePanel);
-			}
-		});
-		newMessageButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		newMessageButton.setBounds(462, 10, 150, 40);
-		ImageIcon newMailIcon = new ImageIcon("src/main/java/views/newGmail.png");
-		Icon newIcon = new ImageIcon(newMailIcon.getImage().getScaledInstance((width+10), height, Image.SCALE_DEFAULT));
-		newMessageButton.setIcon(newIcon);
-		headPanel.add(newMessageButton);
-		
-		closeInboxButton = new JButton("Volver");
-		closeInboxButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		closeInboxButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		closeInboxButton.setBounds(660, 10, 150, 40);
-		ImageIcon newHomeIcon = new ImageIcon("src/main/java/views/homeIcon.png");
-		Icon newHome = new ImageIcon(newHomeIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-		closeInboxButton.setIcon(newHome);
-		headPanel.add(closeInboxButton);
-		
-		returnInboxButton = new JButton("Volver");
-		returnInboxButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showInbox(returnInboxButton, newMessageButton, closeInboxButton, inboxMailsPanel, messagePanel);
-			}
-		});
-		returnInboxButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		returnInboxButton.setBounds(660, 10, 150, 40);
-		ImageIcon newReturnIcon = new ImageIcon("src/main/java/views/return.png");
-		Icon newReturn = new ImageIcon(newReturnIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-		returnInboxButton.setIcon(newReturn);
-		headPanel.add(returnInboxButton);
-		
-		JSeparator dividingLine = new JSeparator();
-		dividingLine.setForeground(new Color(255, 0, 51));
-		dividingLine.setBackground(new Color(255, 0, 51));
-		dividingLine.setBounds(0, 60, 836, 2);
-		contentPane.add(dividingLine);
-		
-		showInbox(returnInboxButton, newMessageButton, closeInboxButton, inboxMailsPanel, messagePanel);
-		
-		inboxMailsPanel = objectMail.generateJComboBoxWithEmails();
-		inboxMailsPanel.setBounds(0, 90, 836, 605);
-		contentPane.add(inboxMailsPanel);
-		//inboxMailsPanel.setLayout(null);
-		
-		messagePanel = new JPanel();
-		messagePanel.setBounds(0, 90, 836, 605);
-		contentPane.add(messagePanel);
-		messagePanel.setLayout(null);
+		headPane = new JPanel();
+		contentPane.add(headPane, BorderLayout.NORTH);
+
+		JLabel lblInbox = new JLabel("Buzón de entrada");
+		lblInbox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+		headPane.add(lblInbox);
+
+		JButton btnRefresh = new JButton("Refrescar");
+		btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		headPane.add(btnRefresh);
+
+		JButton btnWriteEmail = new JButton("Redactar");
+		btnWriteEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		headPane.add(btnWriteEmail);
+
+		JButton btnCloseInbox = new JButton("Volver");
+		btnCloseInbox.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		headPane.add(btnCloseInbox);
+
+		contextMailPane = new JPanel();
+		contentPane.add(contextMailPane, BorderLayout.SOUTH);
+
+		mailListPane = new JPanel();
+
+		/*
+		 * Generate 2 JPanels: 1. JPanel = JPanel with JComboBox with all emails 2.
+		 * JPanel = JPanel that show the context of message
+		 */
+		mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
+
+		/**
+		 * Add listener to the Refresh button
+		 */
+		RefreshEmail.addRefreshButtonListener(btnRefresh, contentPane, contextMailPane);
+		contentPane.add(mailListPane);
+
+		/**
+		 * Create and start Thread that auto refresh the JComboBox with emails
+		 */
+		objectThreadAutoRefresh = new ThreadAutoRefresh(contentPane, contextMailPane);
+		objectThreadAutoRefresh.start();
 	}
+
+	// All get and set
+
+	public static MailMethods getObjectMail() {
+		return objectMail;
+	}
+
+	public static void setObjectMail(MailMethods objectMail) {
+		InboxView.objectMail = objectMail;
+	}
+
+	public static JPanel getContextMailPane() {
+		return contextMailPane;
+	}
+
+	public static void setContextMailPane(JPanel contextMailPane) {
+		InboxView.contextMailPane = contextMailPane;
+	}
+
+	public static JPanel getMailListPane() {
+		return mailListPane;
+	}
+
+	public static void setMailListPane(JPanel mailListPane) {
+		InboxView.mailListPane = mailListPane;
+	}
+
 }

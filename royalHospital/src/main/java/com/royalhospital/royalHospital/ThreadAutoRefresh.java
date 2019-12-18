@@ -45,12 +45,13 @@ public class ThreadAutoRefresh extends Thread {
 					InboxView.getObjectMail().connectMailServer();
 					InboxView.getObjectMail().setFolderEmails();
 					InboxView.getObjectMail().receiveAndSaveAllEmails();
-//					if (MailMethods.getScrollEmails().getItemCount() != MailMethods.getMessages().length + 1) {
-//						MailMethods.getScrollEmails().removeAllItems();
-//						MailMethods.updateJComboBox();
-//						contentView.revalidate();
-//						contentView.repaint();
-//					}
+
+					if (MailMethods.getScrollEmails().getItemCount() != MailMethods.getMessages().length + 1) {
+						MailMethods.getScrollEmails().removeAllItems();
+						MailMethods.updateJComboBox();
+						contentView.revalidate();
+						contentView.repaint();
+					}
 				}
 			}
 		} catch (Exception e) {

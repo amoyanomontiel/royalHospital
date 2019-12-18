@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-//import com.royalhospital.royalHospital.ThreadRefreshEmails;
+import com.royalhospital.royalHospital.ThreadRefreshEmails;
 
 /**
  * Class that add the listener of refresh Button
@@ -30,8 +30,8 @@ public class RefreshEmail {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//ThreadRefreshEmails objectThread = new ThreadRefreshEmails(contentPane, contentMailPane);
-				//objectThread.start();
+				ThreadRefreshEmails objectThread = new ThreadRefreshEmails(contentPane, contentMailPane);
+				objectThread.start();
 			}
 		});
 	}

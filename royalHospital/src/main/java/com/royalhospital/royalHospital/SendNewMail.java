@@ -31,7 +31,7 @@ public class SendNewMail {
 
 	private static void enviarConGMail(String destinatario, String asunto) {
 		String remitente = "thenapo212@gmail.com"; // Qui�n manda el correo
-		String clave = ""; // Contrase�a del correo (cambiar por tu contrase�a)
+		String clave = "N"; // Contrase�a del correo (cambiar por tu contrase�a)
 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", "smtp.gmail.com"); // El servidor SMTP de Google
@@ -40,7 +40,7 @@ public class SendNewMail {
 		props.put("mail.smtp.auth", "true"); // Usar autenticaci�n mediante usuario y clave
 		props.put("mail.smtp.starttls.enable", "true"); // Para conectar de manera segura al servidor SMTP
 		props.put("mail.smtp.port", "587"); // El puerto SMTP seguro de Google
-		props.put("mail.smtp.ssl.trust", "smtp.gmail.com"); // Para que no pete al usar el gmail
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com"); // Para establecer el protocolo de seguridad de gmail
 
 		Session session = Session.getDefaultInstance(props);
 		MimeMessage message = new MimeMessage(session);

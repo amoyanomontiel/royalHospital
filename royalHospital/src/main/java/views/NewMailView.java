@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.io.FilenameUtils;
+import com.royalhospital.royalHospital.UploadedFile;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,12 +25,10 @@ import javax.swing.JFileChooser;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 
@@ -40,7 +39,8 @@ public class NewMailView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final int width = 30;
 	private final int height = 30;
-	private HashMap<String, String> fileList;
+	private ArrayList<UploadedFile> fileList;
+	private JPanel uploadedFilesPane;
 
 	/**
 	 * Launch the application.
@@ -68,13 +68,14 @@ public class NewMailView extends JFrame {
 			File[] selectedFiles = fc.getSelectedFiles();
 
 			for (int i = 0; i < selectedFiles.length; i++) {
-				if (!fileList.containsKey(selectedFiles[i].getName()))
-					fileList.put(selectedFiles[i].getName(), selectedFiles[i].getAbsolutePath());
+//				if (fileList.size() == 0 || !fileList.get(i).getFilePath().equals(selectedFiles[i].getAbsolutePath())) {
+					fileList.add(new UploadedFile(selectedFiles[i].getName(), selectedFiles[i].getAbsolutePath()));
+//				}
 			}
 		}
 	}
 
-	public void refreshUploadedFiles(JPanel uploadedFilesPane) {
+	public void refreshUploadedFiles() {
 		int cellsNumber = 3;
 		if (uploadedFilesPane.getComponentCount() != 0) {
 			uploadedFilesPane.removeAll();
@@ -90,7 +91,7 @@ public class NewMailView extends JFrame {
 			}
 		}
 
-		createScrollPane(uploadedFilesPane, panel);
+		createScrollPane(panel);
 
 		uploadedFilesPane.revalidate();
 	}
@@ -98,39 +99,50 @@ public class NewMailView extends JFrame {
 	public Object[][] refillArrays(int cellsNumber) {
 		Object[][] listUploadedFiles = new Object[fileList.size()][cellsNumber];
 		int i = 0;
-		for (HashMap.Entry<String, String> entry : fileList.entrySet()) {
-			String key = entry.getKey();
-			String extension = FilenameUtils.getExtension(key);
-			String basename = FilenameUtils.getBaseName(key);
+		for (UploadedFile attachedFile : fileList) {
+			String extension = FilenameUtils.getExtension(attachedFile.getFileName());
+			String basename = FilenameUtils.getBaseName(attachedFile.getFileName());
 			for (int j = 0; j < cellsNumber; j++) {
 				if (j == 0) {
 					JLabel newIcon = new JLabel();
 					String route = searchImage(extension);
-					
+
 					ImageIcon extensionIcon = new ImageIcon(route);
 					Icon newExtensionIcon = new ImageIcon(
 							extensionIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 					newIcon.setIcon(newExtensionIcon);
 					newIcon.putClientProperty("id", "ic" + i);
 					listUploadedFiles[i][j] = newIcon;
-					
+
 				} else if (j == 1) {
 					JLabel newFile;
 					if (basename.length() > 15) {
 						String fileName = basename.substring(0, 16) + "..." + extension;
 						newFile = new JLabel(fileName);
-					}
-					else {
-						newFile = new JLabel(key);
+					} else {
+						newFile = new JLabel(basename + "." + extension);
 					}
 					newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					newFile.putClientProperty("id", "jl" + i);
 					listUploadedFiles[i][j] = newFile;
-					
+
 				} else if (j == 2) {
 					JCheckBox newDelete = new JCheckBox("Cancelar");
 					newDelete.putClientProperty("id", "cb" + i);
 					newDelete.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					newDelete.addItemListener(new ItemListener() {
+
+						@Override
+						public void itemStateChanged(ItemEvent e) {
+							if (e.getStateChange() == ItemEvent.SELECTED) {
+								JCheckBox aux = (JCheckBox) e.getItem();
+								String id = (String) aux.getClientProperty("id");
+								int position = Integer.valueOf(id.substring(2));
+								fileList.remove(position);
+								refreshUploadedFiles();
+							}
+						}
+					});
 					
 					listUploadedFiles[i][j] = newDelete;
 				}
@@ -139,57 +151,57 @@ public class NewMailView extends JFrame {
 		}
 		return listUploadedFiles;
 	}
-	
-	private String searchImage (String extension) {
+
+	private String searchImage(String extension) {
 		switch (extension) {
 		case "mp4":
 			return "src//main//java//views//mp4_mp3_webm_gif.png";
-			
+
 		case "mp3":
 			return "src//main//java//views//mp4_mp3_webm_gif.png";
-			
+
 		case "webm":
 			return "src//main//java//views//mp4_mp3_webm_gif.png";
-			
+
 		case "gif":
 			return "src//main//java//views//mp4_mp3_webm_gif.png";
-			
+
 		case "docx":
 			return "src//main//java//views//docx.png";
-			
+
 		case "png":
 			return "src//main//java//views//png_jpg_jpeg.png";
-			
+
 		case "jpg":
 			return "src//main//java//views//png_jpg_jpeg.png";
-			
+
 		case "txt":
 			return "src//main//java//views//txt.png";
-			
+
 		case "pdf":
 			return "src//main//java//views//pdf.png";
-			
+
 		case "jpeg":
 			return "src//main//java//views//png_jpg_jpeg.png";
-			
+
 		case "bmp":
 			return "src//main//java//views//png_jpg_jpeg.png";
-			
+
 		case "zip":
 			return "src//main//java//views//compressed.png";
-			
+
 		case "7z":
 			return "src//main//java//views//compressed.png";
-			
+
 		case "rar":
 			return "src//main//java//views//compressed.png";
-			
+
 		case "sql":
 			return "src//main//java//views//sql.png";
-			
+
 		case "jar":
 			return "src//main//java//views//jar.png";
-			
+
 		case "java":
 			return "src//main//java//views//jar.png";
 
@@ -198,7 +210,7 @@ public class NewMailView extends JFrame {
 		}
 	}
 
-	public void createScrollPane(JPanel uploadedFilesPane, JPanel panel) {
+	public void createScrollPane(JPanel panel) {
 		JScrollPane scrollPane = new JScrollPane(panel);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -253,7 +265,7 @@ public class NewMailView extends JFrame {
 	 * Create the frame.
 	 */
 	public NewMailView() {
-		fileList = new HashMap<String, String>();
+		fileList = new ArrayList<UploadedFile>();
 
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -296,7 +308,7 @@ public class NewMailView extends JFrame {
 		lblUploaded.setBounds(340, 392, 142, 27);
 		contentPane.add(lblUploaded);
 
-		JPanel uploadedFilesPane = new JPanel(null);
+		uploadedFilesPane = new JPanel(null);
 		uploadedFilesPane.setBounds(67, 441, 678, 105);
 		contentPane.add(uploadedFilesPane);
 		uploadedFilesPane.setLayout(new GridLayout(1, 0, 0, 0));
@@ -305,7 +317,7 @@ public class NewMailView extends JFrame {
 		btnNewFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				createFileChooser(contentPane);
-				refreshUploadedFiles(uploadedFilesPane);
+				refreshUploadedFiles();
 			}
 		});
 		btnNewFile.setFont(new Font("Tahoma", Font.PLAIN, 15));

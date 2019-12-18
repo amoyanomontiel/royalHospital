@@ -132,15 +132,6 @@ public class MailMethods {
 
 			updateJComboBox();
 
-			for (int counter = 0; counter < messages.length; counter++) {
-				Message objectMessage = messages[counter];
-
-				String informationEmail = "Titulo:   " + objectMessage.getSubject() + "      "
-						+ filterFromMessage(objectMessage.getFrom()[0].toString());
-
-				scrollEmails.addItem(informationEmail);
-			}
-
 			ScrollEmailListener.addScrollEmailListener(scrollEmails, mailPanelBox, contenPane);
 			viewScroll.add(scrollEmails);
 			return viewScroll;

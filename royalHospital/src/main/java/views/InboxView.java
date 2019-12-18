@@ -38,6 +38,7 @@ public class InboxView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					// :D
 					objectMail = new MailMethods();
 					objectMail.setAllDataConnection("pop.gmail.com", "pop3",
 							"jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");

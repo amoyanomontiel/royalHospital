@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.io.FilenameUtils;
+
+import com.royalhospital.royalHospital.Extensions;
+import com.royalhospital.royalHospital.SendNewMail;
 import com.royalhospital.royalHospital.UploadedFile;
 
 import javax.swing.JLabel;
@@ -33,6 +36,7 @@ import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 
 import javax.swing.JScrollPane;
+import java.awt.Color;
 
 public class NewMailView extends JFrame {
 
@@ -41,6 +45,7 @@ public class NewMailView extends JFrame {
 	private final int height = 30;
 	private ArrayList<UploadedFile> fileList;
 	private JPanel uploadedFilesPane;
+	private Extensions extensions;
 
 	/**
 	 * Launch the application.
@@ -68,9 +73,7 @@ public class NewMailView extends JFrame {
 			File[] selectedFiles = fc.getSelectedFiles();
 
 			for (int i = 0; i < selectedFiles.length; i++) {
-//				if (fileList.size() == 0 || !fileList.get(i).getFilePath().equals(selectedFiles[i].getAbsolutePath())) {
-					fileList.add(new UploadedFile(selectedFiles[i].getName(), selectedFiles[i].getAbsolutePath()));
-//				}
+				fileList.add(new UploadedFile(selectedFiles[i].getName(), selectedFiles[i].getAbsolutePath()));
 			}
 		}
 	}
@@ -124,6 +127,14 @@ public class NewMailView extends JFrame {
 					}
 					newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					newFile.putClientProperty("id", "jl" + i);
+					
+					if (extensions.getTextExtensions().contains(extension)) {
+						File fichero = new File(attachedFile.getFilePath());
+						if (fichero.length() == 0) {
+							newFile.setForeground(Color.RED);
+						}
+					}
+					
 					listUploadedFiles[i][j] = newFile;
 
 				} else if (j == 2) {
@@ -143,7 +154,7 @@ public class NewMailView extends JFrame {
 							}
 						}
 					});
-					
+
 					listUploadedFiles[i][j] = newDelete;
 				}
 			}
@@ -199,9 +210,6 @@ public class NewMailView extends JFrame {
 		case "sql":
 			return "src//main//java//views//sql.png";
 
-		case "jar":
-			return "src//main//java//views//jar.png";
-
 		case "java":
 			return "src//main//java//views//jar.png";
 
@@ -246,7 +254,9 @@ public class NewMailView extends JFrame {
 					// enviar mensaje
 				}
 			} else {
-				// enviar mensaje
+				SendNewMail newGmail = new SendNewMail("thenapo212@gmail.com", "N@pitoG@tito2");
+				System.out.println(fileList.size());
+				newGmail.sendNewGmail(addressee, subject, body, fileList);
 			}
 		} else {
 			if (!emptyaddressee || !emptysubject || !emptybody) {
@@ -266,6 +276,7 @@ public class NewMailView extends JFrame {
 	 */
 	public NewMailView() {
 		fileList = new ArrayList<UploadedFile>();
+		extensions = new Extensions();
 
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -309,6 +320,7 @@ public class NewMailView extends JFrame {
 		contentPane.add(lblUploaded);
 
 		uploadedFilesPane = new JPanel(null);
+		uploadedFilesPane.setBorder(null);
 		uploadedFilesPane.setBounds(67, 441, 678, 105);
 		contentPane.add(uploadedFilesPane);
 		uploadedFilesPane.setLayout(new GridLayout(1, 0, 0, 0));

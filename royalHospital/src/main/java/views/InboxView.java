@@ -38,7 +38,6 @@ public class InboxView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					// :D
 					objectMail = new MailMethods();
 					objectMail.setAllDataConnection("pop.gmail.com", "pop3",
 							"jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
@@ -59,9 +58,8 @@ public class InboxView extends JFrame {
 	 * Create the frame.
 	 */
 	public InboxView() {
-		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 840, 748);
+		setBounds(100, 100, 1381, 757);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

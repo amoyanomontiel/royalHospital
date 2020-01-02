@@ -169,13 +169,17 @@ public class MailMethods {
 	public static JPanel generateJEditorPaneEmail(int position) {
 		try {
 			Message objectMessage = messages[position];
-
-			Multipart multipart = (Multipart) objectMessage.getContent();
+			
+			try {
+				Multipart multipart = (Multipart) objectMessage.getContent();	
+			} catch (Exception e) {
+				String multipart = (String) objectMessage.getContent();
+			}
 
 			String bodyTextSave = "";
 			bodyTextSave += "<p align= 'left'>Subject:   " + objectMessage.getSubject() + "</p>";
 			bodyTextSave += "<p></p>";
-			bodyTextSave += "<p align= 'left'>From:   " + filterFromMessage(objectMessage.getFrom()[0].toString())
+			bodyTextSave += "<p align= 'left'> " + filterFromMessage(objectMessage.getFrom()[0].toString())
 					+ "</p>";
 			bodyTextSave += "<p></p>";
 			bodyTextSave += getBodyText(objectMessage);
@@ -186,6 +190,9 @@ public class MailMethods {
 			for (int counterAttachments = 0; counterAttachments < attachments.size(); counterAttachments++) {
 				filterName = searchOnlyNameAttachment(attachments.get(counterAttachments).toString());
 				bodyTextSave.replace(attachments.get(counterAttachments).toString(), "");
+				if(bodyTextSave.contains("<img")) {
+					bodyTextSave = searchLinks(bodyTextSave);	
+				}
 				bodyTextSave += "<a href=file:///'" + attachments.get(counterAttachments).toString() + "'>" + filterName
 						+ " </a>";
 			}
@@ -204,11 +211,58 @@ public class MailMethods {
 			return allEmailInfo;
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Error reading content about messages");
 			return null;
 		}
 	}
 
+	/**
+	 * This method search and remove all links on the body of the email
+	 * 
+	 * @param bodyTextSave String, contain all body context of the email
+	 * @return String, The filtered t
+	 */
+	public static String searchLinks(String bodyTextSave) {
+		char [] listOfCaracters = new char [bodyTextSave.length()];
+		String labelImage = "";
+		boolean dontSaveImageLink = false;
+		for(int counter = 0; counter < bodyTextSave.length(); counter++) {
+			if(dontSaveImageLink) {
+				if(bodyTextSave.charAt(counter-1) == ">".charAt(0)) {
+					dontSaveImageLink = false;
+				}
+			}
+			if(bodyTextSave.charAt(counter) == "<".charAt(0)) {
+				if(bodyTextSave.charAt(counter+1) == "i".charAt(0)) {
+					if(bodyTextSave.charAt(counter+2) == "m".charAt(0)) {
+						if(bodyTextSave.charAt(counter+3) == "g".charAt(0)) {
+							dontSaveImageLink = true;	
+						}else {
+							if(!dontSaveImageLink) {
+								listOfCaracters[counter] = bodyTextSave.charAt(counter);
+							}	
+						}
+					}else {
+						if(!dontSaveImageLink) {
+							listOfCaracters[counter] = bodyTextSave.charAt(counter);
+						}
+					}
+				}else {
+					if(!dontSaveImageLink) {
+						listOfCaracters[counter] = bodyTextSave.charAt(counter);
+					}
+				}
+			}else {
+				if(!dontSaveImageLink) {
+					listOfCaracters[counter] = bodyTextSave.charAt(counter);
+				}
+			}
+		}
+		System.out.println(String.valueOf(listOfCaracters));
+		return String.valueOf(listOfCaracters);
+	}
+	
 	/*
 	 * get the sender of Email
 	 */

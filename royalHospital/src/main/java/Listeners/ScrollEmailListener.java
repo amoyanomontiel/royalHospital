@@ -2,6 +2,7 @@ package Listeners;
 
 // All imports
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -39,7 +40,8 @@ public class ScrollEmailListener {
 					contenPaneCopy.remove(emailPanelBoxCopy);
 					emailPanelBoxCopy = com.royalhospital.royalHospital.MailMethods
 							.generateJEditorPaneEmail(JComboBoxParam.getSelectedIndex() - 1);
-					emailPanelBoxCopy.setBounds(12, 329, 810, 353);
+					emailPanelBoxCopy.setLocation(100, 500);
+					emailPanelBoxCopy.setBounds(12, 329, 1510, 353);
 					contenPaneCopy.add(emailPanelBoxCopy);
 					contenPaneCopy.setLayout(new BorderLayout(0, 0));
 					contenPaneCopy.revalidate();

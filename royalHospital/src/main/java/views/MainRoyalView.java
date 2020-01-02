@@ -11,6 +11,8 @@ import javax.swing.tree.TreeNode;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import com.royalhospital.royalHospital.DataModel;
+
+import listeners.CreateDirectoryListener;
 import listeners.DocumentsListener;
 import listeners.DownloadListener;
 import listeners.PatientsListener;
@@ -93,6 +95,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		contentPane.add(btnCreateDir);
 		btnCreateDir.setBackground(Color.WHITE);
 		btnCreateDir.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCreateDir.addActionListener(new CreateDirectoryListener(this, ftpClient));
 
 		JButton btnCreateFile = new JButton("Crear Fichero");
 		contentPane.add(btnCreateFile);
@@ -155,7 +158,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 				mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnDownload.setIcon(mydocIcon5);
 		
-		raiz = new DefaultMutableTreeNode("Royal Hospital");
+		raiz = new DefaultMutableTreeNode("\\" + user);
 		if (ftpClient.isConnected()) {
 			try {
 				if (roll.equalsIgnoreCase("MEDICO")) {

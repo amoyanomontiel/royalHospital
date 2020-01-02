@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 // All imports
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -74,14 +77,23 @@ public class InboxView extends JFrame {
 
 		JButton btnRefresh = new JButton("Refrescar");
 		btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		ImageIcon refreshIcon = new ImageIcon("src//main//java//views//refresh.jpg");
+		Icon newRefreshIcon = new ImageIcon(refreshIcon.getImage().getScaledInstance(width+5, height, Image.SCALE_DEFAULT));
+		btnRefresh.setIcon(newRefreshIcon);
 		headPane.add(btnRefresh);
 
 		JButton btnWriteEmail = new JButton("Redactar");
 		btnWriteEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		ImageIcon mailIcon = new ImageIcon("src//main//java//views//newGmail.png");
+		Icon newMailIcon = new ImageIcon(mailIcon.getImage().getScaledInstance(width+15, height, Image.SCALE_DEFAULT));
+		btnWriteEmail.setIcon(newMailIcon);
 		headPane.add(btnWriteEmail);
 
 		JButton btnCloseInbox = new JButton("Volver");
 		btnCloseInbox.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		ImageIcon returnIcon = new ImageIcon("src//main//java//views//homeIcon.png");
+		Icon newReturnIcon = new ImageIcon(returnIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+		btnCloseInbox.setIcon(newReturnIcon);
 		headPane.add(btnCloseInbox);
 
 		contextMailPane = new JPanel();

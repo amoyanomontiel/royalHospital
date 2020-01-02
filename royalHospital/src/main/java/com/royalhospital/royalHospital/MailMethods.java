@@ -221,7 +221,7 @@ public class MailMethods {
 	 * This method search and remove all links on the body of the email
 	 * 
 	 * @param bodyTextSave String, contain all body context of the email
-	 * @return String, The filtered t
+	 * @return String, The filtered body text
 	 */
 	public static String searchLinks(String bodyTextSave) {
 		char [] listOfCaracters = new char [bodyTextSave.length()];

@@ -9,6 +9,7 @@ import org.apache.commons.net.ftp.FTPReply;
 
 import com.royalhospital.royalHospital.DataModel;
 
+import conections.FTPConection;
 import views.MainRoyalView;
 
 public class RemoveListener implements ActionListener {

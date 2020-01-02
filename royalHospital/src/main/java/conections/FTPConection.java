@@ -7,8 +7,8 @@ import views.ErrorRoyalView;
 public class FTPConection {
 	private static String ftpServer = "localhost";
 	private static int port = 9000;
-	private final String ftpUser = "usuario";
-	private final String ftpPassword = "usuario";
+	private final static String ftpUser = "usuario";
+	private final static String ftpPassword = "usuario";
 
 //	public FTPConection(String ftpUser, String ftpPassword) {
 //		this.ftpUser = ftpUser;
@@ -19,7 +19,7 @@ public class FTPConection {
 		
 	}
 	
-	public FTPClient createFTPClient() {
+	public static FTPClient createFTPClient() {
 		FTPClient client = new FTPClient();
 		try {
 			client.connect(ftpServer, port);
@@ -37,5 +37,5 @@ public class FTPConection {
 		}
 		
 		return client;
-	}
+	}	
 }

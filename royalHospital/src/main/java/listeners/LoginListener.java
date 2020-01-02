@@ -29,7 +29,7 @@ public class LoginListener implements ActionListener {
 
 		if (!userText.equals("") && !passwordText.equals("")) {
 			if (!checkCredentials(userText, passwordText)) {
-				ErrorRoyalView error = new ErrorRoyalView("El usuario y la contraseña no coinciden.", 1);
+				ErrorRoyalView error = new ErrorRoyalView("El usuario o la contraseña no son correctos", 1);
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 				loginView.getTxtUserName().setText("");
@@ -93,6 +93,7 @@ public class LoginListener implements ActionListener {
 			ResultSet result = state.executeQuery("Select nameUser, password from usuarios where nameUser like '"
 					+ userText.toString() + "' and password like '" + passwordText.toString() + "'");
 			result.next();
+			System.out.println(result.getString(1) + result.getString(2));
 			isCorrect = true;
 		} catch (SQLException | NullPointerException e) {
 			isCorrect = false;

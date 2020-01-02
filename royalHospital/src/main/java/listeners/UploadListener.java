@@ -42,10 +42,14 @@ public class UploadListener implements ActionListener {
 							FileInputStream input = new FileInputStream(file);
 							FTPFile[] files = ftpClient.listFiles();
 							boolean exist = false;
+							System.out.println(file.getName());
 							for (FTPFile f : files) {
-								if (f.getName() == file.getName()) {
+								System.out.println(f.getName());
+								if (f.getName().equals(file.getName())) {
 									exist = true;
+									break;
 								}
+								System.out.println(exist);
 							}
 							if (exist) {
 								mainRoyal.getTxtaHistorial().append("El fichero ya existe en el directorio actual\n");

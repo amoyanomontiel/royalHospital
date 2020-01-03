@@ -44,7 +44,7 @@ public class CreateModifyView extends JFrame{
 		if(type == 0) {
 			//aqui listener del btnChange cuando se pulsa el botón de crear directorio
 			//Hay que crear una carpeta en el servidor FTP y un nodo nuevo en el arbol o borrar el arbol y crearlo de nuevo
-			btnChange.addActionListener(new ActionCreateDirectoryListener(ftpClient, textField.getText(), royalView));
+			btnChange.addActionListener(new ActionCreateDirectoryListener(ftpClient, textField, royalView));
 			
 		}else if(type == 1) {
 			//aqui listener del btnChange cuando se pulsa el botón de crear fichero

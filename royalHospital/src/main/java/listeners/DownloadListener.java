@@ -9,6 +9,8 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import com.royalhospital.royalHospital.DataModel;
+
+import views.ErrorRoyalView;
 import views.MainRoyalView;
 
 public class DownloadListener implements ActionListener {
@@ -27,10 +29,6 @@ public class DownloadListener implements ActionListener {
 			if (DataModel.selectedFile != "") {
 				try {
 					ftpClient.changeWorkingDirectory(DataModel.directionPath);
-				} catch (IOException e2) {
-					//Error
-				}
-				try {
 					String sDirectoryWork = System.getProperty("user.home") + "/Downloads/";
 					FileOutputStream out = new FileOutputStream(sDirectoryWork + DataModel.selectedFile);
 					if (ftpClient.retrieveFile(DataModel.selectedFile, out)) {
@@ -47,7 +45,9 @@ public class DownloadListener implements ActionListener {
 					}
 					out.close();
 				} catch (IOException e1) {
-					// Error
+					ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+					error.setVisible(true);
+					error.setLocationRelativeTo(null);
 				}
 			} else {
 				mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero en la lista \n");

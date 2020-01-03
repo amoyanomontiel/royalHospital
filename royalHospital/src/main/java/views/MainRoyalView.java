@@ -215,8 +215,9 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		try {
 			ftpClient.changeToParentDirectory();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+			error.setVisible(true);
+			error.setLocationRelativeTo(null);
 		}
 	}
 
@@ -252,7 +253,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		    	if(i == route.length-1) {
 			    	DataModel.directionPath = path;
 			    }
-			    path += "\\" + route[i];		    
+			    path += "/" + route[i];		    
 		    }
 		    DataModel.actualUserPath = path;
 		    System.out.println(path);

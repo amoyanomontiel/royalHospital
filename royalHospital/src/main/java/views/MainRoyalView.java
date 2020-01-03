@@ -164,12 +164,12 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 				if (roll.equalsIgnoreCase("MEDICO")) {
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
 					DataModel.directionPath = ftpClient.printWorkingDirectory();
-					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
+					seekFile(raiz, ftpClient.listFiles(), ftpClient);
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
 				} else if (roll.equalsIgnoreCase("PACIENTE")) {
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
 					DataModel.directionPath = ftpClient.printWorkingDirectory();
-					seekFile(raiz, ftpClient.listFiles(), ftpClient, roll, user);
+					seekFile(raiz, ftpClient.listFiles(), ftpClient);
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
 					
 					btnCreateDir.setEnabled(false);
@@ -191,7 +191,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		}
 	}
 
-	private void seekFile(DefaultMutableTreeNode raiz2, FTPFile[] files, FTPClient ftpClient, String roll, String user) {
+	private void seekFile(DefaultMutableTreeNode raiz2, FTPFile[] files, FTPClient ftpClient) {
 		FTPFile[] list = files;
 		if (list != null)
 			for (FTPFile fil : list) {
@@ -201,7 +201,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 					try {
 						ftpClient.changeWorkingDirectory(fil.getName());
 						FTPFile[] list2 = ftpClient.listFiles();
-						seekFile(directory, list2, ftpClient, roll, user);
+						seekFile(directory, list2, ftpClient);
 					} catch (IOException e) {
 						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 						error.setVisible(true);

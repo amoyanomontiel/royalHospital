@@ -26,6 +26,7 @@ public class PatientsListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		try {
 			client.changeWorkingDirectory("/Pacientes");
+			royal.getRaiz().setUserObject("/Pacientes");
 		} catch (IOException e1) {
 
 		}

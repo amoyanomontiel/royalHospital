@@ -28,6 +28,7 @@ public class DocumentsListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			ftpClient.changeWorkingDirectory("/Medicos/" + user);
+			royal.getRaiz().setUserObject("\\" + user);
 		} catch (IOException e1) {
 
 		}

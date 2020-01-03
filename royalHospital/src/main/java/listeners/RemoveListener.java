@@ -25,20 +25,28 @@ public class RemoveListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(DataModel.actualUserPath !="") {
+			ftpClient.enterLocalPassiveMode();
 			if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
+
 				try {
 					if (ftpClient.deleteFile(DataModel.selectedPath)) {
 						mainRoyal.getTxtaHistorial().append("Se borró el archivo satisfactoriamente\n");
 					} else {
 						mainRoyal.getTxtaHistorial().append("No se pudo borrar el archivo\n");
+						ftpClient.reinitialize();
 					}
-
 				} catch (IOException ex) {
 					// Error
 				}
 			} else {
 				mainRoyal.getTxtaHistorial()
 						.append("No se pudo borrar el archivo verifica que estás conectado al servidor\n");
+				try {
+					ftpClient.reinitialize();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}else {
 			mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero de la lista\n");

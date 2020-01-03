@@ -50,7 +50,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 
 	public MainRoyalView(FTPClient ftpClient, String user, String roll) {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
 		setTitle("Royal Hospital - Main");
 		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");

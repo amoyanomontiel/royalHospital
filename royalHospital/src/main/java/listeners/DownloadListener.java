@@ -26,7 +26,7 @@ public class DownloadListener implements ActionListener {
 		if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 			if (DataModel.selectedFile != "") {
 				try {
-					ftpClient.changeWorkingDirectory(DataModel.actualUserPath);
+					ftpClient.changeWorkingDirectory(DataModel.directionPath);
 				} catch (IOException e2) {
 					//Error
 				}

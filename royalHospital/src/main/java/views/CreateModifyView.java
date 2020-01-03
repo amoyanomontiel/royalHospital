@@ -17,7 +17,7 @@ public class CreateModifyView extends JFrame{
 	private JPanel contentPane;
 	private JTextField textField;
 	
-	public CreateModifyView(String button, String label, String title, int type, FTPClient ftpClient) {
+	public CreateModifyView(String button, String label, String title, int type, FTPClient ftpClient, MainRoyalView royalView) {
 		setResizable(false);
 		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 430, 120);
@@ -44,7 +44,7 @@ public class CreateModifyView extends JFrame{
 		if(type == 0) {
 			//aqui listener del btnChange cuando se pulsa el botón de crear directorio
 			//Hay que crear una carpeta en el servidor FTP y un nodo nuevo en el arbol o borrar el arbol y crearlo de nuevo
-			btnChange.addActionListener(new ActionCreateDirectoryListener(ftpClient, textField.getText()));
+			btnChange.addActionListener(new ActionCreateDirectoryListener(ftpClient, textField.getText(), royalView));
 			
 		}else if(type == 1) {
 			//aqui listener del btnChange cuando se pulsa el botón de crear fichero

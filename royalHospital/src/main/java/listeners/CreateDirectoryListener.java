@@ -25,12 +25,12 @@ public class CreateDirectoryListener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (DataModel.actualUserPath != "") {
 			if (FTPReply.isPositiveCompletion(client.getReplyCode())) {
-				CreateModifyView view = new CreateModifyView("Crear Directorio", "Introduce el nombre de directorio: ", "Crear Directorio", 0,client);
+				CreateModifyView view = new CreateModifyView("Crear Directorio", "Introduce el nombre de directorio: ", "Crear Directorio", 0, client, royal);
 				view.setVisible(true);
 				view.setLocationRelativeTo(null);
 			}
 		} else {
-			royal.getTxtaHistorial().append("Seleccione primero un directorio de la lista\n");
+			royal.getTxtaHistorial().append("Seleccione primero un directorio en donde crear la carpeta\n");
 		}
 		
 	}

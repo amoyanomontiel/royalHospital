@@ -91,7 +91,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnRemove.addActionListener(new RemoveListener(this, ftpClient));
 		
-		JButton btnCreateDir = new JButton("Crear Directorio");
+		JButton btnCreateDir = new JButton("Crear Carpeta");
 		contentPane.add(btnCreateDir);
 		btnCreateDir.setBackground(Color.WHITE);
 		btnCreateDir.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -158,7 +158,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 				mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnDownload.setIcon(mydocIcon5);
 		
-		raiz = new DefaultMutableTreeNode("\\" + user);
+		raiz = new DefaultMutableTreeNode("/Medicos/" + user);
 		if (ftpClient.isConnected()) {
 			try {
 				if (roll.equalsIgnoreCase("MEDICO")) {
@@ -178,7 +178,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 					btnPatient.setEnabled(false);
 					btnRemove.setEnabled(false);
 					btnRename.setEnabled(false);
-					btnDownload.setEnabled(false);
+//					btnDownload.setEnabled(false);
 				}
 			} catch (IOException | NullPointerException e) {
 				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);

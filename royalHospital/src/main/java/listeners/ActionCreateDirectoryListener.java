@@ -17,18 +17,20 @@ public class ActionCreateDirectoryListener implements ActionListener{
 	
 	private FTPClient ftp;
 	private String directoryName;
+	private MainRoyalView royal;
 
-	public ActionCreateDirectoryListener(FTPClient ftpClient, String directoryName) {
+	public ActionCreateDirectoryListener(FTPClient ftpClient, String directoryName, MainRoyalView royalView) {
 		this.ftp = ftpClient;
 		this.directoryName = directoryName;
+		this.royal = royalView;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		MainRoyalView royal = new MainRoyalView();
 		try {
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				FTPFile[] directory = ftp.listDirectories(DataModel.actualUserPath);
+				System.out.println(DataModel.actualUserPath);
 				for(FTPFile a: directory) {
 					if(a.getName().equalsIgnoreCase(directoryName)) {
 						royal.getTxtaHistorial().append("El directorio ya existe\n");

@@ -10,6 +10,9 @@ public class Extensions {
 	public Extensions() {
 		textExtensions = new ArrayList<String>();
 		forbiddenGmailExtensions = new ArrayList<String>();
+		
+		fillExtensions();
+		fillForbiddenGmailExtensions();
 	}
 	
 	private void fillExtensions() {
@@ -70,6 +73,9 @@ public class Extensions {
 		forbiddenGmailExtensions.add("wsc");
 		forbiddenGmailExtensions.add("wsf");
 		forbiddenGmailExtensions.add("wsh");
+		forbiddenGmailExtensions.add("rar");
+		forbiddenGmailExtensions.add("zip");
+		forbiddenGmailExtensions.add("7zip");
 	}
 
 

@@ -76,7 +76,6 @@ public class SendNewMail {
 			BodyPart messageBodyPart = new MimeBodyPart(); // Crear el cuerpo del mensaje
 			messageBodyPart.setText(body);
 			multipart.addBodyPart(messageBodyPart);
-			System.out.println(attached.size());
 			if (attached.size() != 0) {
 				for (UploadedFile currentFile : attached) {
 					messageBodyPart = new MimeBodyPart();

@@ -49,20 +49,20 @@ public class NewMailView extends JFrame {
 	private String gmailUsername = "thenapo212@gmail.com";
 	private String gmailPassword = "";
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewMailView frame = new NewMailView();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					NewMailView frame = new NewMailView();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	public void createFileChooser(JPanel contentPane) {
 		JFileChooser fc = new JFileChooser();

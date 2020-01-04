@@ -21,7 +21,7 @@ import javax.swing.JScrollPane;
 
 import org.apache.commons.lang3.StringUtils;
 
-import Listeners.ScrollEmailListener;
+import listeners.ScrollEmailListener;
 
 /**
  * Contail all methods about connect and receive all messages
@@ -202,7 +202,7 @@ public class MailMethods {
 			JEditorPane editor = new JEditorPane("text/html", bodyTextSave);
 
 			editor.setEditable(false);
-			Listeners.LinksEmailListener.addListenerLink(editor);
+			listeners.LinksEmailListener.addListenerLink(editor);
 
 			JScrollPane scrollElement = new JScrollPane(editor);
 

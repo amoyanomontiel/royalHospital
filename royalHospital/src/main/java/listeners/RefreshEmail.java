@@ -1,4 +1,4 @@
-package Listeners;
+package listeners;
 
 // All imports
 import java.awt.event.ActionEvent;

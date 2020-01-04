@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import com.royalhospital.royalHospital.MailMethods;
 import com.royalhospital.royalHospital.ThreadAutoRefresh;
 
-import Listeners.RefreshEmail;
+import listeners.RefreshEmail;
 
 public class InboxView extends JFrame {
 

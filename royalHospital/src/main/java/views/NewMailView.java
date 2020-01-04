@@ -37,6 +37,8 @@ import java.awt.GridLayout;
 
 import javax.swing.JScrollPane;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class NewMailView extends JFrame {
 
@@ -49,7 +51,6 @@ public class NewMailView extends JFrame {
 	private String gmailUsername = "thenapo212@gmail.com";
 	private String gmailPassword = "N@pitoG@tito2";
 
-	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -134,12 +135,12 @@ public class NewMailView extends JFrame {
 							newFile.setToolTipText("Este archivo contiene 0 bytes; por tanto, no se adjuntará");
 						}
 					}
-					
+
 					if (extensions.getForbiddenGmailExtensions().contains(extension)) {
 						newFile.setForeground(Color.RED);
 						newFile.setToolTipText("Este archivo no se puede mandar por gmail por motivos de seguridad");
 					}
-					
+
 					listUploadedFiles[i][j] = newFile;
 
 				} else if (j == 2) {
@@ -249,7 +250,7 @@ public class NewMailView extends JFrame {
 
 		if (action.equals("send")) {
 			SendNewMail newGmail = new SendNewMail(gmailUsername, gmailPassword);
-			
+
 			if (emptyaddressee) {
 				JOptionPane.showMessageDialog(null, "Debes introducir un destinatario", "Introduzca Destinatario",
 						JOptionPane.WARNING_MESSAGE);
@@ -297,6 +298,19 @@ public class NewMailView extends JFrame {
 		contentPane.add(lblAddressee);
 
 		JTextField textFieldAddressee = new JTextField();
+		textFieldAddressee.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				String addressee = textFieldAddressee.getText();
+				if (!addressee.contains("@gmail.com")) {
+					lblAddressee.setForeground(Color.RED);
+					lblAddressee.setToolTipText("No se ha encontrado la cuenta de correo ' "+ addressee +" '."
+							+ " Comprueba que no haya errores y vuelve a intentarlo.");
+				} else {
+					lblAddressee.setForeground(Color.BLACK);
+				}
+			}
+		});
 		textFieldAddressee.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textFieldAddressee.setBounds(230, 29, 515, 27);
 		contentPane.add(textFieldAddressee);

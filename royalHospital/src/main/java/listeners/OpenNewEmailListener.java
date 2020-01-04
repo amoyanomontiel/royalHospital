@@ -9,15 +9,12 @@ import views.NewMailView;
 
 public class OpenNewEmailListener {
 
-	private static NewMailView viewNewMail = new NewMailView();
 	
 	public static void addNewMailOpenListener(JButton openButton) {
 		openButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				if(!viewNewMail.isShowing()) {
-					viewNewMail.setVisible(true);	
-				}
+				NewMailView viewNewMail = new NewMailView();
 			}
 		});
 	}

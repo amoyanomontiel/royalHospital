@@ -18,15 +18,25 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 
+/**
+ * Login view class which define all frame properties
+ * 
+ * @author Cristina Montilla
+ *
+ */
 public class RoyalLoginView extends JFrame {
-
+	/**
+	 * View objects statement
+	 */
 	private JPanel contentPane;
 	private JTextField txtUserName;
 	private JButton btnLogin;
 	private JPasswordField txtPassword;
 
 	/**
-	 * Create the frame.
+	 * Creates the login frame
+	 * @param String user_email 
+	 * @param String iconRoute Route of the icon
 	 */
 	public RoyalLoginView(String user_email, String iconRoute) {
 		setResizable(false);
@@ -40,36 +50,36 @@ public class RoyalLoginView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		txtUserName = new JTextField();
 		txtUserName.setBounds(191, 220, 116, 22);
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
-		
+
 		JLabel lblUserName = new JLabel("Usuario");
 		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUserName.setBounds(98, 222, 71, 16);
 		contentPane.add(lblUserName);
-		
+
 		JLabel lblPassword = new JLabel("Contraseña");
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblPassword.setBounds(98, 280, 91, 16);
 		contentPane.add(lblPassword);
-		
+
 		btnLogin = new JButton("Entrar");
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogin.setBounds(144, 367, 116, 32);
 		contentPane.add(btnLogin);
-    	btnLogin.addActionListener(new LoginListener(this));
+		btnLogin.addActionListener(new LoginListener(this));
 
-		
 		JLabel lblRoyalIcon = new JLabel();
 		lblRoyalIcon.setBounds(70, 40, 268, 117);
 		ImageIcon img = new ImageIcon(RoyalLoginView.class.getResource("/views/royalhospital.png"));
-		Icon in = new ImageIcon(img.getImage().getScaledInstance(lblRoyalIcon.getWidth(), lblRoyalIcon.getHeight(), Image.SCALE_DEFAULT));
+		Icon in = new ImageIcon(img.getImage().getScaledInstance(lblRoyalIcon.getWidth(), lblRoyalIcon.getHeight(),
+				Image.SCALE_DEFAULT));
 		lblRoyalIcon.setIcon(in);
 		contentPane.add(lblRoyalIcon);
-		
+
 		txtPassword = new JPasswordField();
 		txtPassword.setBounds(191, 278, 116, 22);
 		contentPane.add(txtPassword);

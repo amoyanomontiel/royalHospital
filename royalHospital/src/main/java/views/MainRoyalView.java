@@ -29,25 +29,37 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 import java.awt.Font;
 
-public class MainRoyalView extends JFrame implements TreeSelectionListener{
-
+/**
+ * Principal view class which define all frame properties
+ * 
+ * @author Cristina Montilla / Daniel Cuenca
+ *
+ */
+public class MainRoyalView extends JFrame implements TreeSelectionListener {
+	/**
+	 * Principal class variables
+	 */
 	private static final int BTN_HEIGHT = 40;
 	private static final int IMG_HEIGHT = 30;
 	private static final int BTN_WIDTH = 150;
 	private static final int IMG_WIDTH = 30;
 	private JPanel contentPane;
-	private static DefaultMutableTreeNode raiz;
+	private static DefaultMutableTreeNode root;
 	private static JTextArea txtaHistorial;
 	private static JTree tree;
 	private static JScrollPane scrollPane, scrollHistory;
-	/**
-	 * Create the frame.
-	 * @param ftpClient 
-	 */
+
 	public MainRoyalView() {
 
 	}
 
+	/**
+	 * Creates the principal frame and the tree of server files
+	 * 
+	 * @param FTPClient ftpClient Client ftp for transfer operations
+	 * @param String    user Username
+	 * @param String    roll User roll
+	 */
 	public MainRoyalView(FTPClient ftpClient, String user, String roll) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -64,21 +76,21 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(64, 86, 691, 259);
 		contentPane.add(scrollPane);
-		
+
 		txtaHistorial = new JTextArea();
 		txtaHistorial.setEditable(false);
-		
+
 		scrollHistory = new JScrollPane();
 		scrollHistory.setBounds(64, 363, 691, 134);
 		scrollHistory.setViewportView(txtaHistorial);
 		contentPane.add(scrollHistory);
-		
+
 		JButton btnUpload = new JButton("Cargar");
 		contentPane.add(btnUpload);
 		btnUpload.setBackground(Color.WHITE);
 		btnUpload.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnUpload.addActionListener(new UploadListener(this, ftpClient));
-		
+
 		JButton btnDownload = new JButton("Descargar");
 		contentPane.add(btnDownload);
 		btnDownload.setBackground(Color.WHITE);
@@ -90,7 +102,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		btnRemove.setBackground(Color.WHITE);
 		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnRemove.addActionListener(new RemoveListener(this, ftpClient));
-		
+
 		JButton btnCreateDir = new JButton("Crear Directorio");
 		contentPane.add(btnCreateDir);
 		btnCreateDir.setBackground(Color.WHITE);
@@ -157,21 +169,21 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		Icon mydocIcon5 = new ImageIcon(
 				mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnDownload.setIcon(mydocIcon5);
-		
-		raiz = new DefaultMutableTreeNode("\\" + user);
+
+		root = new DefaultMutableTreeNode("\\" + user);
 		if (ftpClient.isConnected()) {
 			try {
 				if (roll.equalsIgnoreCase("MEDICO")) {
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
 					DataModel.directionPath = ftpClient.printWorkingDirectory();
-					seekFile(raiz, ftpClient.listFiles(), ftpClient);
+					seekFile(root, ftpClient.listFiles(), ftpClient);
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
 				} else if (roll.equalsIgnoreCase("PACIENTE")) {
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
 					DataModel.directionPath = ftpClient.printWorkingDirectory();
-					seekFile(raiz, ftpClient.listFiles(), ftpClient);
+					seekFile(root, ftpClient.listFiles(), ftpClient);
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
-					
+
 					btnCreateDir.setEnabled(false);
 					btnCreateFile.setEnabled(false);
 					btnDocuments.setEnabled(false);
@@ -185,19 +197,26 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 			}
-			tree = new JTree(raiz);
+			tree = new JTree(root);
 			scrollPane.setViewportView(tree);
 			tree.addTreeSelectionListener(this);
 		}
 	}
 
-	private void seekFile(DefaultMutableTreeNode raiz2, FTPFile[] files, FTPClient ftpClient) {
+	/**
+	 * Function which search and creates all nodes of the server files tree
+	 * 
+	 * @param DefaultMutableTreeNode root2 Root node
+	 * @param FTPFile[]              files List of server files
+	 * @param FTPClient              ftpClient Client ftp object
+	 */
+	private void seekFile(DefaultMutableTreeNode root2, FTPFile[] files, FTPClient ftpClient) {
 		FTPFile[] list = files;
 		if (list != null)
 			for (FTPFile fil : list) {
 				if (fil.isDirectory()) {
 					DefaultMutableTreeNode directory = new DefaultMutableTreeNode(fil.getName());
-					raiz2.add(directory);
+					root2.add(directory);
 					try {
 						ftpClient.changeWorkingDirectory(fil.getName());
 						FTPFile[] list2 = ftpClient.listFiles();
@@ -209,7 +228,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 					}
 				} else {
 					DefaultMutableTreeNode file = new DefaultMutableTreeNode(fil.getName());
-					raiz2.add(file);
+					root2.add(file);
 				}
 			}
 		try {
@@ -220,42 +239,53 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener{
 		}
 	}
 
-	public void changedJTree(DefaultMutableTreeNode arbol) {
-		tree = new JTree(arbol);
+	/**
+	 * Creates new JTree
+	 * 
+	 * @param DefaultMutableTreeNode completeTree The whole tree
+	 */
+	public void changedJTree(DefaultMutableTreeNode wholeTree) {
+		tree = new JTree(wholeTree);
 		scrollPane.setViewportView(tree);
 		tree.addTreeSelectionListener(this);
 	}
 
 	public DefaultMutableTreeNode getRaiz() {
-		return raiz;
+		return root;
 	}
+
 	public void setRaiz(DefaultMutableTreeNode raiz) {
-		this.raiz = raiz;
+		this.root = raiz;
 	}
+
 	public JTextArea getTxtaHistorial() {
 		return txtaHistorial;
 	}
+
 	public static void setTxtaHistorial(JTextArea txtaHistorial) {
 		MainRoyalView.txtaHistorial = txtaHistorial;
 	}
 
+	/**
+	 * Click event function for Jtree which save diferents roots and name of clicked
+	 * file
+	 */
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 		String path = "";
 		JTree atree = (JTree) e.getSource();
-		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) atree
-		        .getLastSelectedPathComponent();
-		    DataModel.selectedFile = selectedNode.toString();
-		    TreeNode[] route = selectedNode.getPath();
-		    for(int i = 0;i< route.length;i++){
-		    	System.out.println(path);
-		    	if(i == route.length-1) {
-			    	DataModel.directionPath = path;
-			    }
-			    path += "\\" + route[i];		    
-		    }
-		    DataModel.actualUserPath = path;
-		    System.out.println(path);
+		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) atree.getLastSelectedPathComponent();
+		DataModel.selectedFile = selectedNode.toString();
+		TreeNode[] route = selectedNode.getPath();
+		for (int i = 0; i < route.length; i++) {
+			System.out.println(path);
+			if (i == route.length - 1) {
+				DataModel.directionPath = path;
+			}
+			path += "\\" + route[i];
+		}
+		DataModel.actualUserPath = path;
+		System.out.println(path);
 	}
-	
+
 }

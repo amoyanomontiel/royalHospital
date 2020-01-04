@@ -3,18 +3,23 @@ package com.royalhospital.royalHospital;
 import views.RoyalLoginView;
 
 /**
- * Paquete controlador de la App
-  *
+ * Principal class which launches the application
+ * 
+ * @author Cristina Montilla / Daniel Cuenca
+ *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {        
-    	RoyalLoginView initLogin = new RoyalLoginView("Usuario", "/views/royalhospital.png");
-    	initLogin.setLocationRelativeTo(null);
-    	initLogin.setVisible(true);
-    	
-    	// Test about mail
+public class App {
+	/**
+	 * Launches the application and starts with login view
+	 * 
+	 * @param args Application startup arguments
+	 */
+	public static void main(String[] args) {
+		RoyalLoginView initLogin = new RoyalLoginView("Usuario", "/views/royalhospital.png");
+		initLogin.setLocationRelativeTo(null);
+		initLogin.setVisible(true);
+
+		// Test about mail
 //        MailMethods objetoMail = new MailMethods();
 //        objetoMail.setAllDataConnection("pop.gmail.com", "pop3", "jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
 //        objetoMail.setProperties();
@@ -22,6 +27,6 @@ public class App
 //        objetoMail.setFolderEmails();
 //        objetoMail.receiveAndSaveAllEmails();
 //        objetoMail.generateJScrollPaneWithEmails();
-        //objetoMail.storeAllMessages();
-    }
+		// objetoMail.storeAllMessages();
+	}
 }

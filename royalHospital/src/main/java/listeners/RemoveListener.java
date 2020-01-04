@@ -12,20 +12,35 @@ import com.royalhospital.royalHospital.DataModel;
 import conections.FTPConection;
 import views.MainRoyalView;
 
+/**
+ * Listener class for remove file button
+ * 
+ * @author Cristina Montilla
+ *
+ */
 public class RemoveListener implements ActionListener {
 
 	MainRoyalView mainRoyal;
 	FTPClient ftpClient;
 
+	/**
+	 * Initialize the objects
+	 * 
+	 * @param MainRoyalView mainRoyal Principal frame
+	 * @param FTPClient     ftpClient Client ftp object
+	 */
 	public RemoveListener(MainRoyalView mainRoyal, FTPClient ftpClient) {
 		this.mainRoyal = mainRoyal;
 		this.ftpClient = ftpClient;
 	}
 
+	/**
+	 * Click event function which takes selected File of tree and deletes it if its possible
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (DataModel.selectedFile != "") {
-			//ftpClient.enterLocalPassiveMode();
+			// ftpClient.enterLocalPassiveMode();
 			if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 				try {
 					ftpClient.changeWorkingDirectory(DataModel.directionPath);

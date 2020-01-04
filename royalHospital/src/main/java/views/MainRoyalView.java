@@ -102,8 +102,8 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		btnRemove.setBackground(Color.WHITE);
 		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnRemove.addActionListener(new RemoveListener(this, ftpClient));
-
-		JButton btnCreateDir = new JButton("Crear Directorio");
+		
+		JButton btnCreateDir = new JButton("Crear Carpeta");
 		contentPane.add(btnCreateDir);
 		btnCreateDir.setBackground(Color.WHITE);
 		btnCreateDir.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -190,7 +190,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 					btnPatient.setEnabled(false);
 					btnRemove.setEnabled(false);
 					btnRename.setEnabled(false);
-					btnDownload.setEnabled(false);
+//					btnDownload.setEnabled(false);
 				}
 			} catch (IOException | NullPointerException e) {
 				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
@@ -234,8 +234,9 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		try {
 			ftpClient.changeToParentDirectory();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+			error.setVisible(true);
+			error.setLocationRelativeTo(null);
 		}
 	}
 
@@ -274,18 +275,19 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 	public void valueChanged(TreeSelectionEvent e) {
 		String path = "";
 		JTree atree = (JTree) e.getSource();
-		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) atree.getLastSelectedPathComponent();
-		DataModel.selectedFile = selectedNode.toString();
-		TreeNode[] route = selectedNode.getPath();
-		for (int i = 0; i < route.length; i++) {
-			System.out.println(path);
-			if (i == route.length - 1) {
-				DataModel.directionPath = path;
-			}
-			path += "\\" + route[i];
-		}
-		DataModel.actualUserPath = path;
-		System.out.println(path);
+		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) atree
+		        .getLastSelectedPathComponent();
+		    DataModel.selectedFile = selectedNode.toString();
+		    TreeNode[] route = selectedNode.getPath();
+		    for(int i = 0;i< route.length;i++){
+		    	System.out.println(path);
+		    	if(i == route.length-1) {
+			    	DataModel.directionPath = path;
+			    }
+			    path += "/" + route[i];		    
+		    }
+		    DataModel.actualUserPath = path;
+		    System.out.println(path);
 	}
 
 }

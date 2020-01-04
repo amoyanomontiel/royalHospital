@@ -10,6 +10,7 @@ import org.apache.commons.net.ftp.FTPReply;
 import com.royalhospital.royalHospital.DataModel;
 
 import conections.FTPConection;
+import views.ErrorRoyalView;
 import views.MainRoyalView;
 
 /**
@@ -50,7 +51,9 @@ public class RemoveListener implements ActionListener {
 						mainRoyal.getTxtaHistorial().append("No se pudo borrar el archivo\n");
 					}
 				} catch (IOException ex) {
-					// Error
+					ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+					error.setVisible(true);
+					error.setLocationRelativeTo(null);
 				}
 			} else {
 				mainRoyal.getTxtaHistorial()

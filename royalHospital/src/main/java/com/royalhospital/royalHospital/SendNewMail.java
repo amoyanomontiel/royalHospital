@@ -9,6 +9,7 @@ import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -30,7 +31,12 @@ public class SendNewMail {
 	
 	public void sendNewGmail(String addressee, String subject, String body, ArrayList<UploadedFile> attached) {
 		Properties props = establishGmailPropierties();
-		Session session = Session.getDefaultInstance(props);
+		Session session = Session.getInstance(props,  
+			    new javax.mail.Authenticator() {
+			       protected PasswordAuthentication getPasswordAuthentication() {  
+			       return new PasswordAuthentication(sender,password);  
+			   }  
+			   });
 		
 		try {
 			MimeMessage message = new MimeMessage(session);
@@ -60,15 +66,16 @@ public class SendNewMail {
 	 * Define the properties of the gmail server and define the gmail account that you are going to use
 	 */
 	public Properties establishGmailPropierties() {
-		Properties props = System.getProperties();
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.user", sender);
-		props.put("mail.smtp.clave", password);
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.port", "587");
-		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-		return props;
+		Properties props = new Properties();  
+	    props.setProperty("mail.transport.protocol", "smtp");     
+	    props.setProperty("mail.host", "smtp.gmail.com");  
+	    props.put("mail.smtp.auth", "true");  
+	    props.put("mail.smtp.port", "465");  
+	    props.put("mail.debug", "true");  
+	    props.put("mail.smtp.socketFactory.port", "465");  
+	    props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");  
+	    props.put("mail.smtp.socketFactory.fallback", "false");  
+	    return props;
 	}
 	
 	public Multipart createMessage(String body, ArrayList<UploadedFile> attached) {

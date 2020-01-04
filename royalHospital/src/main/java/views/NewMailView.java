@@ -281,94 +281,102 @@ public class NewMailView extends JFrame {
 	 * Create the frame.
 	 */
 	public NewMailView() {
-		fileList = new ArrayList<UploadedFile>();
-		extensions = new Extensions();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					fileList = new ArrayList<UploadedFile>();
+					extensions = new Extensions();
 
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 850, 700);
-		JPanel contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+					setResizable(false);
+					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					setBounds(100, 100, 850, 700);
+					JPanel contentPane = new JPanel();
+					contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+					setContentPane(contentPane);
+					contentPane.setLayout(null);
 
-		JLabel lblAddressee = new JLabel("Destinatario");
-		lblAddressee.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblAddressee.setBounds(67, 29, 102, 27);
-		contentPane.add(lblAddressee);
+					JLabel lblAddressee = new JLabel("Destinatario");
+					lblAddressee.setFont(new Font("Tahoma", Font.BOLD, 15));
+					lblAddressee.setBounds(67, 29, 102, 27);
+					contentPane.add(lblAddressee);
 
-		JTextField textFieldAddressee = new JTextField();
-		textFieldAddressee.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textFieldAddressee.setBounds(230, 29, 515, 27);
-		contentPane.add(textFieldAddressee);
-		textFieldAddressee.setColumns(10);
+					JTextField textFieldAddressee = new JTextField();
+					textFieldAddressee.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					textFieldAddressee.setBounds(230, 29, 515, 27);
+					contentPane.add(textFieldAddressee);
+					textFieldAddressee.setColumns(10);
 
-		JLabel lblSubject = new JLabel("Asunto");
-		lblSubject.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblSubject.setBounds(67, 87, 62, 27);
-		contentPane.add(lblSubject);
+					JLabel lblSubject = new JLabel("Asunto");
+					lblSubject.setFont(new Font("Tahoma", Font.BOLD, 15));
+					lblSubject.setBounds(67, 87, 62, 27);
+					contentPane.add(lblSubject);
 
-		JTextField textFieldSubjectText = new JTextField();
-		textFieldSubjectText.setFont(new Font("Times New Roman", Font.PLAIN, 18));
-		textFieldSubjectText.setColumns(10);
-		textFieldSubjectText.setBounds(230, 87, 515, 27);
-		contentPane.add(textFieldSubjectText);
+					JTextField textFieldSubjectText = new JTextField();
+					textFieldSubjectText.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+					textFieldSubjectText.setColumns(10);
+					textFieldSubjectText.setBounds(230, 87, 515, 27);
+					contentPane.add(textFieldSubjectText);
 
-		JTextArea textAreaBody = new JTextArea();
-		textAreaBody.setBounds(67, 160, 678, 200);
-		textAreaBody.setWrapStyleWord(true);
-		textAreaBody.setLineWrap(true);
-		contentPane.add(textAreaBody);
+					JTextArea textAreaBody = new JTextArea();
+					textAreaBody.setBounds(67, 160, 678, 200);
+					textAreaBody.setWrapStyleWord(true);
+					textAreaBody.setLineWrap(true);
+					contentPane.add(textAreaBody);
 
-		JLabel lblUploaded = new JLabel("Archivos Adjuntos");
-		lblUploaded.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblUploaded.setBounds(340, 392, 142, 27);
-		contentPane.add(lblUploaded);
+					JLabel lblUploaded = new JLabel("Archivos Adjuntos");
+					lblUploaded.setFont(new Font("Tahoma", Font.BOLD, 15));
+					lblUploaded.setBounds(340, 392, 142, 27);
+					contentPane.add(lblUploaded);
 
-		uploadedFilesPane = new JPanel(null);
-		uploadedFilesPane.setBorder(null);
-		uploadedFilesPane.setBounds(67, 441, 678, 105);
-		contentPane.add(uploadedFilesPane);
-		uploadedFilesPane.setLayout(new GridLayout(1, 0, 0, 0));
+					uploadedFilesPane = new JPanel(null);
+					uploadedFilesPane.setBorder(null);
+					uploadedFilesPane.setBounds(67, 441, 678, 105);
+					contentPane.add(uploadedFilesPane);
+					uploadedFilesPane.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JButton btnNewFile = new JButton(" Adjuntar");
-		btnNewFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				createFileChooser(contentPane);
-				refreshUploadedFiles();
+					JButton btnNewFile = new JButton(" Adjuntar");
+					btnNewFile.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							createFileChooser(contentPane);
+							refreshUploadedFiles();
+						}
+					});
+					btnNewFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					btnNewFile.setBounds(67, 593, 150, 40);
+					ImageIcon fileIcon = new ImageIcon("src//main//java//views//download.png");
+					Icon newFileIcon = new ImageIcon(fileIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+					btnNewFile.setIcon(newFileIcon);
+					contentPane.add(btnNewFile);
+
+					JButton btnSend = new JButton(" Enviar");
+					btnSend.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							checkTextBoxes(textFieldAddressee, textFieldSubjectText, textAreaBody, "send");
+						}
+					});
+					btnSend.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					btnSend.setBounds(595, 593, 150, 40);
+					ImageIcon sendIcon = new ImageIcon("src//main//java//views//send.png");
+					Icon newSendIcon = new ImageIcon(sendIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+					btnSend.setIcon(newSendIcon);
+					contentPane.add(btnSend);
+
+					JButton btnCancel = new JButton(" Cancelar");
+					btnCancel.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							checkTextBoxes(textFieldAddressee, textFieldSubjectText, textAreaBody, "cancel");
+						}
+					});
+					btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					btnCancel.setBounds(381, 593, 150, 40);
+					ImageIcon cancelIcon = new ImageIcon("src//main//java//views//cancel.png");
+					Icon newCancelIcon = new ImageIcon(cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+					btnCancel.setIcon(newCancelIcon);
+					contentPane.add(btnCancel);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 			}
 		});
-		btnNewFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewFile.setBounds(67, 593, 150, 40);
-		ImageIcon fileIcon = new ImageIcon("src//main//java//views//download.png");
-		Icon newFileIcon = new ImageIcon(fileIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-		btnNewFile.setIcon(newFileIcon);
-		contentPane.add(btnNewFile);
-
-		JButton btnSend = new JButton(" Enviar");
-		btnSend.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				checkTextBoxes(textFieldAddressee, textFieldSubjectText, textAreaBody, "send");
-			}
-		});
-		btnSend.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnSend.setBounds(595, 593, 150, 40);
-		ImageIcon sendIcon = new ImageIcon("src//main//java//views//send.png");
-		Icon newSendIcon = new ImageIcon(sendIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-		btnSend.setIcon(newSendIcon);
-		contentPane.add(btnSend);
-
-		JButton btnCancel = new JButton(" Cancelar");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				checkTextBoxes(textFieldAddressee, textFieldSubjectText, textAreaBody, "cancel");
-			}
-		});
-		btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCancel.setBounds(381, 593, 150, 40);
-		ImageIcon cancelIcon = new ImageIcon("src//main//java//views//cancel.png");
-		Icon newCancelIcon = new ImageIcon(cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-		btnCancel.setIcon(newCancelIcon);
-		contentPane.add(btnCancel);
 	}
 }

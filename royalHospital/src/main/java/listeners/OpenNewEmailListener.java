@@ -15,6 +15,7 @@ public class OpenNewEmailListener {
 			
 			public void actionPerformed(ActionEvent e) {
 				NewMailView viewNewMail = new NewMailView();
+				viewNewMail.setVisible(true);
 			}
 		});
 	}

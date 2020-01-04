@@ -32,24 +32,34 @@ public class ActionCreateDirectoryListener implements ActionListener {
 		try {
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				FTPFile[] directory = ftp.listDirectories(DataModel.actualUserPath);
-				for (FTPFile a : directory) {
-					if (!directoryName.getText().toString().equalsIgnoreCase("")) {
-						if (a.getName().equalsIgnoreCase(directoryName.getText().toString())) {
-							royal.getTxtaHistorial().append("El directorio ya existe\n");
-						} else {
-							ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
-							royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
+				if(directory != null) {
+					for (FTPFile a : directory) {
+						if (!directoryName.getText().toString().equalsIgnoreCase("")) {
+							if (a.getName().equalsIgnoreCase(directoryName.getText().toString())) {
+								royal.getTxtaHistorial().append("El directorio ya existe\n");
+							} else {
+								ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
+								royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
+								break;
+							}
+						}else {
+							ErrorRoyalView error = new ErrorRoyalView("Escribe un nombre para la carpeta", 1);
+							error.setVisible(true);
+							error.setLocationRelativeTo(null);
 							break;
 						}
+					}
+				}else {
+					if(!directoryName.getText().toString().equalsIgnoreCase("")) {
+						ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
+						royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
 					}else {
 						ErrorRoyalView error = new ErrorRoyalView("Escribe un nombre para la carpeta", 1);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
-						break;
 					}
 				}
 			}
-
 		} catch (IOException e1) {
 			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 			error.setVisible(true);

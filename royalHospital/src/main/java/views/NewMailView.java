@@ -47,7 +47,7 @@ public class NewMailView extends JFrame {
 	private JPanel uploadedFilesPane;
 	private Extensions extensions;
 	private String gmailUsername = "thenapo212@gmail.com";
-	private String gmailPassword = "";
+	private String gmailPassword = "N@pitoG@tito2";
 
 //	/**
 //	 * Launch the application.

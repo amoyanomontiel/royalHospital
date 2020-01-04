@@ -11,13 +11,13 @@ import com.royalhospital.royalHospital.DataModel;
 import views.CreateModifyView;
 import views.MainRoyalView;
 
-public class CreateFileButton implements ActionListener{
+public class CreateFileButtonListener implements ActionListener{
 	
 	private MainRoyalView royal;
 	private FTPClient ftp;
 	
 	
-	public CreateFileButton(MainRoyalView mainRoyalView, FTPClient ftpClient) {
+	public CreateFileButtonListener(MainRoyalView mainRoyalView, FTPClient ftpClient) {
 		this.ftp = ftpClient;
 		this.royal = mainRoyalView;
 	}
@@ -31,7 +31,7 @@ public class CreateFileButton implements ActionListener{
 				view.setLocationRelativeTo(null);
 			}
 		} else {
-			royal.getTxtaHistorial().append("Seleccione primero una carpeta donde crear el fichero\n");
+			royal.getTxtaHistorial().append("Seleccione primero una carpeta en donde crear el fichero\n");
 		}
 		
 	}

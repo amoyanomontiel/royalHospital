@@ -13,7 +13,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import com.royalhospital.royalHospital.DataModel;
 
 import listeners.CreateDirectoryListener;
-import listeners.CreateFileButton;
+import listeners.CreateFileButtonListener;
 import listeners.DocumentsListener;
 import listeners.DownloadListener;
 import listeners.PatientsListener;
@@ -114,7 +114,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		contentPane.add(btnCreateFile);
 		btnCreateFile.setBackground(Color.WHITE);
 		btnCreateFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCreateFile.addActionListener(new CreateFileButton(this, ftpClient));
+		btnCreateFile.addActionListener(new CreateFileButtonListener(this, ftpClient));
 
 		JButton btnRename = new JButton("Renombrar");
 		contentPane.add(btnRename);

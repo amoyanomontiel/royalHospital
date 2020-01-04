@@ -53,4 +53,8 @@ public class FTPConection {
 
 		return client;
 	}
+	
+	public static void reconection() {
+		
+	}
 }

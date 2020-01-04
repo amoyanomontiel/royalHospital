@@ -32,7 +32,7 @@ public class ActionCreateDirectoryListener implements ActionListener {
 		try {
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				FTPFile[] directory = ftp.listDirectories(DataModel.actualUserPath);
-				if(directory != null) {
+				if(directory != null && directory.length != 0) {
 					for (FTPFile a : directory) {
 						if (!directoryName.getText().toString().equalsIgnoreCase("")) {
 							if (a.getName().equalsIgnoreCase(directoryName.getText().toString())) {

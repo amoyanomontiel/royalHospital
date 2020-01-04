@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import org.apache.commons.net.ftp.FTPClient;
 
 import listeners.ActionCreateDirectoryListener;
+import listeners.ActionCreateFileListener;
 
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -49,6 +50,7 @@ public class CreateModifyView extends JFrame{
 		}else if(type == 1) {
 			//aqui listener del btnChange cuando se pulsa el botón de crear fichero
 			//Hay que crear una carpeta en el servidor FTP y un nodo nuevo en el arbol o borrar el arbol y crearlo de nuevo
+			btnChange.addActionListener(new ActionCreateFileListener(ftpClient, textField, royalView));
 		}else {
 			//aqui listener del btnChange cuando se pulsa el botón de renombrar
 			//Hay que cambiar el nombre de una carpeta en el servidor FTP y un nodo en el arbol o borrar el arbol y crearlo de nuevo

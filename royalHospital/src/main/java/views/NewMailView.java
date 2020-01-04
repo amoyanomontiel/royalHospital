@@ -55,7 +55,6 @@ public class NewMailView extends JFrame {
 			public void run() {
 				try {
 					NewMailView frame = new NewMailView();
-					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

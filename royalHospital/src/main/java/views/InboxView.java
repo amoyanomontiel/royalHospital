@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import com.royalhospital.royalHospital.MailMethods;
 import com.royalhospital.royalHospital.ThreadAutoRefresh;
 
+import listeners.OpenNewEmailListener;
 import listeners.RefreshEmail;
 
 public class InboxView extends JFrame {
@@ -114,6 +115,8 @@ public class InboxView extends JFrame {
 		RefreshEmail.addRefreshButtonListener(btnRefresh, contentPane, contextMailPane);
 		contentPane.add(mailListPane);
 
+		OpenNewEmailListener.addNewMailOpenListener(btnWriteEmail);
+		
 		/**
 		 * Create and start Thread that auto refresh the JComboBox with emails
 		 */

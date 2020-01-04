@@ -63,6 +63,7 @@ public class NewMailView extends JFrame {
 //		});
 //	}
 
+
 	public void createFileChooser(JPanel contentPane) {
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -369,6 +370,5 @@ public class NewMailView extends JFrame {
 		Icon newCancelIcon = new ImageIcon(cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 		btnCancel.setIcon(newCancelIcon);
 		contentPane.add(btnCancel);
-		setVisible(true);
 	}
 }

@@ -27,24 +27,27 @@ public class DownloadListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 			if (DataModel.selectedFile != "") {
+				if(checkDirectory()) {
+					
+				}
 				try {
-					ftpClient.changeWorkingDirectory(DataModel.directionPath);
+					//ftpClient.changeWorkingDirectory(DataModel.directionPath);
 					String sDirectoryWork = System.getProperty("user.home") + "/Downloads/";
 					FileOutputStream out = new FileOutputStream(sDirectoryWork + DataModel.selectedFile);
 					if (ftpClient.retrieveFile(DataModel.selectedFile, out)) {
 						mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito \n");
 					} else {
-//						System.out.println(DataModel.actualUserPath);
-//						FTPFile downFile = ftpClient.mlistFile(DataModel.actualUserPath);						
-//						if(downFile.isDirectory()) {
-//							mainRoyal.getTxtaHistorial().append("No es posible descargar un directorio \n");
-//						}else {
-//							mainRoyal.getTxtaHistorial().append("No es posible descargar el fichero \n");
-//						}
-
+						System.out.println(DataModel.actualUserPath);
+						FTPFile downFile = ftpClient.mlistFile(DataModel.actualUserPath);						
+						if(downFile.isDirectory()) {
+							mainRoyal.getTxtaHistorial().append("No es posible descargar un directorio \n");
+						}else {
+							mainRoyal.getTxtaHistorial().append("No es posible descargar el fichero \n");
+						}
 					}
 					out.close();
 				} catch (IOException e1) {
+					System.out.println(e1.getMessage());
 					ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 					error.setVisible(true);
 					error.setLocationRelativeTo(null);
@@ -53,5 +56,10 @@ public class DownloadListener implements ActionListener {
 				mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero en la lista \n");
 			}
 		}
+	}
+
+	private boolean checkDirectory() {
+		boolean isDirectory = false;
+		return isDirectory;
 	}
 }

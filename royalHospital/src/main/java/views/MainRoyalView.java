@@ -170,7 +170,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 				mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnDownload.setIcon(mydocIcon5);
 
-		root = new DefaultMutableTreeNode("\\" + user);
+		root = new DefaultMutableTreeNode("/Medicos/" + user);
 		if (ftpClient.isConnected()) {
 			try {
 				if (roll.equalsIgnoreCase("MEDICO")) {

@@ -210,7 +210,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 	 * @param FTPFile[]              files List of server files
 	 * @param FTPClient              ftpClient Client ftp object
 	 */
-	private void seekFile(DefaultMutableTreeNode root2, FTPFile[] files, FTPClient ftpClient) {
+	public void seekFile(DefaultMutableTreeNode root2, FTPFile[] files, FTPClient ftpClient) {
 		FTPFile[] list = files;
 		if (list != null)
 			for (FTPFile fil : list) {
@@ -241,7 +241,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 	}
 
 	/**
-	 * Creates new JTree
+	 * Creates new JTree for updates
 	 * 
 	 * @param DefaultMutableTreeNode completeTree The whole tree
 	 */

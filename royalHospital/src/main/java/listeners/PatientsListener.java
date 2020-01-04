@@ -35,41 +35,12 @@ public class PatientsListener implements ActionListener {
 		raiz.removeAllChildren();
 
 		try {
-			seekFile(raiz, client.listFiles(), client);
+			royal.seekFile(raiz, client.listFiles(), client);
 			client.changeWorkingDirectory("/Pacientes");
 		} catch (IOException e1) {
 
 		}
 		royal.changedJTree(raiz);
 
-	}
-
-	private void seekFile(DefaultMutableTreeNode raiz2, FTPFile[] files, FTPClient ftpClient) {
-		FTPFile[] list = files;
-		if (list != null)
-			for (FTPFile fil : list) {
-				if (fil.isDirectory()) {
-					DefaultMutableTreeNode directory = new DefaultMutableTreeNode(fil.getName());
-					raiz2.add(directory);
-					try {
-						ftpClient.changeWorkingDirectory(fil.getName());
-						FTPFile[] list2 = ftpClient.listFiles();
-						seekFile(directory, list2, ftpClient);
-					} catch (IOException e) {
-						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
-						error.setVisible(true);
-						error.setLocationRelativeTo(null);
-					}
-				} else {
-					DefaultMutableTreeNode file = new DefaultMutableTreeNode(fil.getName());
-					raiz2.add(file);
-				}
-			}
-		try {
-			ftpClient.changeToParentDirectory();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }

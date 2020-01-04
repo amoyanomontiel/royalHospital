@@ -46,10 +46,10 @@ public class NewMailView extends JFrame {
 	private ArrayList<UploadedFile> fileList;
 	private JPanel uploadedFilesPane;
 	private Extensions extensions;
+	private String gmailUsername = "thenapo212@gmail.com";
+	private String gmailPassword = "N@pitoG@tito2";
 
-	/**
-	 * Launch the application.
-	 */
+	
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
@@ -57,7 +57,7 @@ public class NewMailView extends JFrame {
 //					NewMailView frame = new NewMailView();
 //					frame.setVisible(true);
 //				} catch (Exception e) {
-//					e.printStackTrace();
+//					System.out.println(e.getMessage());
 //				}
 //			}
 //		});
@@ -127,12 +127,17 @@ public class NewMailView extends JFrame {
 					}
 					newFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					newFile.putClientProperty("id", "jl" + i);
-					
 					if (extensions.getTextExtensions().contains(extension)) {
 						File fichero = new File(attachedFile.getFilePath());
 						if (fichero.length() == 0) {
 							newFile.setForeground(Color.RED);
+							newFile.setToolTipText("Este archivo contiene 0 bytes; por tanto, no se adjuntará");
 						}
+					}
+					
+					if (extensions.getForbiddenGmailExtensions().contains(extension)) {
+						newFile.setForeground(Color.RED);
+						newFile.setToolTipText("Este archivo no se puede mandar por gmail por motivos de seguridad");
 					}
 					
 					listUploadedFiles[i][j] = newFile;
@@ -243,6 +248,8 @@ public class NewMailView extends JFrame {
 			emptybody = true;
 
 		if (action.equals("send")) {
+			SendNewMail newGmail = new SendNewMail(gmailUsername, gmailPassword);
+			
 			if (emptyaddressee) {
 				JOptionPane.showMessageDialog(null, "Debes introducir un destinatario", "Introduzca Destinatario",
 						JOptionPane.WARNING_MESSAGE);
@@ -251,11 +258,9 @@ public class NewMailView extends JFrame {
 						"¿Estás seguro de que quieres enviar un mensaje sin asunto o sin cuerpo?", "Enviar Mensaje",
 						JOptionPane.YES_NO_OPTION);
 				if (answer == 0) {
-					// enviar mensaje
+					newGmail.sendNewGmail(addressee, subject, body, fileList);
 				}
 			} else {
-				SendNewMail newGmail = new SendNewMail("jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
-				System.out.println(fileList.size());
 				newGmail.sendNewGmail(addressee, subject, body, fileList);
 			}
 		} else {

@@ -287,7 +287,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 			    path += "/" + route[i];		    
 		    }
 		    DataModel.actualUserPath = path;
-		    System.out.println(path);
+			txtaHistorial.append("Archivo seleccionado: " + DataModel.selectedFile + "\n");
 	}
 
 }

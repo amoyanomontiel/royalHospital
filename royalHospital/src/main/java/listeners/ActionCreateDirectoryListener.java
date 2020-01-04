@@ -43,7 +43,7 @@ public class ActionCreateDirectoryListener implements ActionListener {
 								break;
 							}
 						}else {
-							ErrorRoyalView error = new ErrorRoyalView("Escribe un nombre para la carpeta", 1);
+							ErrorRoyalView error = new ErrorRoyalView("Escribe un nombre para el directorio", 1);
 							error.setVisible(true);
 							error.setLocationRelativeTo(null);
 							break;
@@ -54,7 +54,7 @@ public class ActionCreateDirectoryListener implements ActionListener {
 						ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
 						royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
 					}else {
-						ErrorRoyalView error = new ErrorRoyalView("Escribe un nombre para la carpeta", 1);
+						ErrorRoyalView error = new ErrorRoyalView("Escribe un nombre para el directorio", 1);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
 					}

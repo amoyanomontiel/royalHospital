@@ -2,6 +2,7 @@ package listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import org.apache.commons.net.ftp.FTPClient;
@@ -30,22 +31,27 @@ public class DownloadListener implements ActionListener {
 					try {
 						ftpClient.changeWorkingDirectory(DataModel.directionPath);
 						String sDirectoryWork = System.getProperty("user.home") + "/Downloads/";
-						FileOutputStream out = new FileOutputStream(sDirectoryWork + DataModel.selectedFile);
-						if (ftpClient.retrieveFile(DataModel.selectedFile, out)) {
-							mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito \n");
+						File downloadDirectory = new File(sDirectoryWork + DataModel.selectedFile);
+						if (downloadDirectory.exists()) {
+							mainRoyal.getTxtaHistorial()
+									.append("El fichero ya está descargado, revise su directorio de descargas\n");
 						} else {
-							mainRoyal.getTxtaHistorial().append("No se pudo descargar el fichero \n");
+							FileOutputStream out = new FileOutputStream(sDirectoryWork + DataModel.selectedFile);
+							if (ftpClient.retrieveFile(DataModel.selectedFile, out)) {
+								mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito \n");
+							} else {
+								mainRoyal.getTxtaHistorial().append("No se pudo descargar el fichero \n");
+							}
 						}
-						out.close();
 					} catch (IOException e1) {
 						System.out.println(e1.getMessage());
 						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
 					}
-				}else {
+				} else {
 					mainRoyal.getTxtaHistorial().append("No es posible descargar un directorio \n");
-				}				
+				}
 			} else {
 				mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero en la lista \n");
 			}
@@ -60,7 +66,7 @@ public class DownloadListener implements ActionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if(file.isDirectory()) {
+		if (file.isDirectory()) {
 			isDirectory = true;
 		}
 		return isDirectory;

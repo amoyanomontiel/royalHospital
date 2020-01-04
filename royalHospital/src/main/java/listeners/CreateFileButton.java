@@ -31,7 +31,7 @@ public class CreateFileButton implements ActionListener{
 				view.setLocationRelativeTo(null);
 			}
 		} else {
-			royal.getTxtaHistorial().append("Seleccione primero una carpeta en donde crear el fichero\n");
+			royal.getTxtaHistorial().append("Seleccione primero una carpeta donde crear el fichero\n");
 		}
 		
 	}

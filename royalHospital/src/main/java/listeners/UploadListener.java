@@ -42,23 +42,25 @@ public class UploadListener implements ActionListener {
 							FileInputStream input = new FileInputStream(file);
 							FTPFile[] files = ftpClient.listFiles();
 							boolean exist = false;
-							System.out.println(file.getName());
-							for (FTPFile f : files) {
-								System.out.println(f.getName());
-								if (f.getName().equals(file.getName())) {
-									exist = true;
-									break;
+							if (files != null) {
+								System.out.println(file.getName());
+								for (FTPFile f : files) {
+									System.out.println(f.getName());
+									if (f.getName().equals(file.getName())) {
+										exist = true;
+										break;
+									}
+									System.out.println(exist);
 								}
-								System.out.println(exist);
 							}
 							if (exist) {
 								mainRoyal.getTxtaHistorial().append("El fichero ya existe en el directorio actual\n");
 							} else {
 								if (ftpClient.storeFile(file.getName(), input)) {
-									mainRoyal.getTxtaHistorial().append("Cargó satisfactoriamente el archivo\n");
-									//Aquí actualizar JTree
+									mainRoyal.getTxtaHistorial().append("Cargó satisfactoriamente el fichero\n");
+									// Aquí actualizar JTree
 								} else {
-									mainRoyal.getTxtaHistorial().append("No se pudo cargar el archivo\n");
+									mainRoyal.getTxtaHistorial().append("No se pudo cargar el fichero\n");
 								}
 							}
 							input.close();
@@ -71,7 +73,7 @@ public class UploadListener implements ActionListener {
 			}
 			// Error
 		} else {
-			mainRoyal.getTxtaHistorial().append("Seleccione primero un directorio de la lista\n");
+			mainRoyal.getTxtaHistorial().append("Seleccione primero un directorio donde cargar el fichero\n");
 		}
 	}
 }

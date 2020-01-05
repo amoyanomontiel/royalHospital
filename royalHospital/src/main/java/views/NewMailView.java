@@ -14,6 +14,8 @@ import com.royalhospital.royalHospital.Extensions;
 import com.royalhospital.royalHospital.SendNewMail;
 import com.royalhospital.royalHospital.UploadedFile;
 
+import listeners.CheckEmailAddressListener;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -212,11 +214,20 @@ public class NewMailView extends JFrame {
 
 		case "rar":
 			return "src//main//java//views//compressed.png";
+			
+		case "gz":
+			return "src//main//java//views//compressed.png";
+			
+		case "sitx":
+			return "src//main//java//views//compressed.png";
 
 		case "sql":
 			return "src//main//java//views//sql.png";
 
 		case "java":
+			return "src//main//java//views//jar.png";
+			
+		case "jar":
 			return "src//main//java//views//jar.png";
 
 		default:
@@ -305,6 +316,7 @@ public class NewMailView extends JFrame {
 					textFieldAddressee.setBounds(230, 29, 515, 27);
 					contentPane.add(textFieldAddressee);
 					textFieldAddressee.setColumns(10);
+					CheckEmailAddressListener.addNewLostFocusListener(textFieldAddressee, lblAddressee);
 
 					JLabel lblSubject = new JLabel("Asunto");
 					lblSubject.setFont(new Font("Tahoma", Font.BOLD, 15));

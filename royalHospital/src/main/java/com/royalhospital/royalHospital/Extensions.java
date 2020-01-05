@@ -76,6 +76,8 @@ public class Extensions {
 		forbiddenGmailExtensions.add("rar");
 		forbiddenGmailExtensions.add("zip");
 		forbiddenGmailExtensions.add("7zip");
+		forbiddenGmailExtensions.add("sitx");
+		forbiddenGmailExtensions.add("gz");
 	}
 
 

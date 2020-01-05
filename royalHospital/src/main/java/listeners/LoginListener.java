@@ -8,6 +8,8 @@ import java.sql.Statement;
 
 import org.apache.commons.net.ftp.FTPClient;
 
+import com.royalhospital.royalHospital.DataModel;
+
 import conections.DBConection;
 import conections.FTPConection;
 import views.ErrorRoyalView;
@@ -24,6 +26,7 @@ import views.RoyalLoginView;
 public class LoginListener implements ActionListener {
 
 	RoyalLoginView loginView;
+	DataModel data = new DataModel();
 
 	/**
 	 * Initializes the variable loginView
@@ -44,7 +47,7 @@ public class LoginListener implements ActionListener {
 
 		if (!userText.equals("") && !passwordText.equals("")) {
 			if (!checkCredentials(userText, passwordText)) {
-				ErrorRoyalView error = new ErrorRoyalView("El usuario o la contraseña no son correctos", 1);
+				ErrorRoyalView error = new ErrorRoyalView(data.getPasswordUserIncorrectMsg(), 1);
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 				loginView.getTxtUserName().setText("");
@@ -62,7 +65,7 @@ public class LoginListener implements ActionListener {
 			}
 
 		} else {
-			ErrorRoyalView error = new ErrorRoyalView("El campo usuario y/o contraseña no pueden estar vacios", 1);
+			ErrorRoyalView error = new ErrorRoyalView(data.getNoEmptyLoginFieldsMsg(), 1);
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}
@@ -81,7 +84,7 @@ public class LoginListener implements ActionListener {
 		try {
 			st = con.getConect().createStatement();
 		} catch (SQLException e) {
-			ErrorRoyalView error = new ErrorRoyalView("Error de conexión con la Base de Datos", 0);
+			ErrorRoyalView error = new ErrorRoyalView(data.getDbConectionError(), 0);
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}
@@ -92,14 +95,14 @@ public class LoginListener implements ActionListener {
 			rs.next();
 			roll = rs.getString(1);
 		} catch (SQLException e) {
-			ErrorRoyalView error = new ErrorRoyalView("Error de conexión con la Base de Datos", 0);
+			ErrorRoyalView error = new ErrorRoyalView(data.getDbConectionError(), 0);
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}
 		try {
 			st.close();
 		} catch (SQLException e) {
-			// Error
+			// DB conection still open (user doesn't care about that)
 		}
 		return roll;
 	}
@@ -120,7 +123,7 @@ public class LoginListener implements ActionListener {
 		try {
 			state = conectToDB.getConect().createStatement();
 		} catch (SQLException | NullPointerException e) {
-			ErrorRoyalView error = new ErrorRoyalView("Error de conexión con la Base de Datos", 0);
+			ErrorRoyalView error = new ErrorRoyalView(data.getDbConectionError(), 0);
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}
@@ -136,7 +139,7 @@ public class LoginListener implements ActionListener {
 		try {
 			state.close();
 		} catch (SQLException e) {
-			// Error
+			// DB conection still open (user doesn't care about that)
 		}
 		return isCorrect;
 	}

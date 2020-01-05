@@ -15,7 +15,8 @@ public class App {
 	 * @param args Application startup arguments
 	 */
 	public static void main(String[] args) {
-		RoyalLoginView initLogin = new RoyalLoginView("Usuario", "/views/royalhospital.png");
+		DataModel data = new DataModel();
+		RoyalLoginView initLogin = new RoyalLoginView(data.getUserTag(), data.getBigRoyalLogoRoute());
 		initLogin.setLocationRelativeTo(null);
 		initLogin.setVisible(true);
 	}

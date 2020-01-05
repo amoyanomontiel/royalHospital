@@ -49,6 +49,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 	private static JTextArea txtaHistorial;
 	private static JTree tree;
 	private static JScrollPane scrollPane, scrollHistory;
+	DataModel data = new DataModel();
 
 	public MainRoyalView() {
 
@@ -65,8 +66,8 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
-		setTitle("Royal Hospital - Main");
-		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
+		setTitle(data.getMainTitle());
+		ImageIcon royal = new ImageIcon(data.getIconRoyalLogo());
 		setIconImage(royal.getImage());
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(204, 204, 255));
@@ -86,57 +87,57 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		scrollHistory.setViewportView(txtaHistorial);
 		contentPane.add(scrollHistory);
 
-		JButton btnUpload = new JButton("Cargar");
+		JButton btnUpload = new JButton(data.getUploadTag());
 		contentPane.add(btnUpload);
 		btnUpload.setBackground(Color.WHITE);
-		btnUpload.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnUpload.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnUpload.addActionListener(new UploadListener(this, ftpClient));
 
-		JButton btnDownload = new JButton("Descargar");
+		JButton btnDownload = new JButton(data.getDownloadTag());
 		contentPane.add(btnDownload);
 		btnDownload.setBackground(Color.WHITE);
-		btnDownload.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnDownload.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnDownload.addActionListener(new DownloadListener(this, ftpClient));
 
-		JButton btnRemove = new JButton("Borrar");
+		JButton btnRemove = new JButton(data.getDeleteTag());
 		contentPane.add(btnRemove);
 		btnRemove.setBackground(Color.WHITE);
-		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnRemove.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnRemove.addActionListener(new RemoveListener(this, ftpClient));
 		
-		JButton btnCreateDir = new JButton("Crear Carpeta");
+		JButton btnCreateDir = new JButton(data.getCreateFolderTag());
 		contentPane.add(btnCreateDir);
 		btnCreateDir.setBackground(Color.WHITE);
-		btnCreateDir.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCreateDir.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnCreateDir.addActionListener(new CreateDirectoryListener(this, ftpClient));
 
-		JButton btnCreateFile = new JButton("Crear Fichero");
+		JButton btnCreateFile = new JButton(data.getCreateFileTag());
 		contentPane.add(btnCreateFile);
 		btnCreateFile.setBackground(Color.WHITE);
-		btnCreateFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCreateFile.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnCreateFile.addActionListener(new CreateFileButtonListener(this, ftpClient));
 
-		JButton btnRename = new JButton("Renombrar");
+		JButton btnRename = new JButton(data.getRenameTag());
 		contentPane.add(btnRename);
 		btnRename.setBackground(Color.WHITE);
-		btnRename.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnRename.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 
-		JButton btnDocuments = new JButton("Documentos");
+		JButton btnDocuments = new JButton(data.getDocumentsTag());
 		contentPane.add(btnDocuments);
 		btnDocuments.setBackground(Color.WHITE);
-		btnDocuments.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnDocuments.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnDocuments.addActionListener(new DocumentsListener(user, ftpClient, this));
 
-		JButton btnPatient = new JButton("Pacientes");
+		JButton btnPatient = new JButton(data.getPatientsTag());
 		contentPane.add(btnPatient);
 		btnPatient.setBackground(Color.WHITE);
-		btnPatient.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnPatient.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnPatient.addActionListener(new PatientsListener(ftpClient, this));
 
-		JButton btnMail = new JButton("Correo");
+		JButton btnMail = new JButton(data.getMailTag());
 		contentPane.add(btnMail);
 		btnMail.setBackground(Color.WHITE);
-		btnMail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnMail.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 
 		btnDocuments.setBounds(64, 13, BTN_WIDTH, BTN_HEIGHT);
 		btnPatient.setBounds(240, 13, BTN_WIDTH, BTN_HEIGHT);
@@ -172,7 +173,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 				mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnDownload.setIcon(mydocIcon5);
 		
-		if(roll.equalsIgnoreCase("MEDICO")){
+		if(roll.equalsIgnoreCase(data.getDoctorTag())){
 			root = new DefaultMutableTreeNode("/Medicos/" + user);
 		}else {
 			root = new DefaultMutableTreeNode("/Pacientes/" + user);
@@ -180,12 +181,12 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		
 		if (ftpClient.isConnected()) {
 			try {
-				if (roll.equalsIgnoreCase("MEDICO")) {
+				if (roll.equalsIgnoreCase(data.getDoctorTag())) {
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
 					DataModel.directionPath = ftpClient.printWorkingDirectory();
 					seekFile(root, ftpClient.listFiles(), ftpClient);
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
-				} else if (roll.equalsIgnoreCase("PACIENTE")) {
+				} else if (roll.equalsIgnoreCase(data.getPatientTag())) {
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
 					DataModel.directionPath = ftpClient.printWorkingDirectory();
 					seekFile(root, ftpClient.listFiles(), ftpClient);
@@ -197,10 +198,9 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 					btnPatient.setEnabled(false);
 					btnRemove.setEnabled(false);
 					btnRename.setEnabled(false);
-//					btnDownload.setEnabled(false);
 				}
 			} catch (IOException | NullPointerException e) {
-				ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+				ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 			}
@@ -229,7 +229,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 						FTPFile[] list2 = ftpClient.listFiles();
 						seekFile(directory, list2, ftpClient);
 					} catch (IOException e) {
-						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+						ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
 					}
@@ -241,7 +241,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		try {
 			ftpClient.changeToParentDirectory();
 		} catch (IOException e) {
-			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+			ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}
@@ -294,7 +294,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 			    path += "/" + route[i];		    
 		    }
 		    DataModel.actualUserPath = path;
-			txtaHistorial.append("Archivo seleccionado: " + DataModel.selectedFile + "\n");
+			txtaHistorial.append(data.getSelectedFileMsg() + DataModel.selectedFile + "\n");
 	}
 
 }

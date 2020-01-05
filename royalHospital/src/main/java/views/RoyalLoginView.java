@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.royalhospital.royalHospital.DataModel;
+
 import listeners.LoginListener;
 
 import javax.swing.JTextField;
@@ -32,19 +34,20 @@ public class RoyalLoginView extends JFrame {
 	private JTextField txtUserName;
 	private JButton btnLogin;
 	private JPasswordField txtPassword;
+	DataModel data = new DataModel();
 
 	/**
 	 * Creates the login frame
 	 * @param String user_email 
 	 * @param String iconRoute Route of the icon
 	 */
-	public RoyalLoginView(String user_email, String iconRoute) {
+	public RoyalLoginView(String labelTag, String iconRoute) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 410, 500);
-		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
+		ImageIcon royal = new ImageIcon(data.getIconRoyalLogo());
 		setIconImage(royal.getImage());
-		setTitle("Royal Hospital - Login");
+		setTitle(data.getLoginTitle());
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(204, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -56,25 +59,25 @@ public class RoyalLoginView extends JFrame {
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
 
-		JLabel lblUserName = new JLabel("Usuario");
-		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 15));
+		JLabel lblUserName = new JLabel(labelTag);
+		lblUserName.setFont(new Font(data.getFontType(), Font.BOLD, 15));
 		lblUserName.setBounds(98, 222, 71, 16);
 		contentPane.add(lblUserName);
 
-		JLabel lblPassword = new JLabel("Contraseña");
-		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
+		JLabel lblPassword = new JLabel(data.getPasswordTag());
+		lblPassword.setFont(new Font(data.getFontType(), Font.BOLD, 15));
 		lblPassword.setBounds(98, 280, 91, 16);
 		contentPane.add(lblPassword);
 
-		btnLogin = new JButton("Entrar");
-		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnLogin = new JButton(data.getLoginBtnTag());
+		btnLogin.setFont(new Font(data.getFontType(), Font.BOLD, 15));
 		btnLogin.setBounds(144, 367, 116, 32);
 		contentPane.add(btnLogin);
 		btnLogin.addActionListener(new LoginListener(this));
 
 		JLabel lblRoyalIcon = new JLabel();
 		lblRoyalIcon.setBounds(70, 40, 268, 117);
-		ImageIcon img = new ImageIcon(RoyalLoginView.class.getResource("/views/royalhospital.png"));
+		ImageIcon img = new ImageIcon(RoyalLoginView.class.getResource(data.getBigRoyalLogoRoute()));
 		Icon in = new ImageIcon(img.getImage().getScaledInstance(lblRoyalIcon.getWidth(), lblRoyalIcon.getHeight(),
 				Image.SCALE_DEFAULT));
 		lblRoyalIcon.setIcon(in);

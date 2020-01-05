@@ -65,7 +65,6 @@ public class ActionCreateDirectoryListener implements ActionListener {
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}
-
 	}
 
 }

@@ -33,16 +33,16 @@ public class DocumentsListener implements ActionListener {
 
 		}
 
-		DefaultMutableTreeNode raiz = royal.getRaiz();
-		raiz.removeAllChildren();
+		DefaultMutableTreeNode root = royal.getRaiz();
+		root.removeAllChildren();
 
 		try {
-			royal.seekFile(raiz, ftpClient.listFiles(), ftpClient);
+			royal.seekFile(root, ftpClient.listFiles(), ftpClient);
 			ftpClient.changeWorkingDirectory("/Medicos/" + user);
 		} catch (IOException e1) {
 
 		}
-		royal.changedJTree(raiz);
+		royal.changedJTree(root);
 
 	}
 }

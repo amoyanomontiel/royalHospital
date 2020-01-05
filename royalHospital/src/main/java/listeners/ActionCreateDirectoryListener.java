@@ -40,6 +40,7 @@ public class ActionCreateDirectoryListener implements ActionListener {
 							} else {
 								ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
 								royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
+								royal.refreshJTree(directoryName.getText().toString());
 								break;
 							}
 						}else {

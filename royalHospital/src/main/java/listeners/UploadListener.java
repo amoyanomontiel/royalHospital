@@ -58,7 +58,7 @@ public class UploadListener implements ActionListener {
 							} else {
 								if (ftpClient.storeFile(file.getName(), input)) {
 									mainRoyal.getTxtaHistorial().append("Cargó satisfactoriamente el fichero\n");
-									// Aquí actualizar JTree
+									mainRoyal.refreshJTree(file.getName());
 								} else {
 									mainRoyal.getTxtaHistorial().append("No se pudo cargar el fichero\n");
 								}

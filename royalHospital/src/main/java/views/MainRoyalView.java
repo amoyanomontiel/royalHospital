@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
 import org.apache.commons.net.ftp.FTPClient;
@@ -256,6 +257,16 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		tree = new JTree(wholeTree);
 		scrollPane.setViewportView(tree);
 		tree.addTreeSelectionListener(this);
+	}
+	/**
+	 * Refresh JTree when updates, create directory or create file
+	 * 
+	 * @param nameNode
+	 */
+	public void refreshJTree(String nameNode) {
+		DefaultTreeModel model = (DefaultTreeModel) MainRoyalView.tree.getModel();
+		DefaultMutableTreeNode newNode = (DefaultMutableTreeNode) MainRoyalView.tree.getLastSelectedPathComponent();
+		model.insertNodeInto(new DefaultMutableTreeNode(nameNode), newNode, newNode.getChildCount());
 	}
 
 	public DefaultMutableTreeNode getRaiz() {

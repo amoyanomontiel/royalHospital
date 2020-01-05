@@ -5,8 +5,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import javax.swing.JTextField;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -36,15 +39,37 @@ public class ActionCreateFileListener implements ActionListener{
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				ftp.setFileType(FTP.BINARY_FILE_TYPE);
 				ftp.changeWorkingDirectory(DataModel.actualUserPath);
-				FTPFile file = new FTPFile();
-				file.setName(text.getText().toString());
-				royal.getTxtaHistorial().append("El archivo '"+text.getText().toString() + "' ha sido creado");
+//				String pathHome = System.getProperty("user.home") + "/downloads/";
+				if(text.getText().toString().isEmpty()) {
+					ErrorRoyalView error = new ErrorRoyalView("Escriba el nombre del archivo y su extensión si lo desea.", 1);
+					error.setVisible(true);
+					error.setLocationRelativeTo(null);
+				}else {
+					String[] splitName = text.getText().toString().split(Pattern.quote("."));
+					String nameFile = "";
+					File fileTmp = null;
+					if(splitName.length>1) {
+						fileTmp = File.createTempFile(splitName[0], "."+splitName[1]);
+						nameFile = splitName[0] + "."+splitName[1];
+					}else {
+						fileTmp = File.createTempFile(splitName[0], ".txt");
+						nameFile = splitName[0]+".txt";
+					}
+					FileInputStream input = new FileInputStream(fileTmp);
+					ftp.storeFile(nameFile, input);
+					royal.getTxtaHistorial().append("El archivo '"+ nameFile + "' ha sido creado\n");
+					input.close();
+//					fileTmp.deleteOnExit();
+					fileTmp.delete();
+					System.out.println(fileTmp.getAbsolutePath());
+					
+					royal.refreshJTree(nameFile);
+				}
 			}
 		} catch (IOException e1) {
 			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
-			e1.printStackTrace();
 		}
 	}
 

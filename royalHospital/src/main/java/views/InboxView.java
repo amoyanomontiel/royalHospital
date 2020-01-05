@@ -38,90 +38,94 @@ public class InboxView extends JFrame {
 	/**
 	 * Launch the View
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					objectMail = new MailMethods();
-					objectMail.setAllDataConnection("pop.gmail.com", "pop3",
-							"jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
-					objectMail.setProperties();
-					objectMail.connectMailServer();
-					objectMail.setFolderEmails();
-					objectMail.receiveAndSaveAllEmails();
-					InboxView frame = new InboxView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		
+//	}
 
 	/**
 	 * Create the frame.
 	 */
 	public InboxView() {
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1381, 551);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					
+					objectMail = new MailMethods();
+					
+					String valorPass = new String(MainMailView.getTxtPassword().getPassword());
+					objectMail.setAllDataConnection("pop.gmail.com", "pop3", MainMailView.getTxtUserName().getText(), valorPass);
+					objectMail.setProperties();
+					objectMail.connectMailServer();
+					objectMail.setFolderEmails();
+					objectMail.receiveAndSaveAllEmails();
 
-		headPane = new JPanel();
-		contentPane.add(headPane, BorderLayout.NORTH);
+					setResizable(false);
+					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					setBounds(100, 100, 1381, 551);
+					contentPane = new JPanel();
+					contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+					setContentPane(contentPane);
 
-		JLabel lblInbox = new JLabel("Buzón de entrada");
-		lblInbox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		headPane.add(lblInbox);
+					headPane = new JPanel();
+					contentPane.add(headPane, BorderLayout.NORTH);
 
-		JButton btnRefresh = new JButton("Refrescar");
-		btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		ImageIcon refreshIcon = new ImageIcon("src//main//java//views//refresh.jpg");
-		Icon newRefreshIcon = new ImageIcon(refreshIcon.getImage().getScaledInstance(width+5, height, Image.SCALE_DEFAULT));
-		btnRefresh.setIcon(newRefreshIcon);
-		headPane.add(btnRefresh);
+					JLabel lblInbox = new JLabel("Buzón de entrada");
+					lblInbox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+					headPane.add(lblInbox);
 
-		JButton btnWriteEmail = new JButton("Redactar");
-		btnWriteEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		ImageIcon mailIcon = new ImageIcon("src//main//java//views//newGmail.png");
-		Icon newMailIcon = new ImageIcon(mailIcon.getImage().getScaledInstance(width+15, height, Image.SCALE_DEFAULT));
-		btnWriteEmail.setIcon(newMailIcon);
-		headPane.add(btnWriteEmail);
+					JButton btnRefresh = new JButton("Refrescar");
+					btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					ImageIcon refreshIcon = new ImageIcon("src//main//java//views//refresh.jpg");
+					Icon newRefreshIcon = new ImageIcon(refreshIcon.getImage().getScaledInstance(width+5, height, Image.SCALE_DEFAULT));
+					btnRefresh.setIcon(newRefreshIcon);
+					headPane.add(btnRefresh);
 
-		JButton btnCloseInbox = new JButton("Volver");
-		btnCloseInbox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		ImageIcon returnIcon = new ImageIcon("src//main//java//views//homeIcon.png");
-		Icon newReturnIcon = new ImageIcon(returnIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-		btnCloseInbox.setIcon(newReturnIcon);
-		headPane.add(btnCloseInbox);
+					JButton btnWriteEmail = new JButton("Redactar");
+					btnWriteEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					ImageIcon mailIcon = new ImageIcon("src//main//java//views//newGmail.png");
+					Icon newMailIcon = new ImageIcon(mailIcon.getImage().getScaledInstance(width+15, height, Image.SCALE_DEFAULT));
+					btnWriteEmail.setIcon(newMailIcon);
+					headPane.add(btnWriteEmail);
 
-		contextMailPane = new JPanel();
-		contentPane.add(contextMailPane, BorderLayout.SOUTH);
+					JButton btnCloseInbox = new JButton("Volver");
+					btnCloseInbox.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					ImageIcon returnIcon = new ImageIcon("src//main//java//views//homeIcon.png");
+					Icon newReturnIcon = new ImageIcon(returnIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+					btnCloseInbox.setIcon(newReturnIcon);
+					headPane.add(btnCloseInbox);
 
-		mailListPane = new JPanel();
+					contextMailPane = new JPanel();
+					contentPane.add(contextMailPane, BorderLayout.SOUTH);
 
-		/*
-		 * Generate 2 JPanels: 1. JPanel = JPanel with JComboBox with all emails 2.
-		 * JPanel = JPanel that show the context of message
-		 */
+					mailListPane = new JPanel();
 
-		mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
+					/*
+					 * Generate 2 JPanels: 1. JPanel = JPanel with JComboBox with all emails 2.
+					 * JPanel = JPanel that show the context of message
+					 */
 
-		/**
-		 * Add listener to the Refresh button
-		 */
-		RefreshEmail.addRefreshButtonListener(btnRefresh, contentPane, contextMailPane);
-		contentPane.add(mailListPane);
+					mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
 
-		OpenNewEmailListener.addNewMailOpenListener(btnWriteEmail);
-		
-		/**
-		 * Create and start Thread that auto refresh the JComboBox with emails
-		 */
-		objectThreadAutoRefresh = new ThreadAutoRefresh(contentPane, contextMailPane);
-		objectThreadAutoRefresh.start();
+					/**
+					 * Add listener to the Refresh button
+					 */
+					RefreshEmail.addRefreshButtonListener(btnRefresh, contentPane, contextMailPane);
+					contentPane.add(mailListPane);
+
+					OpenNewEmailListener.addNewMailOpenListener(btnWriteEmail);
+					
+					/**
+					 * Create and start Thread that auto refresh the JComboBox with emails
+					 */
+					objectThreadAutoRefresh = new ThreadAutoRefresh(contentPane, contextMailPane);
+					objectThreadAutoRefresh.start();
+					
+					setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	// All get and set

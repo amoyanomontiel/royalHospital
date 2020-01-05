@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import listeners.EmailLoginListener;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -27,9 +29,10 @@ public class MainMailView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtUserName;
+	private static JTextField txtUserName;
 	private JButton btnLogin;
-	private JPasswordField txtPassword;
+	private static JPasswordField txtPassword;
+	private static MainMailView frame;
 
 	/**
 	 * Creates the login frame
@@ -41,7 +44,7 @@ public class MainMailView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainMailView frame = new MainMailView("Correo Electrónico", "/views/mailIcon.png");
+					frame = new MainMailView("Correo Electrónico", "/views/mailIcon.png");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
@@ -82,7 +85,6 @@ public class MainMailView extends JFrame {
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogin.setBounds(144, 367, 116, 32);
 		contentPane.add(btnLogin);
-//		btnLogin.addActionListener(new LoginListener(this));
 
 		JLabel lblRoyalIcon = new JLabel();
 		lblRoyalIcon.setBounds(90, 35, 268, 137);
@@ -95,22 +97,34 @@ public class MainMailView extends JFrame {
 		txtPassword = new JPasswordField();
 		txtPassword.setBounds(191, 278, 147, 22);
 		contentPane.add(txtPassword);
+		EmailLoginListener.addEmailLoginListener(btnLogin);
 	}
 
-	public JTextField getTxtUserName() {
+
+	
+
+	public static MainMailView getFrame() {
+		return frame;
+	}
+
+	public static void setFrame(MainMailView frame) {
+		MainMailView.frame = frame;
+	}
+
+	public static JTextField getTxtUserName() {
 		return txtUserName;
 	}
 
-	public void setTxtUserName(JTextField txtUserName) {
-		this.txtUserName = txtUserName;
+	public static void setTxtUserName(JTextField txtUserName) {
+		MainMailView.txtUserName = txtUserName;
 	}
 
-	public JTextField getTxtPassword() {
+	public static JPasswordField getTxtPassword() {
 		return txtPassword;
 	}
 
-	public void setTxtPassword(JPasswordField txtPassword) {
-		this.txtPassword = txtPassword;
+	public static void setTxtPassword(JPasswordField txtPassword) {
+		MainMailView.txtPassword = txtPassword;
 	}
 
 	public JButton getBtnLogin() {

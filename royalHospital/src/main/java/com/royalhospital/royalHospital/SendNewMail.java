@@ -31,7 +31,7 @@ public class SendNewMail {
 	
 	public void sendNewGmail(String addressee, String subject, String body, ArrayList<UploadedFile> attached) {
 		Properties props = establishGmailPropierties();
-		Session session = Session.getInstance(props,  
+		Session session = Session.getInstance(props,
 			    new javax.mail.Authenticator() {
 			       protected PasswordAuthentication getPasswordAuthentication() {  
 			       return new PasswordAuthentication(sender,password);  

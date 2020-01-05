@@ -4,6 +4,7 @@ package com.royalhospital.royalHospital;
 import javax.swing.JPanel;
 
 import views.InboxView;
+import views.MainMailView;
 
 /**
  * Class that control the function of autoRefresh email
@@ -40,7 +41,7 @@ public class ThreadAutoRefresh extends Thread {
 				synchronized (this) {
 					InboxView.setObjectMail(new MailMethods());
 					InboxView.getObjectMail().setAllDataConnection("pop.gmail.com", "pop3",
-							"jfernandezfernandez.sanjose@alumnado.fundacionloyola.net", "14674858");
+							MainMailView.getTxtUserName().getText(), new String(MainMailView.getTxtPassword().getPassword()));
 					InboxView.getObjectMail().setProperties();
 					InboxView.getObjectMail().connectMailServer();
 					InboxView.getObjectMail().setFolderEmails();

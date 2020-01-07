@@ -12,6 +12,7 @@ import org.apache.commons.net.ftp.FTPReply;
 
 import com.royalhospital.royalHospital.DataModel;
 
+import views.CreateModifyView;
 import views.ErrorRoyalView;
 import views.MainRoyalView;
 
@@ -20,11 +21,13 @@ public class ActionCreateDirectoryListener implements ActionListener {
 	private FTPClient ftp;
 	private JTextField directoryName;
 	private MainRoyalView royal;
-
-	public ActionCreateDirectoryListener(FTPClient ftpClient, JTextField textField, MainRoyalView royalView) {
+	private CreateModifyView nameFrame;
+	
+	public ActionCreateDirectoryListener(FTPClient ftpClient, JTextField textField, MainRoyalView royalView, CreateModifyView nameframe) {
 		this.ftp = ftpClient;
 		this.directoryName = textField;
 		this.royal = royalView;
+		this.nameFrame = nameframe;
 	}
 
 	@Override
@@ -39,6 +42,7 @@ public class ActionCreateDirectoryListener implements ActionListener {
 								royal.getTxtaHistorial().append("El directorio ya existe\n");
 							} else {
 								ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
+								nameFrame.dispose();
 								royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
 								royal.refreshJTree(directoryName.getText().toString());
 								break;

@@ -18,6 +18,7 @@ import org.apache.commons.net.ftp.FTPReply;
 
 import com.royalhospital.royalHospital.DataModel;
 
+import views.CreateModifyView;
 import views.ErrorRoyalView;
 import views.MainRoyalView;
 
@@ -26,11 +27,13 @@ public class ActionCreateFileListener implements ActionListener{
 	private FTPClient ftp;
 	private JTextField text;
 	private MainRoyalView royal;
+	private CreateModifyView nameFrame;
 	
-	public ActionCreateFileListener(FTPClient ftpClient, JTextField textField, MainRoyalView royalView) {
+	public ActionCreateFileListener(FTPClient ftpClient, JTextField textField, MainRoyalView royalView, CreateModifyView nameFrame) {
 		this.ftp = ftpClient;
 		this.royal = royalView;
 		this.text = textField;
+		this.nameFrame = nameFrame;
 	}
 
 	@Override
@@ -57,6 +60,7 @@ public class ActionCreateFileListener implements ActionListener{
 					}
 					FileInputStream input = new FileInputStream(fileTmp);
 					ftp.storeFile(nameFile, input);
+					nameFrame.dispose();
 					royal.getTxtaHistorial().append("El archivo '"+ nameFile + "' ha sido creado\n");
 					input.close();
 //					fileTmp.deleteOnExit();

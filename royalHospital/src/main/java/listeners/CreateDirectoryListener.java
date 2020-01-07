@@ -30,7 +30,7 @@ public class CreateDirectoryListener implements ActionListener{
 				view.setLocationRelativeTo(null);
 			}
 		} else {
-			royal.getTxtaHistorial().append("Seleccione primero una carpeta en donde crear el directorio\n");
+			royal.getTxtaHistorial().append("Seleccione primero una carpeta donde crear el directorio\n");
 		}
 		
 	}

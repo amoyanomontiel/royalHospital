@@ -14,6 +14,6 @@ public class App {
 
 		// initLogin.getBtnLogin().addActionListener(new LoginListener(initLogin));
 		// Test about mail
-		MainMailView objectLoginMail = new MainMailView("", "");
+		MainMailView objectLoginMail = new MainMailView("Correo Electrónico", "mailIcon.png");
 	}
 }

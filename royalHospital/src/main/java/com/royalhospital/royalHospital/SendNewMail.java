@@ -41,7 +41,7 @@ public class SendNewMail {
 		try {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(sender));
-			message.addRecipients(Message.RecipientType.TO, addressee);
+			message.addRecipients(Message.RecipientType.CC, addressee);
 			message.setSubject(subject);
 			Multipart multipart = createMessage(body, attached);
 			

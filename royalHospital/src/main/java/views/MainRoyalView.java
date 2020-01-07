@@ -105,7 +105,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		btnRemove.setBackground(Color.WHITE);
 		btnRemove.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnRemove.addActionListener(new RemoveListener(this, ftpClient));
-		
+
 		JButton btnCreateDir = new JButton(data.getCreateFolderTag());
 		contentPane.add(btnCreateDir);
 		btnCreateDir.setBackground(Color.WHITE);
@@ -122,6 +122,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		contentPane.add(btnRename);
 		btnRename.setBackground(Color.WHITE);
 		btnRename.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
+		btnRename.addActionListener(new RenameListener(this, ftpClient));
 
 		JButton btnDocuments = new JButton(data.getDocumentsTag());
 		contentPane.add(btnDocuments);
@@ -173,13 +174,13 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		Icon mydocIcon5 = new ImageIcon(
 				mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnDownload.setIcon(mydocIcon5);
-		
-		if(roll.equalsIgnoreCase(data.getDoctorTag())){
+
+		if (roll.equalsIgnoreCase(data.getDoctorTag())) {
 			root = new DefaultMutableTreeNode("/Medicos/" + user);
-		}else {
+		} else {
 			root = new DefaultMutableTreeNode("/Pacientes/" + user);
 		}
-		
+
 		if (ftpClient.isConnected()) {
 			try {
 				if (roll.equalsIgnoreCase(data.getDoctorTag())) {
@@ -249,7 +250,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 	}
 
 	/**
-	 * Creates new JTree for updates
+	 * Creates new JTree
 	 * 
 	 * @param DefaultMutableTreeNode completeTree The whole tree
 	 */
@@ -258,15 +259,51 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		scrollPane.setViewportView(tree);
 		tree.addTreeSelectionListener(this);
 	}
+
 	/**
-	 * Refresh JTree when updates, create directory or create file
+	 * Refresh JTree for updates, create directory or create file
 	 * 
-	 * @param nameNode
+	 * @param String nameNode New node's name
 	 */
 	public void refreshJTree(String nameNode) {
 		DefaultTreeModel model = (DefaultTreeModel) MainRoyalView.tree.getModel();
 		DefaultMutableTreeNode newNode = (DefaultMutableTreeNode) MainRoyalView.tree.getLastSelectedPathComponent();
 		model.insertNodeInto(new DefaultMutableTreeNode(nameNode), newNode, newNode.getChildCount());
+	}
+
+	/**
+	 * Click event function for Jtree which save diferents roots and name of clicked
+	 * file
+	 */
+	@Override
+	public void valueChanged(TreeSelectionEvent e) {
+		String path = "";
+		JTree atree = (JTree) e.getSource();
+		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) atree.getLastSelectedPathComponent();
+		if (selectedNode != null) {
+			DataModel.selectedFile = selectedNode.toString();
+			TreeNode[] route = selectedNode.getPath();
+			for (int i = 0; i < route.length; i++) {
+				System.out.println(path);
+				if (i == route.length - 1) {
+					DataModel.directionPath = path;
+				}
+				path += "/" + route[i];
+			}
+			DataModel.actualUserPath = path;
+			txtaHistorial.append(data.getSelectedFileMsg() + DataModel.selectedFile + "\n");
+		}
+	}
+
+	/**
+	 * Function which changes to blank or empty the values of DataModel roots
+	 * variables
+	 */
+	public void rootsToBlank() {
+		DataModel.directionPath = "";
+		DataModel.actualUserPath = "";
+		DataModel.selectedFile = "";
+		tree.clearSelection();
 	}
 
 	public DefaultMutableTreeNode getRaiz() {
@@ -285,27 +322,11 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		MainRoyalView.txtaHistorial = txtaHistorial;
 	}
 
-	/**
-	 * Click event function for Jtree which save diferents roots and name of clicked
-	 * file
-	 */
-	@Override
-	public void valueChanged(TreeSelectionEvent e) {
-		String path = "";
-		JTree atree = (JTree) e.getSource();
-		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) atree
-		        .getLastSelectedPathComponent();
-		    DataModel.selectedFile = selectedNode.toString();
-		    TreeNode[] route = selectedNode.getPath();
-		    for(int i = 0;i< route.length;i++){
-		    	System.out.println(path);
-		    	if(i == route.length-1) {
-			    	DataModel.directionPath = path;
-			    }
-			    path += "/" + route[i];		    
-		    }
-		    DataModel.actualUserPath = path;
-			txtaHistorial.append(data.getSelectedFileMsg() + DataModel.selectedFile + "\n");
+	public static JTree getTree() {
+		return tree;
 	}
 
+	public static void setTree(JTree tree) {
+		MainRoyalView.tree = tree;
+	}
 }

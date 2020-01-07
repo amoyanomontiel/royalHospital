@@ -58,6 +58,8 @@ public class ActionCreateDirectoryListener implements ActionListener {
 					if(!directoryName.getText().toString().equalsIgnoreCase("")) {
 						ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
 						royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
+						royal.refreshJTree(directoryName.getText().toString());
+						royal.rootsToBlank();
 					}else {
 						ErrorRoyalView error = new ErrorRoyalView("Escribe un nombre para el directorio", 1);
 						error.setVisible(true);

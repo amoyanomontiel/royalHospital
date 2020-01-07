@@ -7,6 +7,7 @@ import org.apache.commons.net.ftp.FTPClient;
 
 import listeners.ActionCreateDirectoryListener;
 import listeners.ActionCreateFileListener;
+import listeners.ActionRenameFileListener;
 
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -54,6 +55,7 @@ public class CreateModifyView extends JFrame{
 		}else {
 			//aqui listener del btnChange cuando se pulsa el botón de renombrar
 			//Hay que cambiar el nombre de una carpeta en el servidor FTP y un nodo en el arbol o borrar el arbol y crearlo de nuevo
+			btnChange.addActionListener(new ActionRenameFileListener(ftpClient, textField, royalView, this));
 		}
 		
 	}

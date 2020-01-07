@@ -2,9 +2,14 @@ package listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
 import com.royalhospital.royalHospital.DataModel;
@@ -36,7 +41,8 @@ public class RemoveListener implements ActionListener {
 	}
 
 	/**
-	 * Click event function which takes selected File of tree and deletes it if its possible
+	 * Click event function which takes selected File of tree and deletes it if its
+	 * possible
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -45,10 +51,29 @@ public class RemoveListener implements ActionListener {
 			if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 				try {
 					ftpClient.changeWorkingDirectory(DataModel.directionPath);
-					if (ftpClient.deleteFile(DataModel.selectedFile)) {
-						mainRoyal.getTxtaHistorial().append("Se borró el archivo satisfactoriamente\n");
+					FTPFile fileForRemove = ftpClient.mlistFile(DataModel.actualUserPath);
+					if (fileForRemove.isDirectory()) {
+						FTPFile[] filesInside = ftpClient.listFiles(DataModel.actualUserPath);
+						if (filesInside.length > 0) {
+							mainRoyal.getTxtaHistorial()
+									.append("No es posible borrar el directorio si contiene algún elemento\n");
+						} else {
+							if (FTPReply.isPositiveCompletion(ftpClient.rmd(DataModel.selectedFile))) {
+								mainRoyal.getTxtaHistorial().append("Se borró el directorio satisfactoriamente\n");
+								upDateTree();
+								mainRoyal.rootsToBlank();
+							} else {
+								mainRoyal.getTxtaHistorial().append("No se pudo borrar el directorio\n");
+							}
+						}
 					} else {
-						mainRoyal.getTxtaHistorial().append("No se pudo borrar el archivo\n");
+						if (ftpClient.deleteFile(DataModel.selectedFile)) {
+							mainRoyal.getTxtaHistorial().append("Se borró el fichero satisfactoriamente\n");
+							upDateTree();
+							mainRoyal.rootsToBlank();
+						} else {
+							mainRoyal.getTxtaHistorial().append("No se pudo borrar el fichero\n");
+						}
 					}
 				} catch (IOException ex) {
 					ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
@@ -62,6 +87,11 @@ public class RemoveListener implements ActionListener {
 		} else {
 			mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero de la lista\n");
 		}
+	}
 
+	private void upDateTree() {
+		DefaultTreeModel model = (DefaultTreeModel) mainRoyal.getTree().getModel();
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) mainRoyal.getTree().getLastSelectedPathComponent();
+		model.removeNodeFromParent(node);
 	}
 }

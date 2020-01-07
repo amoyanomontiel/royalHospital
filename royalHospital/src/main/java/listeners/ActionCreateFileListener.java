@@ -55,7 +55,7 @@ public class ActionCreateFileListener implements ActionListener{
 						fileTmp = File.createTempFile(splitName[0], "."+splitName[1]);
 						nameFile = splitName[0] + "."+splitName[1];
 					}else {
-						fileTmp = File.createTempFile(splitName[0], ".txt");
+						fileTmp = File.createTempFile(splitName[0], ".txt");//Aqui peta a veces
 						nameFile = splitName[0]+".txt";
 					}
 					FileInputStream input = new FileInputStream(fileTmp);
@@ -68,6 +68,7 @@ public class ActionCreateFileListener implements ActionListener{
 					System.out.println(fileTmp.getAbsolutePath());
 					
 					royal.refreshJTree(nameFile);
+					royal.rootsToBlank();
 				}
 			}
 		} catch (IOException e1) {

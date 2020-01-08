@@ -128,11 +128,13 @@ public class LoginListener implements ActionListener {
 			error.setLocationRelativeTo(null);
 		}
 		try {
-			ResultSet result = state.executeQuery("Select nameUser, password from usuarios where nameUser like '"
+			ResultSet result = state.executeQuery("Select nameUser, password, codUser from usuarios where nameUser like '"
 					+ userText.toString() + "' and password like '" + passwordText.toString() + "'");
 			result.next();
 			System.out.println(result.getString(1) + result.getString(2));
 			isCorrect = true;
+			DataModel.codActualUser = result.getInt(3);
+			System.out.println(DataModel.codActualUser);
 		} catch (SQLException | NullPointerException e) {
 			isCorrect = false;
 		}

@@ -38,7 +38,7 @@ public class FTPConection {
 				
 				refresh = new Thread(new RefreshFTP(client));
 				refresh.start();
-				
+		
 			} else {
 				ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
 				error.setVisible(true);

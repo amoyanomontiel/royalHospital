@@ -12,6 +12,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
+import com.royalhospital.royalHospital.AuxiliaryTools;
 import com.royalhospital.royalHospital.DataModel;
 
 import conections.FTPConection;
@@ -59,6 +60,8 @@ public class RemoveListener implements ActionListener {
 									.append("No es posible borrar el directorio si contiene algún elemento\n");
 						} else {
 							if (FTPReply.isPositiveCompletion(ftpClient.rmd(DataModel.selectedFile))) {
+								AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "borrar directorio", DataModel.selectedFile, 
+										AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 								mainRoyal.getTxtaHistorial().append("Se borró el directorio con éxito\n");
 								upDateTree();
 								mainRoyal.rootsToBlank();
@@ -68,6 +71,8 @@ public class RemoveListener implements ActionListener {
 						}
 					} else {
 						if (ftpClient.deleteFile(DataModel.selectedFile)) {
+							AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "borrar fichero", DataModel.selectedFile, 
+									AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 							mainRoyal.getTxtaHistorial().append("Se borró el fichero con éxito\n");
 							upDateTree();
 							mainRoyal.rootsToBlank();

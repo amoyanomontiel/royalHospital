@@ -8,6 +8,8 @@ import java.io.IOException;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+
+import com.royalhospital.royalHospital.AuxiliaryTools;
 import com.royalhospital.royalHospital.DataModel;
 
 import views.ErrorRoyalView;
@@ -31,7 +33,7 @@ public class DownloadListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 			if (DataModel.selectedFile != "") {
-				if (!checkDirectory()) {
+				if (!AuxiliaryTools.checkDirectory(ftpClient)) {
 					try {
 						ftpClient.changeWorkingDirectory(DataModel.directionPath);
 						String sDirectoryWork = System.getProperty("user.home") + "/Downloads/";
@@ -42,6 +44,8 @@ public class DownloadListener implements ActionListener {
 						} else {
 							FileOutputStream out = new FileOutputStream(sDirectoryWork + DataModel.selectedFile);
 							if (ftpClient.retrieveFile(DataModel.selectedFile, out)) {
+								AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "descargar", DataModel.selectedFile, 
+										AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 								mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito en su directorio de descargas \n");
 							} else {
 								mainRoyal.getTxtaHistorial().append("No se pudo descargar el fichero \n");
@@ -61,19 +65,5 @@ public class DownloadListener implements ActionListener {
 				mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero en la lista \n");
 			}
 		}
-	}
-
-	private boolean checkDirectory() {
-		boolean isDirectory = false;
-		FTPFile file = null;
-		try {
-			file = ftpClient.mlistFile(DataModel.actualUserPath);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if (file.isDirectory()) {
-			isDirectory = true;
-		}
-		return isDirectory;
 	}
 }

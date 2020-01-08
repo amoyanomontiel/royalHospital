@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
+import com.royalhospital.royalHospital.AuxiliaryTools;
 import com.royalhospital.royalHospital.DataModel;
 
 import views.CreateModifyView;
@@ -47,6 +48,8 @@ public class ActionRenameFileListener implements ActionListener {
 					ftp.changeWorkingDirectory(DataModel.directionPath);
 					if (ftp.rename(DataModel.selectedFile, text.getText())) {
 						nameFrame.dispose();
+						AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "renombrar", DataModel.selectedFile, 
+								AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 						royal.getTxtaHistorial().append("El fichero fue renombrado con éxito\n");
 						// Actualizar??
 					} else {

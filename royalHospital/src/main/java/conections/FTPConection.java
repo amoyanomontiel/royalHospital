@@ -18,7 +18,7 @@ public class FTPConection {
 
 	private static FTPClient client;
 	private static Thread refresh;
-	
+
 	public FTPConection() {
 
 	}
@@ -35,10 +35,10 @@ public class FTPConection {
 		try {
 			client.connect(data.getFtpServer(), data.getPort());
 			if (client.login(data.getFtpUser(), data.getFtpPassword())) {
-				
+
 				refresh = new Thread(new RefreshFTP(client));
 				refresh.start();
-		
+
 			} else {
 				ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
 				error.setVisible(true);
@@ -52,7 +52,7 @@ public class FTPConection {
 
 		return client;
 	}
-	
+
 	public static void disconnectFTP() {
 		try {
 			new RefreshFTP().stopRunning();
@@ -62,5 +62,5 @@ public class FTPConection {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

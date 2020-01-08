@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
@@ -66,7 +67,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 	 */
 	public MainRoyalView(FTPClient ftpClient, String user, String roll) {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 840, 748);
 		setTitle(data.getMainTitle());
 		ImageIcon royal = new ImageIcon(data.getIconRoyalLogo());
@@ -208,6 +209,17 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 				error.setLocationRelativeTo(null);
 			}
 			tree = new JTree(root);
+			DefaultTreeCellRenderer cell = (DefaultTreeCellRenderer)tree.getCellRenderer();
+			ImageIcon directoryClose = new ImageIcon("src\\main\\java\\views\\IconoCarpetaCerrada.png");
+			ImageIcon directoryOpen = new ImageIcon("src\\main\\java\\views\\IconoCarpetaAbierta.png");
+			ImageIcon file = new ImageIcon("src\\main\\java\\views\\IconoArchivo.png");
+			cell.setClosedIcon(directoryClose);
+			cell.setOpenIcon(directoryOpen);
+			cell.setLeafIcon(file);
+			final Font currentFont = tree.getFont();
+			final Font bigFont = new Font(currentFont.getName(), currentFont.getStyle(), currentFont.getSize() + 1);
+			tree.setFont(bigFont);
+			tree.setCellRenderer(cell);
 			scrollPane.setViewportView(tree);
 			tree.addTreeSelectionListener(this);
 		}

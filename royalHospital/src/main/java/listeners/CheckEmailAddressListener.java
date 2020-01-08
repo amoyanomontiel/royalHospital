@@ -22,6 +22,7 @@ public class CheckEmailAddressListener {
 				int errorCounter = 0;
 				String invalidEmailError = "No se ha encontrado el correo '*'. Comprueba que no haya errores y vuelve a intentarlo";
 				String multipleAddressees = "Pon una coma entre las direcciones de correo electrónico para mandar el correo a múltiples personas a la vez";
+				String excessSpace = "No puedes dejar espacios entre las direcciones de correo electrónico y las comas separadoras";
 
 				while (addressee.indexOf("@") > -1) {
 					addressee = addressee.substring(addressee.indexOf("@") + 1, addressee.length());
@@ -48,7 +49,12 @@ public class CheckEmailAddressListener {
 
 				for (int i = 0; i < occurrences; i++) {
 					if (!addressees[i].equals(" ")) {
-						addressees[i] = addressees[i].trim();
+						String trimmedAddresse = addressees[i].trim();
+						
+						if (!trimmedAddresse.equals(addressees[i])) {
+							errorList.add(excessSpace);
+							errorCounter++;
+						}
 
 						if (!addressees[i].contains(".sanjose@alumnado.fundacionloyola.net")
 								&& !addressees[i].contains("@gmail.com")) {

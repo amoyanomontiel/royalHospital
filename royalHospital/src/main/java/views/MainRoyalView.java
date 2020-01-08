@@ -14,7 +14,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import com.royalhospital.royalHospital.DataModel;
 
 import listeners.CreateDirectoryListener;
-import listeners.CreateFileButtonListener;
+import listeners.CreateFileListener;
 import listeners.DocumentsListener;
 import listeners.DownloadListener;
 import listeners.PatientsListener;
@@ -117,7 +117,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		contentPane.add(btnCreateFile);
 		btnCreateFile.setBackground(Color.WHITE);
 		btnCreateFile.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
-		btnCreateFile.addActionListener(new CreateFileButtonListener(this, ftpClient));
+		btnCreateFile.addActionListener(new CreateFileListener(this, ftpClient));
 
 		JButton btnRename = new JButton(data.getRenameTag());
 		contentPane.add(btnRename);
@@ -187,12 +187,12 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 				if (roll.equalsIgnoreCase(data.getDoctorTag())) {
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
 					DataModel.directionPath = ftpClient.printWorkingDirectory();
-					seekFile(root, ftpClient.listFiles(), ftpClient);
+					createFilesTree(root, ftpClient.listFiles(), ftpClient);
 					ftpClient.changeWorkingDirectory("/Medicos/" + user);
 				} else if (roll.equalsIgnoreCase(data.getPatientTag())) {
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
 					DataModel.directionPath = ftpClient.printWorkingDirectory();
-					seekFile(root, ftpClient.listFiles(), ftpClient);
+					createFilesTree(root, ftpClient.listFiles(), ftpClient);
 					ftpClient.changeWorkingDirectory("/Pacientes/" + user);
 
 					btnCreateDir.setEnabled(false);
@@ -220,7 +220,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 	 * @param FTPFile[]              files List of server files
 	 * @param FTPClient              ftpClient Client ftp object
 	 */
-	public void seekFile(DefaultMutableTreeNode root2, FTPFile[] files, FTPClient ftpClient) {
+	public void createFilesTree(DefaultMutableTreeNode root2, FTPFile[] files, FTPClient ftpClient) {
 		FTPFile[] list = files;
 		if (list != null)
 			for (FTPFile fil : list) {
@@ -230,7 +230,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 					try {
 						ftpClient.changeWorkingDirectory(fil.getName());
 						FTPFile[] list2 = ftpClient.listFiles();
-						seekFile(directory, list2, ftpClient);
+						createFilesTree(directory, list2, ftpClient);
 					} catch (IOException e) {
 						ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
 						error.setVisible(true);

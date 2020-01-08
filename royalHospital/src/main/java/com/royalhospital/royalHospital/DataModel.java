@@ -9,6 +9,7 @@ public class DataModel {
 	public static String selectedFile = "";
 	public static String actualUserPath = "";
 	public static String directionPath = "";
+	public static int codActualUser = 0;
 	
 	private String bigRoyalLogoRoute = "/views/royalhospital.png";
 	private String iconRoyalLogo = "src\\main\\java\\views\\ic_launcher.png";//Porque tan larga
@@ -54,6 +55,7 @@ public class DataModel {
 	private String fileUpload = "Cargó satisfactoriamente el fichero";
 	private String uploadFake = "No se pudo cargar el fichero";
 	private String selectFileForUpload = "Seleccione primero un directorio donde cargar el fichero";
+	private String isFileMsg = "Para cargar un fichero debe seleccionar un directorio";
 	
 	public DataModel() {
 		
@@ -377,6 +379,14 @@ public class DataModel {
 
 	public void setSelectFileForUpload(String selectFileForUpload) {
 		this.selectFileForUpload = selectFileForUpload;
+	}
+
+	public String getIsFileMsg() {
+		return isFileMsg;
+	}
+
+	public void setIsFileMsg(String isFileMsg) {
+		this.isFileMsg = isFileMsg;
 	}
 
 	

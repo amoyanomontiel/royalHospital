@@ -39,7 +39,7 @@ public class PatientsListener implements ActionListener {
 		raiz.removeAllChildren();
 
 		try {
-			royal.seekFile(raiz, client.listFiles(), client);
+			royal.createFilesTree(raiz, client.listFiles(), client);
 			client.changeWorkingDirectory("/Pacientes");
 		} catch (IOException e1) {
 

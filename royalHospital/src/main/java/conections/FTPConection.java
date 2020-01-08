@@ -30,7 +30,7 @@ public class FTPConection {
 		try {
 			client.connect(data.getFtpServer(), data.getPort());
 			if (client.login(data.getFtpUser(), data.getFtpPassword())) {
-
+				
 			} else {
 				ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(),
 						0);

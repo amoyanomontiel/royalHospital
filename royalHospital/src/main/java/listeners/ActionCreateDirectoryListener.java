@@ -10,6 +10,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
+import com.royalhospital.royalHospital.AuxiliaryTools;
 import com.royalhospital.royalHospital.DataModel;
 
 import views.CreateModifyView;
@@ -47,6 +48,8 @@ public class ActionCreateDirectoryListener implements ActionListener {
 							} else {
 								ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
 								nameFrame.dispose();
+								AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "crear directorio", DataModel.selectedFile, 
+										AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 								royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
 								royal.refreshJTree(directoryName.getText().toString());
 								break;
@@ -61,6 +64,8 @@ public class ActionCreateDirectoryListener implements ActionListener {
 				}else {
 					if(!directoryName.getText().toString().equalsIgnoreCase("")) {
 						ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
+						AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "crear directorio", DataModel.selectedFile, 
+								AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 						royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
 						royal.refreshJTree(directoryName.getText().toString());
 						royal.rootsToBlank();

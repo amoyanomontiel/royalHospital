@@ -41,7 +41,7 @@ public class DocumentsListener implements ActionListener {
 		root.removeAllChildren();
 
 		try {
-			royal.seekFile(root, ftpClient.listFiles(), ftpClient);
+			royal.createFilesTree(root, ftpClient.listFiles(), ftpClient);
 			ftpClient.changeWorkingDirectory("/Medicos/" + user);
 		} catch (IOException e1) {
 

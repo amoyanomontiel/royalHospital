@@ -16,6 +16,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
+import com.royalhospital.royalHospital.AuxiliaryTools;
 import com.royalhospital.royalHospital.DataModel;
 
 import views.CreateModifyView;
@@ -48,7 +49,7 @@ public class ActionCreateFileListener implements ActionListener{
 				ftp.changeWorkingDirectory(DataModel.actualUserPath);
 //				String pathHome = System.getProperty("user.home") + "/downloads/";
 				if(text.getText().toString().isEmpty()) {
-					ErrorRoyalView error = new ErrorRoyalView("Escriba el nombre del archivo y su extensión si lo desea.", 1);
+					ErrorRoyalView error = new ErrorRoyalView("Escriba el nombre del fichero y su extensión si lo desea.", 1);
 					error.setVisible(true);
 					error.setLocationRelativeTo(null);
 				}else {
@@ -65,7 +66,9 @@ public class ActionCreateFileListener implements ActionListener{
 					FileInputStream input = new FileInputStream(fileTmp);
 					ftp.storeFile(nameFile, input);
 					nameFrame.dispose();
-					royal.getTxtaHistorial().append("El archivo '"+ nameFile + "' ha sido creado\n");
+					AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "crear fichero", DataModel.selectedFile, 
+							AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
+					royal.getTxtaHistorial().append("El fichero '"+ nameFile + "' ha sido creado\n");
 					input.close();
 //					fileTmp.deleteOnExit();
 					fileTmp.delete();

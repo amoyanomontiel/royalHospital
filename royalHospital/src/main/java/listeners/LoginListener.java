@@ -29,7 +29,7 @@ public class LoginListener implements ActionListener {
 	DataModel data = new DataModel();
 
 	/**
-	 * Initializes the variable loginView
+	 * Initializes class variables
 	 * 
 	 * @param loginView The login View object
 	 */
@@ -56,9 +56,9 @@ public class LoginListener implements ActionListener {
 				loginView.getBtnLogin().setEnabled(false);
 				FTPConection ftpConect = new FTPConection();
 				FTPClient ftpClient = ftpConect.createFTPClient();
-				String roll = getRoll(userText);
-				if (ftpClient.isConnected() && roll != null) {
-					MainRoyalView mainRoyal = new MainRoyalView(ftpClient, userText, roll);
+				String rol = getRol(userText);
+				if (ftpClient.isConnected() && rol != null) {
+					MainRoyalView mainRoyal = new MainRoyalView(ftpClient, userText, rol);
 					mainRoyal.setLocationRelativeTo(null);
 					mainRoyal.setVisible(true);
 				}
@@ -72,15 +72,15 @@ public class LoginListener implements ActionListener {
 	}
 
 	/**
-	 * Function which search the user roll at data base
+	 * Function which search the user rol at data base
 	 * 
 	 * @param userText Username entered at login view
-	 * @return String Roll of user
+	 * @return String Rol of user
 	 */
-	private String getRoll(String userText) {
+	private String getRol(String userText) {
 		DBConection con = new DBConection();
 		Statement st = null;
-		String roll = null;
+		String rol = null;
 		try {
 			st = con.getConect().createStatement();
 		} catch (SQLException e) {
@@ -93,7 +93,7 @@ public class LoginListener implements ActionListener {
 			ResultSet rs = st.executeQuery("Select nameRoll from roll  where codRoll in ( Select codRoll from usuarios "
 					+ "where nameUser like '" + userText.toString() + "');");
 			rs.next();
-			roll = rs.getString(1);
+			rol = rs.getString(1);
 		} catch (SQLException e) {
 			ErrorRoyalView error = new ErrorRoyalView(data.getDbConectionError(), 0);
 			error.setVisible(true);
@@ -104,7 +104,7 @@ public class LoginListener implements ActionListener {
 		} catch (SQLException e) {
 			// DB conection still open (user doesn't care about that)
 		}
-		return roll;
+		return rol;
 	}
 
 	/**

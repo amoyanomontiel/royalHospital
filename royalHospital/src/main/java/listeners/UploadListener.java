@@ -12,25 +12,37 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import com.royalhospital.royalHospital.DataModel;
 import views.MainRoyalView;
-
+/**
+ * Class for Upload files function
+ * @author Cristina Montilla
+ *
+ */
 public class UploadListener implements ActionListener {
 
 	MainRoyalView mainRoyal;
 	FTPClient ftpClient;
-
+	DataModel data = new DataModel();
+	
+/**
+ * Initializes class variables
+ * @param MainRoyalView mainRoyal Principal frame
+ * @param FTPClient ftpClient Ftp client
+ */
 	public UploadListener(MainRoyalView mainRoyal, FTPClient ftpClient) {
 		this.mainRoyal = mainRoyal;
 		this.ftpClient = ftpClient;
 	}
-
+/**
+ * Upload event function which take a file from user system and upload it to ftp server 
+ */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (DataModel.actualUserPath != "") {
 			if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 				JFileChooser chooserFrame = new JFileChooser();
 				chooserFrame.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				chooserFrame.setDialogTitle("Cargar fichero");
-				int selection = chooserFrame.showDialog(chooserFrame, "Cargar");
+				chooserFrame.setDialogTitle(data.getUploadFileTag());
+				int selection = chooserFrame.showDialog(chooserFrame, data.getUploadTag());
 
 				if (selection == JFileChooser.APPROVE_OPTION) {
 					File file = chooserFrame.getSelectedFile();
@@ -54,14 +66,14 @@ public class UploadListener implements ActionListener {
 								}
 							}
 							if (exist) {
-								mainRoyal.getTxtaHistorial().append("El fichero ya existe en el directorio actual\n");
+								mainRoyal.getTxtaHistorial().append(data.getFileAlreadyExist() + "\n");
 							} else {
 								if (ftpClient.storeFile(file.getName(), input)) {
-									mainRoyal.getTxtaHistorial().append("Cargó satisfactoriamente el fichero\n");
+									mainRoyal.getTxtaHistorial().append(data.getFileUpload() + "\n");
 									mainRoyal.refreshJTree(file.getName());
 									mainRoyal.rootsToBlank();
 								} else {
-									mainRoyal.getTxtaHistorial().append("No se pudo cargar el fichero\n");
+									mainRoyal.getTxtaHistorial().append(data.getUploadFake() + "\n");
 								}
 							}
 							input.close();
@@ -74,7 +86,7 @@ public class UploadListener implements ActionListener {
 			}
 			// Error
 		} else {
-			mainRoyal.getTxtaHistorial().append("Seleccione primero un directorio donde cargar el fichero\n");
+			mainRoyal.getTxtaHistorial().append(data.getSelectFileForUpload() + "\n");
 		}
 	}
 }

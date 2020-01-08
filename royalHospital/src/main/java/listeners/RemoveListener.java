@@ -59,7 +59,7 @@ public class RemoveListener implements ActionListener {
 									.append("No es posible borrar el directorio si contiene algún elemento\n");
 						} else {
 							if (FTPReply.isPositiveCompletion(ftpClient.rmd(DataModel.selectedFile))) {
-								mainRoyal.getTxtaHistorial().append("Se borró el directorio satisfactoriamente\n");
+								mainRoyal.getTxtaHistorial().append("Se borró el directorio con éxito\n");
 								upDateTree();
 								mainRoyal.rootsToBlank();
 							} else {
@@ -68,7 +68,7 @@ public class RemoveListener implements ActionListener {
 						}
 					} else {
 						if (ftpClient.deleteFile(DataModel.selectedFile)) {
-							mainRoyal.getTxtaHistorial().append("Se borró el fichero satisfactoriamente\n");
+							mainRoyal.getTxtaHistorial().append("Se borró el fichero con éxito\n");
 							upDateTree();
 							mainRoyal.rootsToBlank();
 						} else {

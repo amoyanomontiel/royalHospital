@@ -15,7 +15,11 @@ import com.royalhospital.royalHospital.DataModel;
 import views.CreateModifyView;
 import views.ErrorRoyalView;
 import views.MainRoyalView;
-
+/**
+ * 
+ * @author Daniel Cuenca
+ *
+ */
 public class ActionCreateDirectoryListener implements ActionListener {
 
 	private FTPClient ftp;

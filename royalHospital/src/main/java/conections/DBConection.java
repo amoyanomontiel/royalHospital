@@ -13,7 +13,10 @@ import views.ErrorRoyalView;
 public class DBConection {
 	Connection conect;
 	DataModel data = new DataModel();
-
+	
+/**
+ * Creates new conection checking credentials
+ */
 	public DBConection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

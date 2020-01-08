@@ -11,7 +11,11 @@ import org.apache.commons.net.ftp.FTPFile;
 
 import views.ErrorRoyalView;
 import views.MainRoyalView;
-
+/**
+ * 
+ * @author Daniel Cuenca
+ *
+ */
 public class PatientsListener implements ActionListener {
 
 	private FTPClient client;

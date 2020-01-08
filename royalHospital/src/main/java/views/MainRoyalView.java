@@ -19,6 +19,7 @@ import listeners.DocumentsListener;
 import listeners.DownloadListener;
 import listeners.PatientsListener;
 import listeners.RemoveListener;
+import listeners.RenameListener;
 import listeners.UploadListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;

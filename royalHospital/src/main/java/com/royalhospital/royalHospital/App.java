@@ -5,7 +5,7 @@ import views.RoyalLoginView;
 /**
  * Principal class which launches the application
  * 
- * @author Cristina Montilla / Daniel Cuenca
+ * @author Cristina Montilla
  *
  */
 public class App {

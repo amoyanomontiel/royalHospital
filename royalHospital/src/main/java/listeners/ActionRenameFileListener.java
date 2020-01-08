@@ -46,6 +46,7 @@ public class ActionRenameFileListener implements ActionListener {
 				try {
 					ftp.changeWorkingDirectory(DataModel.directionPath);
 					if (ftp.rename(DataModel.selectedFile, text.getText())) {
+						nameFrame.dispose();
 						royal.getTxtaHistorial().append("El fichero fue renombrado con éxito\n");
 						// Actualizar??
 					} else {

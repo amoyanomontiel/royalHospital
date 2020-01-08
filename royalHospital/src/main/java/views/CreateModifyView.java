@@ -13,7 +13,11 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
+/**
+ * 
+ * @author Daniel Cuenca
+ *
+ */
 public class CreateModifyView extends JFrame{
 	
 	private JPanel contentPane;

@@ -14,9 +14,6 @@ import views.ErrorRoyalView;
  */
 public class FTPConection {
 
-	/**
-	 * Create the object
-	 */
 	public FTPConection() {
 
 	}
@@ -47,9 +44,5 @@ public class FTPConection {
 		}
 
 		return client;
-	}
-	
-	public static void reconection() {
-		
 	}
 }

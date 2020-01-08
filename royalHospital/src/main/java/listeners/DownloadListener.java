@@ -12,7 +12,11 @@ import com.royalhospital.royalHospital.DataModel;
 
 import views.ErrorRoyalView;
 import views.MainRoyalView;
-
+/**
+ * 
+ * @author Cristina Montilla
+ *
+ */
 public class DownloadListener implements ActionListener {
 
 	MainRoyalView mainRoyal;
@@ -38,7 +42,7 @@ public class DownloadListener implements ActionListener {
 						} else {
 							FileOutputStream out = new FileOutputStream(sDirectoryWork + DataModel.selectedFile);
 							if (ftpClient.retrieveFile(DataModel.selectedFile, out)) {
-								mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito \n");
+								mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito en su directorio de descargas \n");
 							} else {
 								mainRoyal.getTxtaHistorial().append("No se pudo descargar el fichero \n");
 							}

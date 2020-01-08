@@ -1,11 +1,15 @@
 package com.royalhospital.royalHospital;
-
+/**
+ * Data Model class for all messages, routes, button tags and general info
+ * @author Cristina Montilla
+ *
+ */
 public class DataModel {
 
 	public static String selectedFile = "";
 	public static String actualUserPath = "";
 	public static String directionPath = "";
-
+	
 	private String bigRoyalLogoRoute = "/views/royalhospital.png";
 	private String iconRoyalLogo = "src\\main\\java\\views\\ic_launcher.png";//Porque tan larga
 	private String errorIconRoute = "/views/errorIcono.png";
@@ -13,16 +17,18 @@ public class DataModel {
 	private String loginTitle = "Royal Hospital - Login";
 	private String mainTitle = "Royal Hospital - Main";
 	private String fontType = "Tahoma";
-	private String userTag = "Usuario";
-	private String passwordTag = "Contraseña";
-	private String loginBtnTag = "Entrar";
 	private String passwordUserIncorrectMsg = "El usuario o la contraseña no son correctos";
 	private String noEmptyLoginFieldsMsg = "El campo usuario y/o contraseña no pueden estar vacios";
 	private String dbConectionError = "Error de conexión con la Base de Datos";
 	private String ftpConectionError = "Error de conexión con el servidor";
+	//Tags
+	private String userTag = "Usuario";
+	private String passwordTag = "Contraseña";
+	private String loginBtnTag = "Entrar";
 	private String errorTag = "Error";
 	private String acceptTag = "Aceptar";
 	private String uploadTag =  "Cargar";
+	private String uploadFileTag = "Cargar fichero";
 	private String downloadTag = "Descargar";
 	private String deleteTag = "Borrar";
 	private String createFolderTag = "Crear Carpeta";
@@ -33,14 +39,21 @@ public class DataModel {
 	private String mailTag = "Correo";
 	private String doctorTag = "MEDICO";
 	private String patientTag = "PACIENTE";
-	private String selectedFileMsg = "Archivo seleccionado: ";
+	//Data base info
 	private String db = "jdbc:mysql://localhost/royalhospital";
 	private String dbUser = "root";
 	private String dbPassword = "";
+	//FTP info
 	private String ftpServer = "localhost";
 	private int port = 9000;
 	private String ftpUser = "usuario";
-	private String ftpPassword = "usuario";	
+	private String ftpPassword = "usuario";
+	//Record messages
+	private String selectedFileMsg = "Archivo seleccionado: ";
+	private String fileAlreadyExist = "El fichero ya existe en el directorio actual";
+	private String fileUpload = "Cargó satisfactoriamente el fichero";
+	private String uploadFake = "No se pudo cargar el fichero";
+	private String selectFileForUpload = "Seleccione primero un directorio donde cargar el fichero";
 	
 	public DataModel() {
 		
@@ -172,6 +185,14 @@ public class DataModel {
 
 	public void setUploadTag(String uploadTag) {
 		this.uploadTag = uploadTag;
+	}
+
+	public String getUploadFileTag() {
+		return uploadFileTag;
+	}
+
+	public void setUploadFileTag(String uploadFileTag) {
+		this.uploadFileTag = uploadFileTag;
 	}
 
 	public String getDownloadTag() {
@@ -324,6 +345,38 @@ public class DataModel {
 
 	public void setFtpPassword(String ftpPassword) {
 		this.ftpPassword = ftpPassword;
+	}
+
+	public String getFileAlreadyExist() {
+		return fileAlreadyExist;
+	}
+
+	public void setFileAlreadyExist(String fileAlreadyExist) {
+		this.fileAlreadyExist = fileAlreadyExist;
+	}
+
+	public String getFileUpload() {
+		return fileUpload;
+	}
+
+	public void setFileUpload(String fileUpload) {
+		this.fileUpload = fileUpload;
+	}
+
+	public String getUploadFake() {
+		return uploadFake;
+	}
+
+	public void setUploadFake(String uploadFake) {
+		this.uploadFake = uploadFake;
+	}
+
+	public String getSelectFileForUpload() {
+		return selectFileForUpload;
+	}
+
+	public void setSelectFileForUpload(String selectFileForUpload) {
+		this.selectFileForUpload = selectFileForUpload;
 	}
 
 	

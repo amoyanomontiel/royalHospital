@@ -35,16 +35,16 @@ public class PatientsListener implements ActionListener {
 
 		}
 
-		DefaultMutableTreeNode raiz = royal.getRaiz();
-		raiz.removeAllChildren();
+		DefaultMutableTreeNode root = royal.getRaiz();
+		root.removeAllChildren();
 
 		try {
-			royal.createFilesTree(raiz, client.listFiles(), client);
+			royal.createFilesTree(root, client.listFiles(), client);
 			client.changeWorkingDirectory("/Pacientes");
 		} catch (IOException e1) {
 
 		}
-		royal.changedJTree(raiz);
+		royal.changedJTree(root);
 
 	}
 }

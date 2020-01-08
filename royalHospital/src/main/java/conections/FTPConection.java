@@ -1,5 +1,7 @@
 package conections;
 
+import java.io.IOException;
+
 import org.apache.commons.net.ftp.FTPClient;
 
 import com.royalhospital.royalHospital.DataModel;
@@ -14,6 +16,9 @@ import views.ErrorRoyalView;
  */
 public class FTPConection {
 
+	private static FTPClient client;
+	private static Thread refresh;
+	
 	public FTPConection() {
 
 	}
@@ -26,14 +31,16 @@ public class FTPConection {
 	 */
 	public static FTPClient createFTPClient() {
 		DataModel data = new DataModel();
-		FTPClient client = new FTPClient();
+		client = new FTPClient();
 		try {
 			client.connect(data.getFtpServer(), data.getPort());
 			if (client.login(data.getFtpUser(), data.getFtpPassword())) {
-
+				
+				refresh = new Thread(new RefreshFTP(client));
+				refresh.start();
+				
 			} else {
-				ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(),
-						0);
+				ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
 				error.setVisible(true);
 				error.setLocationRelativeTo(null);
 			}
@@ -45,4 +52,15 @@ public class FTPConection {
 
 		return client;
 	}
+	
+	public static void disconnectFTP() {
+		try {
+			new RefreshFTP().stopRunning();
+			client.logout();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

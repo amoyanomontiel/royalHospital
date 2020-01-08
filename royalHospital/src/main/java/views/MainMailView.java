@@ -53,6 +53,7 @@ public class MainMailView extends JFrame {
 					contentPane.setLayout(null);
 
 					txtUserName = new JTextField();
+					txtUserName.setText("fcanadasortega.sanjose@alumnado.fundacionloyola.net");
 					txtUserName.setBounds(191, 220, 147, 22);
 					contentPane.add(txtUserName);
 					txtUserName.setColumns(10);
@@ -82,6 +83,7 @@ public class MainMailView extends JFrame {
 
 					txtPassword = new JPasswordField();
 					txtPassword.setBounds(191, 278, 147, 22);
+					txtPassword.setText("94836400");
 					contentPane.add(txtPassword);
 					EmailLoginListener.addEmailLoginListener(btnLogin);
 					setVisible(true);

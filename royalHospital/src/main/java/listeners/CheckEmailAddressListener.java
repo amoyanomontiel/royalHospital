@@ -20,8 +20,7 @@ public class CheckEmailAddressListener {
 				ArrayList<String> errorList = new ArrayList<String>();
 				int occurrences = 0;
 				int errorCounter = 0;
-				String invalidEmailError = "No se ha encontrado el correo '" + addresseeTextField.getText()
-						+ "'. Comprueba que no haya errores y vuelve a intentarlo";
+				String invalidEmailError = "No se ha encontrado el correo '*'. Comprueba que no haya errores y vuelve a intentarlo";
 				String multipleAddressees = "Pon una coma entre las direcciones de correo electrónico para mandar el correo a múltiples personas a la vez";
 
 				while (addressee.indexOf("@") > -1) {
@@ -33,7 +32,7 @@ public class CheckEmailAddressListener {
 					if (addresseeTextField.getText().contains(",")) {
 						addressees = addresseeTextField.getText().split(",");
 					}
-					if (addresseeTextField.getText().contains(" ")) {
+					else if (addresseeTextField.getText().contains(" ")) {
 						addressees = addresseeTextField.getText().split(" ");
 					} else {
 						addressees = new String[1];
@@ -53,10 +52,11 @@ public class CheckEmailAddressListener {
 
 						if (!addressees[i].contains(".sanjose@alumnado.fundacionloyola.net")
 								&& !addressees[i].contains("@gmail.com")) {
-							errorList.add(invalidEmailError);
+							String invalidEmailErrorModified = invalidEmailError.replace("*", addressees[i]);
+							errorList.add(invalidEmailErrorModified);
 							errorCounter++;
 						}
-						if (occurrences > 1 && !addresseeTextField.getText().contains(",")) {
+						if (occurrences > 1 && !addresseeTextField.getText().contains(",") && !errorList.contains(multipleAddressees)) {
 							errorList.add(multipleAddressees);
 							errorCounter++;
 						}

@@ -88,7 +88,7 @@ public class SendNewMail {
 		Multipart multipart = new MimeMultipart();
 		try {
 			BodyPart messageBodyPart = new MimeBodyPart(); // Crear el cuerpo del mensaje
-			messageBodyPart.setText("<p>" + body + "</p>");
+			messageBodyPart.setText(body);
 			multipart.addBodyPart(messageBodyPart);
 
 			if (attached.size() != 0) {

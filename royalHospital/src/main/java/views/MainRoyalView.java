@@ -155,7 +155,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		btnLogout.setBackground(Color.WHITE);
 		btnLogout.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnLogout.addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -167,11 +167,10 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				
+				}	
 			}
-			
 		});
+		btnLogout.setToolTipText("Cerrar Sesión");
 		
 
 		btnDocuments.setBounds(64, 13, BTN_WIDTH, BTN_HEIGHT);

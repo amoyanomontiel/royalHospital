@@ -1,5 +1,8 @@
 package com.royalhospital.royalHospital;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import views.RoyalLoginView;
 
 /**
@@ -19,5 +22,11 @@ public class App {
 		RoyalLoginView initLogin = new RoyalLoginView(data.getUserTag(), data.getBigRoyalLogoRoute());
 		initLogin.setLocationRelativeTo(null);
 		initLogin.setVisible(true);
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 	}
 }

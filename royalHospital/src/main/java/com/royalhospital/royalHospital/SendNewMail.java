@@ -29,7 +29,7 @@ public class SendNewMail {
 		this.password = password;
 	}
 	
-	public void sendNewGmail(String addressee, String subject, String body, ArrayList<UploadedFile> attached) {
+	public boolean sendNewGmail(String addressee, String subject, String body, ArrayList<UploadedFile> attached) {
 		Properties props = establishGmailPropierties();
 		Session session = Session.getInstance(props,
 			    new javax.mail.Authenticator() {
@@ -52,13 +52,19 @@ public class SendNewMail {
 				transport.connect("smtp.gmail.com", sender, password);
 				transport.sendMessage(message, message.getAllRecipients());
 				transport.close();
+				return true;
+			}
+			else {
+				return false;
 			}
 		} catch (AddressException e) {
 			JOptionPane.showMessageDialog(null, "No se ha encontrado dicha cuenta de correo", "Correo erróneo",
 					JOptionPane.WARNING_MESSAGE);
+			return false;
 		} catch (MessagingException e) {
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al mandar el mensaje, vuelve a intentarlo", "Error fatal",
 					JOptionPane.WARNING_MESSAGE);
+			return false;
 		}
 	}
 	
@@ -84,8 +90,9 @@ public class SendNewMail {
 		Multipart multipart = new MimeMultipart();
 		try {			
 			BodyPart messageBodyPart = new MimeBodyPart(); // Crear el cuerpo del mensaje
-			messageBodyPart.setText(body);
+			messageBodyPart.setText("<p>" + body + "</p>");
 			multipart.addBodyPart(messageBodyPart);
+			
 			if (attached.size() != 0) {
 				for (UploadedFile currentFile : attached) {
 					messageBodyPart = new MimeBodyPart();

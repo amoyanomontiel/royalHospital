@@ -23,6 +23,8 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -39,6 +41,8 @@ import java.awt.GridLayout;
 
 import javax.swing.JScrollPane;
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class NewMailView extends JFrame {
 
@@ -50,6 +54,9 @@ public class NewMailView extends JFrame {
 	private Extensions extensions;
 	private String gmailUsername = MainMailView.getTxtUserName().getText();
 	private String gmailPassword = new String(MainMailView.getTxtPassword().getPassword());
+	private JTextField textFieldAddressee;
+	private JTextField textFieldSubjectText;
+	private JTextArea textAreaBody;
 
 	
 //	public static void main(String[] args) {
@@ -67,6 +74,12 @@ public class NewMailView extends JFrame {
 
 
 	public void createFileChooser(JPanel contentPane) {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			System.out.println(e.getMessage());
+		}
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setMultiSelectionEnabled(true);
@@ -261,6 +274,7 @@ public class NewMailView extends JFrame {
 
 		if (action.equals("send")) {
 			SendNewMail newGmail = new SendNewMail(gmailUsername, gmailPassword);
+			boolean messageState = false;
 			
 			if (emptyaddressee) {
 				JOptionPane.showMessageDialog(null, "Debes introducir un destinatario", "Introduzca Destinatario",
@@ -270,20 +284,28 @@ public class NewMailView extends JFrame {
 						"¿Estás seguro de que quieres enviar un mensaje sin asunto o sin cuerpo?", "Enviar Mensaje",
 						JOptionPane.YES_NO_OPTION);
 				if (answer == 0) {
-					newGmail.sendNewGmail(addressee, subject, body, fileList);
+					messageState = newGmail.sendNewGmail(addressee, subject, body, fileList);
 				}
 			} else {
-				newGmail.sendNewGmail(addressee, subject, body, fileList);
+				messageState = newGmail.sendNewGmail(addressee, subject, body, fileList);
+			}
+			if (messageState) {
+				JOptionPane.showMessageDialog(null, "Correo enviado correctamente", "Operación correcta",
+						JOptionPane.WARNING_MESSAGE);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "El Correo no se ha enviado correctamente, intentalo de nuevo", "Operación incorrecta",
+						JOptionPane.WARNING_MESSAGE);
 			}
 		} else {
-			if (!emptyaddressee || !emptysubject || !emptybody) {
+			if (!emptyaddressee || !emptysubject || !emptybody || fileList.size() != 0) {
 				int answer = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres desechar el mensaje?",
 						"Desechar Mensaje", JOptionPane.YES_NO_OPTION);
 				if (answer == 0) {
-					System.exit(0);
+					dispose();
 				}
 			} else {
-				System.exit(0);
+				dispose();
 			}
 		}
 	}
@@ -292,6 +314,12 @@ public class NewMailView extends JFrame {
 	 * Create the frame.
 	 */
 	public NewMailView() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				checkTextBoxes(textFieldAddressee, textFieldSubjectText, textAreaBody, "cancel");
+			}
+		});
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -299,7 +327,7 @@ public class NewMailView extends JFrame {
 					extensions = new Extensions();
 
 					setResizable(false);
-					setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 					setBounds(100, 100, 850, 700);
 					JPanel contentPane = new JPanel();
 					contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -311,7 +339,7 @@ public class NewMailView extends JFrame {
 					lblAddressee.setBounds(67, 29, 102, 27);
 					contentPane.add(lblAddressee);
 
-					JTextField textFieldAddressee = new JTextField();
+					textFieldAddressee = new JTextField();
 					textFieldAddressee.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					textFieldAddressee.setBounds(230, 29, 515, 27);
 					contentPane.add(textFieldAddressee);
@@ -322,13 +350,13 @@ public class NewMailView extends JFrame {
 					lblSubject.setBounds(67, 87, 62, 27);
 					contentPane.add(lblSubject);
 
-					JTextField textFieldSubjectText = new JTextField();
+					textFieldSubjectText = new JTextField();
 					textFieldSubjectText.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 					textFieldSubjectText.setColumns(10);
 					textFieldSubjectText.setBounds(230, 87, 515, 27);
 					contentPane.add(textFieldSubjectText);
 
-					JTextArea textAreaBody = new JTextArea();
+					textAreaBody = new JTextArea();
 					textAreaBody.setBounds(67, 160, 678, 200);
 					textAreaBody.setWrapStyleWord(true);
 					textAreaBody.setLineWrap(true);

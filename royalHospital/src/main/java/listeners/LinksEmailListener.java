@@ -3,6 +3,7 @@ package listeners;
 // All imports
 import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.swing.JEditorPane;
@@ -33,7 +34,10 @@ public class LinksEmailListener {
 					if (Desktop.isDesktopSupported()) {
 						try {
 							Desktop.getDesktop().browse(e.getURL().toURI());
+							
 						} catch (IOException e1) {
+							System.out.println("AQUI");
+							System.out.println(e.getURL());
 							System.out.println("Input/outPut error");
 						} catch (URISyntaxException e1) {
 							System.out.println("URL sintax error");

@@ -48,24 +48,24 @@ public class ActionCreateFileListener implements ActionListener{
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				ftp.setFileType(FTP.BINARY_FILE_TYPE);
 				ftp.changeWorkingDirectory(DataModel.actualUserPath);
-//				String pathHome = System.getProperty("user.home") + "/downloads/";
 				if(text.getText().toString().isEmpty() || text.getText().length()>20) {
 					ErrorRoyalView error = new ErrorRoyalView("Escriba el nombre del fichero\n(máximo 20 caracteres) y su extensión si lo desea.", 1);
 					error.setVisible(true);
 					error.setLocationRelativeTo(null);
 				}else {
-//					String[] splitName = text.getText().toString().split(Pattern.quote("."));
 					String fileExtension = FilenameUtils.getExtension(text.getText());
 					String fileName = FilenameUtils.getBaseName(text.getText());
-					File fileTmp = File.createTempFile(fileName, fileExtension);
-//					if(splitName.length>1) {
-//						fileTmp = File.createTempFile(splitName[0], "."+splitName[1]);
-//						nameFile = splitName[0] + "."+splitName[1];
-//					}else {
-//						fileTmp = File.createTempFile(splitName[0], ".txt");//Aqui peta a veces
-//						nameFile = splitName[0]+".txt";
-//					}
-					String nameFile = fileName + "." + fileExtension;
+					File fileTmp = null;
+					String nameFile = "";
+					if(fileExtension.equalsIgnoreCase("")) {
+						fileTmp = File.createTempFile(fileName, ".txt");
+						System.out.println("hola");
+						nameFile = fileName + ".txt";
+					}else {
+						fileTmp = File.createTempFile(fileName, fileExtension);
+						System.out.println(fileExtension);
+						nameFile = fileName + "." + fileExtension;
+					}
 					FileInputStream input = new FileInputStream(fileTmp);
 					ftp.storeFile(nameFile, input);
 					nameFrame.dispose();
@@ -73,7 +73,6 @@ public class ActionCreateFileListener implements ActionListener{
 							AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 					royal.getTxtaHistorial().append("El fichero '"+ nameFile + "' ha sido creado\n");
 					input.close();
-//					fileTmp.deleteOnExit();
 					fileTmp.delete();
 					System.out.println(fileTmp.getAbsolutePath());
 					

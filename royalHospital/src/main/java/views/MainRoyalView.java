@@ -15,6 +15,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import com.royalhospital.royalHospital.DataModel;
 
+import conections.FTPConection;
 import listeners.CreateDirectoryListener;
 import listeners.CreateFileListener;
 import listeners.DocumentsListener;
@@ -159,15 +160,10 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				try {
-					ftpClient.disconnect();
-					RoyalLoginView login = new RoyalLoginView(data.getUserTag(), data.getBigRoyalLogoRoute());
-					login.setLocationRelativeTo(null);
-					login.setVisible(true);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
+				new FTPConection().disconnectFTP();
+				RoyalLoginView login = new RoyalLoginView(data.getUserTag(), data.getBigRoyalLogoRoute());
+				login.setLocationRelativeTo(null);
+				login.setVisible(true);	
 			}
 		});
 		btnLogout.setToolTipText("Cerrar Sesión");

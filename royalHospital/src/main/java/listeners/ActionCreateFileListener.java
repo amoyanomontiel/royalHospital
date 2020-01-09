@@ -24,7 +24,7 @@ import views.CreateModifyView;
 import views.ErrorRoyalView;
 import views.MainRoyalView;
 /**
- * 
+ * Class to create files and update Jtree
  * @author Daniel Cuenca
  *
  */

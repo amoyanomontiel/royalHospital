@@ -95,9 +95,9 @@ public class MailMethods {
 					continue;
 				}
 				InputStream is = bodyPart.getInputStream();
-
+				
 				// Save attachment on Download directory
-				fileAttachment = new File(homeRute + "\\Downloads\\" + bodyPart.getFileName());
+				fileAttachment = new File(homeRute + "\\Downloads\\" + bodyPart.getFileName().replace(" ", ""));
 				FileOutputStream fos = new FileOutputStream(fileAttachment);
 
 				// Buffer of bytes
@@ -193,7 +193,7 @@ public class MailMethods {
 				if(bodyTextSave.contains("<img")) {
 					bodyTextSave = searchLinks(bodyTextSave);	
 				}
-				bodyTextSave += "<a href=file:///'" + attachments.get(counterAttachments).toString() + "'>" + filterName
+				bodyTextSave += "<a href=file:///'" + attachments.get(counterAttachments).toString().replace(" ", "") + "'>" + filterName.replace(" ", "")
 						+ " </a>";
 			}
 
@@ -322,7 +322,7 @@ public class MailMethods {
 				builderName.append(ch);
 			}
 
-			return builderName.toString();
+			return "<br>" + builderName.toString() + "</br>";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

@@ -150,30 +150,30 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		btnMail.setBackground(Color.WHITE);
 		btnMail.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnMail.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//Añadir Correo
+				@SuppressWarnings("unused")
+				MainMailView objectLoginMail = new MainMailView("Correo Electrónico", "mailIcon.png");
 			}
 		});
-		
+
 		JButton btnLogout = new JButton();
 		contentPane.add(btnLogout);
 		btnLogout.setBackground(Color.WHITE);
 		btnLogout.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
 		btnLogout.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 				new FTPConection().disconnectFTP();
 				RoyalLoginView login = new RoyalLoginView(data.getUserTag(), data.getBigRoyalLogoRoute());
 				login.setLocationRelativeTo(null);
-				login.setVisible(true);	
+				login.setVisible(true);
 			}
 		});
 		btnLogout.setToolTipText(data.getLogoutTag());
-		
 
 		btnDocuments.setBounds(64, 13, BTN_WIDTH, BTN_HEIGHT);
 		btnPatient.setBounds(240, 13, BTN_WIDTH, BTN_HEIGHT);
@@ -289,9 +289,9 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 			error.setLocationRelativeTo(null);
 		}
 	}
-	
+
 	private void changeStyleJtree(JTree tree) {
-		DefaultTreeCellRenderer cell = (DefaultTreeCellRenderer)tree.getCellRenderer();
+		DefaultTreeCellRenderer cell = (DefaultTreeCellRenderer) tree.getCellRenderer();
 		ImageIcon directoryClose = new ImageIcon("src\\main\\java\\views\\IconoCarpetaCerrada.png");
 		ImageIcon directoryOpen = new ImageIcon("src\\main\\java\\views\\IconoCarpetaAbierta.png");
 		ImageIcon file = new ImageIcon("src\\main\\java\\views\\IconoArchivo.png");
@@ -303,7 +303,6 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		tree.setFont(bigFont);
 		tree.setCellRenderer(cell);
 	}
-	
 
 	/**
 	 * Creates new JTree

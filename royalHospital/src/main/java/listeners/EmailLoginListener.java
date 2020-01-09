@@ -17,7 +17,6 @@ public class EmailLoginListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(MainMailView.getTxtUserName().getText().contains("@alumnado.fundacionloyola.net")) {
-					MainMailView.getFrame().setVisible(false);;
 					InboxView viewReceiveEmails = new InboxView();
 				}
 			}

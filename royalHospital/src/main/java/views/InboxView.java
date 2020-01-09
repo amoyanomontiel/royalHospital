@@ -34,6 +34,7 @@ public class InboxView extends JFrame {
 	private static MailMethods objectMail;
 	private static JPanel mailListPane;
 	private static ThreadAutoRefresh objectThreadAutoRefresh;
+	private static boolean connectMail;
 
 	/**
 	 * Launch the View
@@ -55,23 +56,25 @@ public class InboxView extends JFrame {
 					String valorPass = new String(MainMailView.getTxtPassword().getPassword());
 					objectMail.setAllDataConnection("pop.gmail.com", "pop3", MainMailView.getTxtUserName().getText(), valorPass);
 					objectMail.setProperties();
-					objectMail.connectMailServer();
-					objectMail.setFolderEmails();
-					objectMail.receiveAndSaveAllEmails();
+					connectMail = objectMail.connectMailServer();
+					if(connectMail) {
+						MainMailView.getFrame().setVisible(false);
+						objectMail.setFolderEmails();
+						objectMail.receiveAndSaveAllEmails();
 
-					setResizable(false);
-					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					setBounds(100, 100, 1381, 551);
-					contentPane = new JPanel();
-					contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-					setContentPane(contentPane);
+						setResizable(false);
+						setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						setBounds(100, 100, 1381, 551);
+						contentPane = new JPanel();
+						contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+						setContentPane(contentPane);
 
-					headPane = new JPanel();
-					contentPane.add(headPane, BorderLayout.NORTH);
+						headPane = new JPanel();
+						contentPane.add(headPane, BorderLayout.NORTH);
 
-					JLabel lblInbox = new JLabel("Buzón de entrada");
-					lblInbox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-					headPane.add(lblInbox);
+						JLabel lblInbox = new JLabel("Buzón de entrada");
+						lblInbox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+						headPane.add(lblInbox);
 
 					JButton btnRefresh = new JButton("Refrescar");
 					btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -80,47 +83,48 @@ public class InboxView extends JFrame {
 					btnRefresh.setIcon(newRefreshIcon);
 					headPane.add(btnRefresh);
 
-					JButton btnWriteEmail = new JButton("Redactar");
-					btnWriteEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					ImageIcon mailIcon = new ImageIcon("src//main//java//views//newGmail.png");
-					Icon newMailIcon = new ImageIcon(mailIcon.getImage().getScaledInstance(width+15, height, Image.SCALE_DEFAULT));
-					btnWriteEmail.setIcon(newMailIcon);
-					headPane.add(btnWriteEmail);
+						JButton btnWriteEmail = new JButton("Redactar");
+						btnWriteEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+						ImageIcon mailIcon = new ImageIcon("src//main//java//views//newGmail.png");
+						Icon newMailIcon = new ImageIcon(mailIcon.getImage().getScaledInstance(width+15, height, Image.SCALE_DEFAULT));
+						btnWriteEmail.setIcon(newMailIcon);
+						headPane.add(btnWriteEmail);
 
-					JButton btnCloseInbox = new JButton("Volver");
-					btnCloseInbox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					ImageIcon returnIcon = new ImageIcon("src//main//java//views//homeIcon.png");
-					Icon newReturnIcon = new ImageIcon(returnIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-					btnCloseInbox.setIcon(newReturnIcon);
-					headPane.add(btnCloseInbox);
+						JButton btnCloseInbox = new JButton("Volver");
+						btnCloseInbox.setFont(new Font("Tahoma", Font.PLAIN, 15));
+						ImageIcon returnIcon = new ImageIcon("src//main//java//views//homeIcon.png");
+						Icon newReturnIcon = new ImageIcon(returnIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+						btnCloseInbox.setIcon(newReturnIcon);
+						headPane.add(btnCloseInbox);
 
-					contextMailPane = new JPanel();
-					contentPane.add(contextMailPane, BorderLayout.SOUTH);
+						contextMailPane = new JPanel();
+						contentPane.add(contextMailPane, BorderLayout.SOUTH);
 
-					mailListPane = new JPanel();
+						mailListPane = new JPanel();
 
-					/*
-					 * Generate 2 JPanels: 1. JPanel = JPanel with JComboBox with all emails 2.
-					 * JPanel = JPanel that show the context of message
-					 */
+						/*
+						 * Generate 2 JPanels: 1. JPanel = JPanel with JComboBox with all emails 2.
+						 * JPanel = JPanel that show the context of message
+						 */
 
-					mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
+						mailListPane = objectMail.generateJComboBoxWithEmails(contextMailPane, contentPane);
 
-					/**
-					 * Add listener to the Refresh button
-					 */
-					RefreshEmail.addRefreshButtonListener(btnRefresh, contentPane, contextMailPane);
-					contentPane.add(mailListPane);
+						/**
+						 * Add listener to the Refresh button
+						 */
+						RefreshEmail.addRefreshButtonListener(btnRefresh, contentPane, contextMailPane);
+						contentPane.add(mailListPane);
 
-					OpenNewEmailListener.addNewMailOpenListener(btnWriteEmail);
-					
-					/**
-					 * Create and start Thread that auto refresh the JComboBox with emails
-					 */
-					objectThreadAutoRefresh = new ThreadAutoRefresh(contentPane, contextMailPane);
-					objectThreadAutoRefresh.start();
-					
-					setVisible(true);
+						OpenNewEmailListener.addNewMailOpenListener(btnWriteEmail);
+						
+						/**
+						 * Create and start Thread that auto refresh the JComboBox with emails
+						 */
+						objectThreadAutoRefresh = new ThreadAutoRefresh(contentPane, contextMailPane);
+						objectThreadAutoRefresh.start();
+						
+						setVisible(true);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -152,6 +156,14 @@ public class InboxView extends JFrame {
 
 	public static void setMailListPane(JPanel mailListPane) {
 		InboxView.mailListPane = mailListPane;
+	}
+
+	public static boolean isConnectMail() {
+		return connectMail;
+	}
+
+	public static void setConnectMail(boolean connectMail) {
+		InboxView.connectMail = connectMail;
 	}
 
 }

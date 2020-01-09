@@ -1,3 +1,10 @@
+/**
+ * This class contains the file name and the file path of every file attached to the message
+ * @author Fernando Cañadas Ortega
+ * @version 1.0
+ * Realizado el 9 november 2020
+ */
+
 package com.royalhospital.royalHospital;
 
 import java.util.ArrayList;
@@ -24,11 +31,30 @@ public class SendNewMail {
 	private String sender;
 	private String password;
 
+	/**
+	 * Builder of this class that fill the email sender and email password of the
+	 * email account
+	 */
 	public SendNewMail(String sender, String password) {
 		this.sender = sender;
 		this.password = password;
 	}
 
+	/**
+	 * Call the method that defines the properties of the mail server, log in with
+	 * your email account, establish who will be the addressees, the subject, the
+	 * body and the attachments of the mail and when everything is already, send the
+	 * message
+	 * 
+	 * @param addressee string that contains the addressee to whom the message is
+	 *                  aimed to
+	 * @param subject   string that contains the subject of the message
+	 * @param body      string that contains the message body
+	 * @param attached  ArrayList of the class UploadedFile that contains the file
+	 *                  path and the file name of every file that will be attached
+	 *                  to the message
+	 * @return boolean that establish if the message is sended correctly or not
+	 */
 	public boolean sendNewGmail(String addressee, String subject, String body, ArrayList<UploadedFile> attached) {
 		Properties props = establishGmailPropierties();
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -66,8 +92,14 @@ public class SendNewMail {
 	}
 
 	/*
-	 * Define the properties of the gmail server and define the gmail account that
+	
+	 */
+
+	/**
+	 * Define the properties of the mail server and define the gmail account that
 	 * you are going to use
+	 * 
+	 * @return Propierties of the server and the account that will be used
 	 */
 	public Properties establishGmailPropierties() {
 		Properties props = new Properties();
@@ -84,6 +116,16 @@ public class SendNewMail {
 		return props;
 	}
 
+	/**
+	 * Create the message body and add the attachments to the message so they can be
+	 * sent
+	 * 
+	 * @param body     string that contains the message body
+	 * @param attached ArrayList of the class UploadedFile that contains the file
+	 *                 path and the file name of every file that will be attached to
+	 *                 the message
+	 * @return Multipart that contains the body message and the attached files ready to be added to the message
+	 */
 	public Multipart createMessage(String body, ArrayList<UploadedFile> attached) {
 		Multipart multipart = new MimeMultipart();
 		try {

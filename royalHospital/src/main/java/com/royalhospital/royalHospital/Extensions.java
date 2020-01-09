@@ -1,3 +1,10 @@
+/**
+ * This class contains all the extensions, any text file extensions and those file extensions that are banned by gmail
+ * @author Fernando Cañadas Ortega
+ * @version 1.0
+ * Realizado el 9 november 2020
+ */
+
 package com.royalhospital.royalHospital;
 
 import java.util.ArrayList;
@@ -6,7 +13,10 @@ public class Extensions {
 
 	private ArrayList<String> textExtensions;
 	private ArrayList<String> forbiddenGmailExtensions;
-
+	
+	/**
+	 * Builder of this class that initialize the ArrayLists and call the array fill methods
+	 */
 	public Extensions() {
 		textExtensions = new ArrayList<String>();
 		forbiddenGmailExtensions = new ArrayList<String>();
@@ -15,6 +25,9 @@ public class Extensions {
 		fillForbiddenGmailExtensions();
 	}
 
+	/**
+	 * Method that fill the text file extensions arraylist
+	 */
 	private void fillExtensions() {
 		textExtensions.add("doc");
 		textExtensions.add("docx");
@@ -28,6 +41,9 @@ public class Extensions {
 		textExtensions.add("nfo");
 	}
 
+	/**
+	 * Method that fill the forbidden file extensions arraylist
+	 */
 	private void fillForbiddenGmailExtensions() {
 		forbiddenGmailExtensions.add("ade");
 		forbiddenGmailExtensions.add("adp");

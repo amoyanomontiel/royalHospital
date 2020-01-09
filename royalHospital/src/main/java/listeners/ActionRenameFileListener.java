@@ -32,6 +32,7 @@ public class ActionRenameFileListener implements ActionListener {
 	private JTextField text;
 	private MainRoyalView royal;
 	private CreateModifyView nameFrame;
+	private String file;
 
 	/**
 	 * 

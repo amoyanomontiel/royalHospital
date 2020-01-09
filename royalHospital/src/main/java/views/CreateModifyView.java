@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import org.apache.commons.net.ftp.FTPClient;
 
+import com.royalhospital.royalHospital.DataModel;
+
 import listeners.ActionCreateDirectoryListener;
 import listeners.ActionCreateFileListener;
 import listeners.ActionRenameFileListener;
@@ -64,6 +66,7 @@ public class CreateModifyView extends JDialog{
 		}else {
 			//aqui listener del btnChange cuando se pulsa el botón de renombrar
 			//Hay que cambiar el nombre de una carpeta en el servidor FTP y un nodo en el arbol o borrar el arbol y crearlo de nuevo
+			textField.setText(DataModel.selectedFile);
 			btnChange.addActionListener(new ActionRenameFileListener(ftpClient, textField, royalView, this));
 		}
 		

@@ -52,15 +52,17 @@ public class FTPConection {
 
 		return client;
 	}
-
+	
+	/**
+	 * This method closes the connection with the FTP server and the thread refresh connection.
+	 */
 	public static void disconnectFTP() {
 		try {
 			client.logout();
 			refresh.stopRunning();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 }

@@ -48,8 +48,8 @@ public class ActionCreateFileListener implements ActionListener{
 				ftp.setFileType(FTP.BINARY_FILE_TYPE);
 				ftp.changeWorkingDirectory(DataModel.actualUserPath);
 //				String pathHome = System.getProperty("user.home") + "/downloads/";
-				if(text.getText().toString().isEmpty() && text.getText().length()>20) {
-					ErrorRoyalView error = new ErrorRoyalView("Escriba el nombre del fichero y su extensión si lo desea.", 1);
+				if(text.getText().toString().isEmpty() || text.getText().length()>20) {
+					ErrorRoyalView error = new ErrorRoyalView("Escriba el nombre del fichero\n(máximo 20 caracteres) y su extensión si lo desea.", 1);
 					error.setVisible(true);
 					error.setLocationRelativeTo(null);
 				}else {

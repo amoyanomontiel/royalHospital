@@ -13,6 +13,8 @@ import com.royalhospital.royalHospital.DataModel;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.Color;
 
 /**
@@ -21,7 +23,7 @@ import java.awt.Color;
  * @author Daniel Cuenca
  *
  */
-public class ErrorRoyalView extends JFrame {
+public class ErrorRoyalView extends JDialog {
 
 	private JPanel contentPane;
 	DataModel data = new DataModel();

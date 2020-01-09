@@ -37,7 +37,7 @@ public class DataModel {
 	private String createFolderTag = "Crear Carpeta";
 	private String createFileTag = "Crear Fichero";
 	private String renameTag = "Renombrar";
-	private String documentsTag = "Mis Documentos";
+	private String documentsTag = "Documentos";
 	private String patientsTag = "Pacientes";
 	private String mailTag = "Correo";
 	private String doctorTag = "MEDICO";

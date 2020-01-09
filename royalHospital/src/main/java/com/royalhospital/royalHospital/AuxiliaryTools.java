@@ -14,14 +14,12 @@ import org.apache.commons.net.ftp.FTPFile;
 import conections.DBConection;
 
 /**
+ * Auxiliar Tools and utilities class
  * @author Cristina Montilla
  *
  */
 public class AuxiliaryTools {
 
-	/**
-	 * 
-	 */
 	public AuxiliaryTools() {
 
 	}

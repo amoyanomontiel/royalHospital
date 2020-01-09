@@ -18,6 +18,7 @@ import com.royalhospital.royalHospital.AuxiliaryTools;
 import com.royalhospital.royalHospital.DataModel;
 
 import views.CreateModifyView;
+import views.ErrorRoyalView;
 import views.MainRoyalView;
 
 /**
@@ -49,19 +50,25 @@ public class ActionRenameFileListener implements ActionListener {
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				try {
 					ftp.changeWorkingDirectory(DataModel.directionPath);
-					if (ftp.rename(DataModel.selectedFile, text.getText())) {
-						nameFrame.dispose();
-						AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "renombrar", DataModel.selectedFile, 
-								AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-						royal.getTxtaHistorial().append("El fichero fue renombrado con éxito\n");
-						DefaultMutableTreeNode node = (DefaultMutableTreeNode)royal.getTree().getLastSelectedPathComponent();
-						node.setUserObject(text.getText().toString());
-						DefaultTreeModel model = (DefaultTreeModel) royal.getTree().getModel();
-						model.nodeChanged(node);
-						royal.getTree().setModel(model);
-					} else {
-						royal.getTxtaHistorial().append("El fichero no pudo ser renombrado\n");
-					}
+					if(text.getText().toString().isEmpty() || text.getText().length()>20) {
+						ErrorRoyalView error = new ErrorRoyalView("Escriba el nombre nuevo para el fichero(máximo 20 caracteres)", 1);
+						error.setVisible(true);
+						error.setLocationRelativeTo(null);
+					}else {
+						if (ftp.rename(DataModel.selectedFile, text.getText())) {
+							nameFrame.dispose();
+							AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "renombrar", DataModel.selectedFile, 
+									AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
+							royal.getTxtaHistorial().append("El fichero fue renombrado con éxito\n");
+							DefaultMutableTreeNode node = (DefaultMutableTreeNode)royal.getTree().getLastSelectedPathComponent();
+							node.setUserObject(text.getText().toString());
+							DefaultTreeModel model = (DefaultTreeModel) royal.getTree().getModel();
+							model.nodeChanged(node);
+							royal.getTree().setModel(model);
+						} else {
+							royal.getTxtaHistorial().append("El fichero no pudo ser renombrado\n");
+						}
+					}					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

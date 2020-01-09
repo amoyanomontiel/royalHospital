@@ -9,6 +9,11 @@ public class RefreshFTP extends Thread{
 	private FTPClient client;
 	private Boolean flag = true;
 	
+	/**
+	 * This function refresh conection with server FTP.
+	 * 
+	 * @param client
+	 */
 	public RefreshFTP(FTPClient client) {
 		this.client = client;
 	}
@@ -17,22 +22,22 @@ public class RefreshFTP extends Thread{
 	public void run() {
 		do {
 			try {
-				client.sendNoOp();
-				System.out.println("Refresca el Filezilla");
+				client.sendNoOp();//Send a command to the server indicating that it is still connected
+//				System.out.println("Refresca el Filezilla");
 			} catch (IOException e) {
-				System.out.println("oh");
+				System.out.println(e.getMessage());
 			}
-			System.out.println(flag);
-			
 			try {
 				Thread.sleep(60000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		}while(flag);
 	}
 	
+	/**
+	 * This method closes the thread by breaking the while loop by changing the boolean to false
+	 */
 	public void stopRunning() {
 			flag = false;	
 	}

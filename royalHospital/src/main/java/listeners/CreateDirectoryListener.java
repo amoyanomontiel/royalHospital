@@ -29,18 +29,19 @@ public class CreateDirectoryListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		DataModel data = new DataModel();
 		if (DataModel.actualUserPath != "") {
 			if (!AuxiliaryTools.checkFile(client)) {
 				if (FTPReply.isPositiveCompletion(client.getReplyCode())) {
-					CreateModifyView view = new CreateModifyView("Crear Directorio",
-							"Introduce el nombre del directorio: ", "Crear Directorio", 0, client, royal);
+					CreateModifyView view = new CreateModifyView(data.getCreateFolderTag(),
+							data.getInsertNewDirLbl(), data.getCreateFolderTag(), 0, client, royal);
 					view.setVisible(true);
 				}
 			} else {
-				royal.getTxtaHistorial().append("Para crear un directorio es necesario seleccionar un directorio de creación\n");
+				royal.getTxtaHistorial().append(data.getIsDirMsg() + "\n");
 			}
 		} else {
-			royal.getTxtaHistorial().append("Seleccione primero un directorio de creación\n");
+			royal.getTxtaHistorial().append(data.getSelectDirFirst()+ "\n");
 		}
 
 	}

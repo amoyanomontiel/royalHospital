@@ -16,6 +16,8 @@ import org.apache.commons.net.ftp.FTPReply;
 
 import com.royalhospital.royalHospital.AuxiliaryTools;
 import com.royalhospital.royalHospital.DataModel;
+
+import views.ErrorRoyalView;
 import views.MainRoyalView;
 /**
  * Class for Upload files function
@@ -85,13 +87,13 @@ public class UploadListener implements ActionListener {
 								}
 								input.close();
 							} catch (IOException ex) {
-								// Error
+								ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
+								error.setVisible(true);
+								error.setLocationRelativeTo(null);
 							}
 						}
-						// Error
 					}
 				}
-				// Error
 			}else {
 				mainRoyal.getTxtaHistorial().append(data.getIsFileMsg() + "\n");
 			}			

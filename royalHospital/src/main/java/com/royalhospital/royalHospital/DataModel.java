@@ -25,7 +25,7 @@ public class DataModel {
 	private String ftpConectionError = "Error de conexión con el servidor";
 	private String createDirLeghtMaxException = "Escribe un nombre para el directorio de máximo 20 caracteres";
 	private String createDirTextEmpty = "Escribe un nombre para el directorio";
-	private String createFileTextLeght = "Escriba el nombre del fichero\n(máximo 20 caracteres) y su extensión si lo desea.";
+	private String createFileTextLeght = "Escriba el nombre del fichero (máximo 20 caracteres) y su extensión si lo desea.";
 	private String renameFileLeghtMax = "Escriba el nombre nuevo para el fichero(máximo 20 caracteres)";
 	
 	//Tags & labels
@@ -40,9 +40,8 @@ public class DataModel {
 	private String deleteTag = "Borrar";
 	private String deleteDirTag = "borrar directorio";
 	private String deleteFileTag = "borrar fichero";
-	private String createFolderTag = "Crear Carpeta";
+	private String createFolderTag = "Crear Directorio";
 	private String createFileTag = "Crear Fichero";
-	private String createDirTag = "Crear directorio";
 	private String renameTag = "Renombrar";
 	private String documentsTag = "Documentos";
 	private String patientsTag = "Pacientes";
@@ -51,7 +50,10 @@ public class DataModel {
 	private String patientTag = "PACIENTE";
 	private String renameFileTag = "Renombrar fichero";
 	private String insertNewNameLbl = "Introduce el nuevo nombre del fichero: ";
+	private String insertNewFileLbl = "Introduce el nombre del fichero: ";
+	private String insertNewDirLbl = "Introduce el nombre del directorio: ";
 	private String logoutTag = "Cerrar Sesión";
+	private String deleteQuestion = "¿Seguro que desea borrar el fichero?";
 	//Data base info
 	private String db = "jdbc:mysql://localhost/royalhospital";
 	private String dbUser = "root";
@@ -68,17 +70,28 @@ public class DataModel {
 	private String uploadFake = "No se pudo cargar el fichero";
 	private String selectFileForUpload = "Seleccione primero un directorio donde cargar el fichero";
 	private String isFileMsg = "Para cargar un fichero debe seleccionar un directorio";
+	private String isDirMsg = "Para crear un directorio es necesario seleccionar un directorio de creación";
+	private String FileMsg = "Para crear un fichero es necesario seleccionar un directorio de creación";
 	private String selectFileOrDir = "Seleccione primero un fichero o directorio de la lista";
+	private String selectDirFirst = "Seleccione primero un directorio de creación";
 	private String selectFileFirst = "Seleccione primero un fichero de la lista";
+	private String selectDir = "Seleccione primero un directorio donde crear el fichero";
 	private String deleteNoPossibleWithElems = "No es posible borrar el directorio si contiene algún elemento";
 	private String deleteSuccess = "Se borró el directorio con éxito";
 	private String deleteFileSuccess = "Se borró el fichero con éxito";
 	private String deleteDirNoPossible = "No se pudo borrar el directorio";
 	private String deleteFileNoPossible = "No se pudo borrar el fichero";
 	private String verifyServer = "No se pudo borrar el archivo verifica que estás conectado al servidor";
-	private String createDirNoPossible = "El directorio ya existe\n";
-	private String fileRename = "El fichero fue renombrado con éxito\n";
-	private String fileRenameError = "El fichero no pudo ser renombrado\n";
+	private String createDirNoPossible = "El directorio ya existe";
+	private String fileRename = "El fichero fue renombrado con éxito";
+	private String fileRenameError = "El fichero no pudo ser renombrado";
+	private String TheDir = "El directorio '";
+	private String TheFile = "El fichero '";
+	private String createdSuccess = "' ha sido creado";
+	private String downLoadExits = "El fichero ya está descargado, revise su directorio de descargas";
+	private String downLoadSuccess = "Se descargó el fichero con éxito en su directorio de descargas ";
+	private String downLoadFail = "No se pudo descargar el fichero ";
+	private String downLoadDirError = "No es posible descargar un directorio ";
 	
 	public DataModel() {
 		
@@ -540,14 +553,6 @@ public class DataModel {
 		this.createDirTextEmpty = createDirTextEmpty;
 	}
 
-	public String getCreateDirTag() {
-		return createDirTag;
-	}
-
-	public void setCreateDirTag(String createDirTag) {
-		this.createDirTag = createDirTag;
-	}
-
 	public String getCreateFileTextLeght() {
 		return createFileTextLeght;
 	}
@@ -579,6 +584,120 @@ public class DataModel {
 	public void setFileRenameError(String fileRenameError) {
 		this.fileRenameError = fileRenameError;
 	}
+
+	public String getIsDirMsg() {
+		return isDirMsg;
+	}
+
+	public void setIsDirMsg(String isDirMsg) {
+		this.isDirMsg = isDirMsg;
+	}
+
+	public String getSelectDirFirst() {
+		return selectDirFirst;
+	}
+
+	public void setSelectDirFirst(String selectDirFirst) {
+		this.selectDirFirst = selectDirFirst;
+	}
+
+	public String getTheDir() {
+		return TheDir;
+	}
+
+	public void setTheDir(String theDir) {
+		TheDir = theDir;
+	}
+
+	public String getTheFile() {
+		return TheFile;
+	}
+
+	public void setTheFile(String theFile) {
+		TheFile = theFile;
+	}
+
+	public String getFileMsg() {
+		return FileMsg;
+	}
+
+	public void setFileMsg(String fileMsg) {
+		FileMsg = fileMsg;
+	}
+
+	public String getSelectDir() {
+		return selectDir;
+	}
+
+	public void setSelectDir(String selectDir) {
+		this.selectDir = selectDir;
+	}
+
+	public String getInsertNewFileLbl() {
+		return insertNewFileLbl;
+	}
+
+	public void setInsertNewFileLbl(String insertNewFileLbl) {
+		this.insertNewFileLbl = insertNewFileLbl;
+	}
+
+	public String getCreatedSuccess() {
+		return createdSuccess;
+	}
+
+	public void setCreatedSuccess(String createdSuccess) {
+		this.createdSuccess = createdSuccess;
+	}
+
+	public String getInsertNewDirLbl() {
+		return insertNewDirLbl;
+	}
+
+	public void setInsertNewDirLbl(String insertNewDirLbl) {
+		this.insertNewDirLbl = insertNewDirLbl;
+	}
+
+	public String getDownLoadExits() {
+		return downLoadExits;
+	}
+
+	public void setDownLoadExits(String downLoadExits) {
+		this.downLoadExits = downLoadExits;
+	}
+
+	public String getDownLoadSuccess() {
+		return downLoadSuccess;
+	}
+
+	public void setDownLoadSuccess(String downLoadSuccess) {
+		this.downLoadSuccess = downLoadSuccess;
+	}
+
+	public String getDownLoadFail() {
+		return downLoadFail;
+	}
+
+	public void setDownLoadFail(String downLoadFail) {
+		this.downLoadFail = downLoadFail;
+	}
+
+	public String getDownLoadDirError() {
+		return downLoadDirError;
+	}
+
+	public void setDownLoadDirError(String downLoadDirError) {
+		this.downLoadDirError = downLoadDirError;
+	}
+
+	public String getDeleteQuestion() {
+		return deleteQuestion;
+	}
+
+	public void setDeleteQuestion(String deleteQuestion) {
+		this.deleteQuestion = deleteQuestion;
+	}
+
+	
 	
 	
 	

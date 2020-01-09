@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -53,16 +54,18 @@ public class ActionCreateFileListener implements ActionListener{
 					error.setVisible(true);
 					error.setLocationRelativeTo(null);
 				}else {
-					String[] splitName = text.getText().toString().split(Pattern.quote("."));
-					String nameFile = "";
-					File fileTmp = null;
-					if(splitName.length>1) {
-						fileTmp = File.createTempFile(splitName[0], "."+splitName[1]);
-						nameFile = splitName[0] + "."+splitName[1];
-					}else {
-						fileTmp = File.createTempFile(splitName[0], ".txt");//Aqui peta a veces
-						nameFile = splitName[0]+".txt";
-					}
+//					String[] splitName = text.getText().toString().split(Pattern.quote("."));
+					String fileExtension = FilenameUtils.getExtension(text.getText());
+					String fileName = FilenameUtils.getBaseName(text.getText());
+					File fileTmp = File.createTempFile(fileName, fileExtension);
+//					if(splitName.length>1) {
+//						fileTmp = File.createTempFile(splitName[0], "."+splitName[1]);
+//						nameFile = splitName[0] + "."+splitName[1];
+//					}else {
+//						fileTmp = File.createTempFile(splitName[0], ".txt");//Aqui peta a veces
+//						nameFile = splitName[0]+".txt";
+//					}
+					String nameFile = fileName + "." + fileExtension;
 					FileInputStream input = new FileInputStream(fileTmp);
 					ftp.storeFile(nameFile, input);
 					nameFrame.dispose();

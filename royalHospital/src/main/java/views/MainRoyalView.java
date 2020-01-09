@@ -2,6 +2,7 @@ package views;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -26,6 +27,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.JTree;
 import javax.swing.JScrollPane;
@@ -47,6 +50,10 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 	private static final int IMG_HEIGHT = 30;
 	private static final int BTN_WIDTH = 150;
 	private static final int IMG_WIDTH = 30;
+	private static final int IMG_WIDTH_EXIT = 86;
+	private static final int IMG_HEIGHT_EXIT = 86;
+	private static final int BTN_WIDTH_EXIT = 54;
+	private static final int BTN_HEIGHT_EXIT = 54;
 	private JPanel contentPane;
 	private static DefaultMutableTreeNode root;
 	private static JTextArea txtaHistorial;
@@ -142,6 +149,30 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		contentPane.add(btnMail);
 		btnMail.setBackground(Color.WHITE);
 		btnMail.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
+		
+		JButton btnLogout = new JButton();
+		contentPane.add(btnLogout);
+		btnLogout.setBackground(Color.WHITE);
+		btnLogout.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
+		btnLogout.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				try {
+					ftpClient.disconnect();
+					RoyalLoginView login = new RoyalLoginView(data.getUserTag(), data.getBigRoyalLogoRoute());
+					login.setLocationRelativeTo(null);
+					login.setVisible(true);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+		});
+		
 
 		btnDocuments.setBounds(64, 13, BTN_WIDTH, BTN_HEIGHT);
 		btnPatient.setBounds(240, 13, BTN_WIDTH, BTN_HEIGHT);
@@ -152,6 +183,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		btnRename.setBounds(604, 585, BTN_WIDTH, BTN_HEIGHT);
 		btnCreateDir.setBounds(425, 524, BTN_WIDTH, BTN_HEIGHT);
 		btnCreateFile.setBounds(604, 524, BTN_WIDTH, BTN_HEIGHT);
+		btnLogout.setBounds(699, 645, BTN_WIDTH_EXIT, BTN_HEIGHT_EXIT);
 
 		ImageIcon mydoc = new ImageIcon("src\\main\\java\\views\\doc4.png");
 		Icon mydocIcon = new ImageIcon(mydoc.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
@@ -176,6 +208,11 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		Icon mydocIcon5 = new ImageIcon(
 				mydoc5.getImage().getScaledInstance(IMG_WIDTH, IMG_HEIGHT, Image.SCALE_DEFAULT));
 		btnDownload.setIcon(mydocIcon5);
+
+		ImageIcon mydoc6 = new ImageIcon("src\\main\\java\\views\\IconoExit.png");
+		Icon mydocIcon6 = new ImageIcon(
+				mydoc6.getImage().getScaledInstance(IMG_WIDTH_EXIT, IMG_HEIGHT_EXIT, Image.SCALE_DEFAULT));
+		btnLogout.setIcon(mydocIcon6);
 
 		if (roll.equalsIgnoreCase(data.getDoctorTag())) {
 			root = new DefaultMutableTreeNode("/Medicos/" + user);
@@ -209,17 +246,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 				error.setLocationRelativeTo(null);
 			}
 			tree = new JTree(root);
-			DefaultTreeCellRenderer cell = (DefaultTreeCellRenderer)tree.getCellRenderer();
-			ImageIcon directoryClose = new ImageIcon("src\\main\\java\\views\\IconoCarpetaCerrada.png");
-			ImageIcon directoryOpen = new ImageIcon("src\\main\\java\\views\\IconoCarpetaAbierta.png");
-			ImageIcon file = new ImageIcon("src\\main\\java\\views\\IconoArchivo.png");
-			cell.setClosedIcon(directoryClose);
-			cell.setOpenIcon(directoryOpen);
-			cell.setLeafIcon(file);
-			final Font currentFont = tree.getFont();
-			final Font bigFont = new Font(currentFont.getName(), currentFont.getStyle(), currentFont.getSize() + 1);
-			tree.setFont(bigFont);
-			tree.setCellRenderer(cell);
+			changeStyleJtree(tree);
 			scrollPane.setViewportView(tree);
 			tree.addTreeSelectionListener(this);
 		}
@@ -261,6 +288,21 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 			error.setLocationRelativeTo(null);
 		}
 	}
+	
+	private void changeStyleJtree(JTree tree) {
+		DefaultTreeCellRenderer cell = (DefaultTreeCellRenderer)tree.getCellRenderer();
+		ImageIcon directoryClose = new ImageIcon("src\\main\\java\\views\\IconoCarpetaCerrada.png");
+		ImageIcon directoryOpen = new ImageIcon("src\\main\\java\\views\\IconoCarpetaAbierta.png");
+		ImageIcon file = new ImageIcon("src\\main\\java\\views\\IconoArchivo.png");
+		cell.setClosedIcon(directoryClose);
+		cell.setOpenIcon(directoryOpen);
+		cell.setLeafIcon(file);
+		final Font currentFont = tree.getFont();
+		final Font bigFont = new Font(currentFont.getName(), currentFont.getStyle(), currentFont.getSize() + 1);
+		tree.setFont(bigFont);
+		tree.setCellRenderer(cell);
+	}
+	
 
 	/**
 	 * Creates new JTree
@@ -269,6 +311,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 	 */
 	public void changedJTree(DefaultMutableTreeNode wholeTree) {
 		tree = new JTree(wholeTree);
+		changeStyleJtree(tree);
 		scrollPane.setViewportView(tree);
 		tree.addTreeSelectionListener(this);
 	}

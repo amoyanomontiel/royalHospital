@@ -44,12 +44,13 @@ public class ActionCreateFileListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		DataModel data = new DataModel();
 		try {
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				ftp.setFileType(FTP.BINARY_FILE_TYPE);
 				ftp.changeWorkingDirectory(DataModel.actualUserPath);
-				if(text.getText().toString().isEmpty() || text.getText().length()>20) {
-					ErrorRoyalView error = new ErrorRoyalView("Escriba el nombre del fichero\n(máximo 20 caracteres) y su extensión si lo desea.", 1);
+				if(text.getText().toString().isEmpty() || text.getText().length()>50) {
+					ErrorRoyalView error = new ErrorRoyalView(data.getCreateFileTextLeght(), 1);
 					error.setVisible(true);
 					error.setLocationRelativeTo(null);
 				}else {
@@ -59,7 +60,6 @@ public class ActionCreateFileListener implements ActionListener{
 					String nameFile = "";
 					if(fileExtension.equalsIgnoreCase("")) {
 						fileTmp = File.createTempFile(fileName, ".txt");
-						System.out.println("hola");
 						nameFile = fileName + ".txt";
 					}else {
 						fileTmp = File.createTempFile(fileName, fileExtension);
@@ -81,7 +81,7 @@ public class ActionCreateFileListener implements ActionListener{
 				}
 			}
 		} catch (IOException e1) {
-			ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+			ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
 			error.setVisible(true);
 			error.setLocationRelativeTo(null);
 		}

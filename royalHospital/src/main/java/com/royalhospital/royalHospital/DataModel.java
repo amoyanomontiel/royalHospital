@@ -18,10 +18,16 @@ public class DataModel {
 	private String loginTitle = "Royal Hospital - Login";
 	private String mainTitle = "Royal Hospital - Main";
 	private String fontType = "Tahoma";
+	//Warning Message
 	private String passwordUserIncorrectMsg = "El usuario o la contraseña no son correctos";
 	private String noEmptyLoginFieldsMsg = "El campo usuario y/o contraseña no pueden estar vacios";
 	private String dbConectionError = "Error de conexión con la Base de Datos";
 	private String ftpConectionError = "Error de conexión con el servidor";
+	private String createDirLeghtMaxException = "Escribe un nombre para el directorio de máximo 20 caracteres";
+	private String createDirTextEmpty = "Escribe un nombre para el directorio";
+	private String createFileTextLeght = "Escriba el nombre del fichero\n(máximo 20 caracteres) y su extensión si lo desea.";
+	private String renameFileLeghtMax = "Escriba el nombre nuevo para el fichero(máximo 20 caracteres)";
+	
 	//Tags & labels
 	private String userTag = "Usuario";
 	private String passwordTag = "Contraseña";
@@ -36,6 +42,7 @@ public class DataModel {
 	private String deleteFileTag = "borrar fichero";
 	private String createFolderTag = "Crear Carpeta";
 	private String createFileTag = "Crear Fichero";
+	private String createDirTag = "Crear directorio";
 	private String renameTag = "Renombrar";
 	private String documentsTag = "Documentos";
 	private String patientsTag = "Pacientes";
@@ -69,6 +76,9 @@ public class DataModel {
 	private String deleteDirNoPossible = "No se pudo borrar el directorio";
 	private String deleteFileNoPossible = "No se pudo borrar el fichero";
 	private String verifyServer = "No se pudo borrar el archivo verifica que estás conectado al servidor";
+	private String createDirNoPossible = "El directorio ya existe\n";
+	private String fileRename = "El fichero fue renombrado con éxito\n";
+	
 	
 	public DataModel() {
 		
@@ -506,6 +516,63 @@ public class DataModel {
 		this.logoutTag = logoutTag;
 	}
 
+	public String getCreateDirNoPossible() {
+		return createDirNoPossible;
+	}
+
+	public void setCreateDirNoPossible(String createDirNoPossible) {
+		this.createDirNoPossible = createDirNoPossible;
+	}
+
+	public String getCreateDirLeghtMaxException() {
+		return createDirLeghtMaxException;
+	}
+
+	public void setCreateDirLeghtMaxException(String createDirLeghtMaxException) {
+		this.createDirLeghtMaxException = createDirLeghtMaxException;
+	}
+
+	public String getCreateDirTextEmpty() {
+		return createDirTextEmpty;
+	}
+
+	public void setCreateDirTextEmpty(String createDirTextEmpty) {
+		this.createDirTextEmpty = createDirTextEmpty;
+	}
+
+	public String getCreateDirTag() {
+		return createDirTag;
+	}
+
+	public void setCreateDirTag(String createDirTag) {
+		this.createDirTag = createDirTag;
+	}
+
+	public String getCreateFileTextLeght() {
+		return createFileTextLeght;
+	}
+
+	public void setCreateFileTextLeght(String createFileTextLeght) {
+		this.createFileTextLeght = createFileTextLeght;
+	}
+
+	public String getRenameFileLeghtMax() {
+		return renameFileLeghtMax;
+	}
+
+	public void setRenameFileLeghtMax(String renameFileLeghtMax) {
+		this.renameFileLeghtMax = renameFileLeghtMax;
+	}
+
+	public String getFileRename() {
+		return fileRename;
+	}
+
+	public void setFileRename(String fileRename) {
+		this.fileRename = fileRename;
+	}
+	
+	
 	
 	
 }

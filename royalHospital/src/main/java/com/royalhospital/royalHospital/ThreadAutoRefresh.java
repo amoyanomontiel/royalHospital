@@ -22,6 +22,7 @@ public class ThreadAutoRefresh extends Thread {
 	// Al variables of class
 	private JPanel contentView;
 	private JPanel contenMailPane;
+	private DataModel dataModelObject;
 
 	/**
 	 * Constructor of class
@@ -33,23 +34,25 @@ public class ThreadAutoRefresh extends Thread {
 	public ThreadAutoRefresh(JPanel contentViewParam, JPanel contentMailPaneParam) {
 		contentView = contentViewParam;
 		contenMailPane = contentMailPaneParam;
+		dataModelObject = new DataModel();
 	}
 
 	/**
 	 * Run of Thread If the views are closed, the thread end
 	 */
 	public void run() {
+
 		try {
 
 			boolean refresh = true;
 
 			while (refresh) {
-				sleep(3000);
+				sleep(60000);
 				synchronized (this) {
 					if (InboxView.getInstance().isShowing()) {
 						InboxView.setObjectMail(new MailMethods());
-						InboxView.getObjectMail().setAllDataConnection("pop.gmail.com", "pop3",
-								MainMailView.getTxtUserName().getText(),
+						InboxView.getObjectMail().setAllDataConnection(dataModelObject.getPopGmail(),
+								dataModelObject.getPop3(), MainMailView.getTxtUserName().getText(),
 								new String(MainMailView.getTxtPassword().getPassword()));
 						InboxView.getObjectMail().setProperties();
 						InboxView.getObjectMail().connectMailServer();
@@ -71,7 +74,7 @@ public class ThreadAutoRefresh extends Thread {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Error auto updating emails");
+			System.out.println(dataModelObject.getMessageErrorUpdatingEmails());
 		}
 	}
 

@@ -154,7 +154,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				@SuppressWarnings("unused")
-				MainMailView objectLoginMail = new MainMailView("Correo Electrónico", "mailIcon.png");
+				MainMailView objectLoginMail = new MainMailView(data.getCorreo(), data.getMailIncon());
 			}
 		});
 

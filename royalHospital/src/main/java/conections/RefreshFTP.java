@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-public class RefreshFTP implements Runnable{
+public class RefreshFTP extends Thread{
 	
 	private FTPClient client;
 	private Boolean flag = true;
@@ -13,18 +13,16 @@ public class RefreshFTP implements Runnable{
 		this.client = client;
 	}
 
-	public RefreshFTP() {}
-
 	@Override
 	public void run() {
-		while(flag) {
+		do {
 			try {
 				client.sendNoOp();
 				System.out.println("Refresca el Filezilla");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("oh");
 			}
+			System.out.println(flag);
 			
 			try {
 				Thread.sleep(60000);
@@ -32,13 +30,11 @@ public class RefreshFTP implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		System.out.println("he salido del while");
-		System.out.println("El boolean es" + flag);
+		}while(flag);
 	}
 	
 	public void stopRunning() {
-			flag = false;				
+			flag = false;	
 	}
 
 }

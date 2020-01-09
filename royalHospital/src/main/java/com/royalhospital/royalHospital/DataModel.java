@@ -1,6 +1,8 @@
 package com.royalhospital.royalHospital;
+
 /**
  * Data Model class for all messages, routes, button tags and general info
+ * 
  * @author Cristina Montilla
  *
  */
@@ -10,15 +12,15 @@ public class DataModel {
 	public static String actualUserPath = "";
 	public static String directionPath = "";
 	public static int codActualUser = 0;
-	
+
 	private String bigRoyalLogoRoute = "/views/royalhospital.png";
-	private String iconRoyalLogo = "src\\main\\java\\views\\ic_launcher.png";//Porque tan larga
+	private String iconRoyalLogo = "src\\main\\java\\views\\ic_launcher.png";// Porque tan larga
 	private String errorIconRoute = "/views/errorIcono.png";
 	private String warningIconRoute = "/views/warning.png";
 	private String loginTitle = "Royal Hospital - Login";
 	private String mainTitle = "Royal Hospital - Main";
 	private String fontType = "Tahoma";
-	//Warning Message
+	// Warning Message
 	private String passwordUserIncorrectMsg = "El usuario o la contraseña no son correctos";
 	private String noEmptyLoginFieldsMsg = "El campo usuario y/o contraseña no pueden estar vacios";
 	private String dbConectionError = "Error de conexión con la Base de Datos";
@@ -27,14 +29,14 @@ public class DataModel {
 	private String createDirTextEmpty = "Escribe un nombre para el directorio";
 	private String createFileTextLeght = "Escriba el nombre del fichero (máximo 20 caracteres) y su extensión si lo desea.";
 	private String renameFileLeghtMax = "Escriba el nombre nuevo para el fichero(máximo 20 caracteres)";
-	
-	//Tags & labels
+
+	// Tags & labels
 	private String userTag = "Usuario";
 	private String passwordTag = "Contraseña";
 	private String loginBtnTag = "Entrar";
 	private String errorTag = "Error";
 	private String acceptTag = "Aceptar";
-	private String uploadTag =  "Cargar";
+	private String uploadTag = "Cargar";
 	private String uploadFileTag = "Cargar fichero";
 	private String downloadTag = "Descargar";
 	private String deleteTag = "Borrar";
@@ -54,16 +56,21 @@ public class DataModel {
 	private String insertNewDirLbl = "Introduce el nombre del directorio: ";
 	private String logoutTag = "Cerrar Sesión";
 	private String deleteQuestion = "¿Seguro que desea borrar el fichero?";
-	//Data base info
+	private String correo = "Correo Electrónico";
+	private String emails = "EMAILS";
+	private String titulo = "Titulo:   ";
+	private String sender = "Remitente:     ";
+
+	// Data base info
 	private String db = "jdbc:mysql://localhost/royalhospital";
 	private String dbUser = "root";
 	private String dbPassword = "";
-	//FTP info
+	// FTP info
 	private String ftpServer = "localhost";
 	private int port = 9000;
 	private String ftpUser = "usuario";
 	private String ftpPassword = "usuario";
-	//Record messages
+	// Record messages
 	private String selectedFileMsg = "Elemento seleccionado: ";
 	private String fileAlreadyExist = "El fichero ya existe en el directorio actual";
 	private String fileUpload = "Cargó satisfactoriamente el fichero";
@@ -92,9 +99,69 @@ public class DataModel {
 	private String downLoadSuccess = "Se descargó el fichero con éxito en su directorio de descargas ";
 	private String downLoadFail = "No se pudo descargar el fichero ";
 	private String downLoadDirError = "No es posible descargar un directorio ";
-	
+	private String errorAdjunto = "Error getting attachments for Email";
+	private String errorCreatingJScrollPane = "Error creating JScrollPane";
+	private String errorUpdatingJScrollPane = "error updating JScroll";
+	private String messageErrorContentMessage = "Error reading content about messages";
+	private String messageErrorGettingBodyPart = "Error getting body part about Message";
+	private String messageErrorGettingMessages = "Error getting messages";
+	private String messageErrorReceiveListEmail = "Error receive list of folders Email";
+	private String messageErrorSettingProperties = "Error setting properties about E-mail";
+	private String messageErrorUpdatingEmails = "Error auto updating emails";
+	private String errorFormat = "Formato de correo inválido";
+	private String messageErrorLogin = "Login Fallido";
+	private String messageErrorListenerLink = "Input/outPut error";
+	private String urlSyntaxError = "URL syntax error";
+
+	// Icons
+	private String mailIncon = "mailIcon.png";
+
+	// Parameters
+	private String userHome = "user.home";
+	private String folderCode = "INBOX";
+	private String storeCode = "imaps";
+	private String hostPop3 = "mail.pop3.host";
+	private String portPop3 = "mail.pop3.port";
+	private String portPop = "995";
+	private String codeStarttls = "mail.pop3.starttls.enable";
+	private String trueString = "true";
+	private String popGmail = "pop.gmail.com";
+	private String pop3 = "pop3";
+	private String keyMail = "@alumnado.fundacionloyola.net";
+
+	// Path
+	private String downloadRute = "\\Downloads\\";
+	private String slash = "\\'";
+
+	// HTML tags
+	private String subjectHTML = "<p align= 'left'>Subject:   ";
+	private String finishP = "</p>";
+	private String onlyTagP = "<p></p>";
+	private String senderCode = "<p align= 'left'> ";
+	private String codeImg = "<img";
+	private String fileSource = "<a href=file:///'";
+	private String closeSymbol = "'>";
+	private String closeSymbolSimple = ">";
+	private String openSymbol = "<";
+	private String closeLink = " </a>";
+	private String openBrTag = "<br>";
+	private String closeBrTag = "</br>";
+
+	// One syllable
+	private String iCaracter = "i";
+	private String mCaracter = "m";
+	private String gCaracter = "g";
+
+	// bodyEmailTags
+	private String codeHTML = "text/html";
+	private String mineTypeText = "text/*";
+	private String mineTypeAlternative = "multipart/alternative";
+	private String minetypeTextPlain = "text/plain";
+	private String minetypeHTML = "text/html";
+	private String mineTypeMultiplart = "multipart/*";
+
 	public DataModel() {
-		
+
 	}
 
 	public String getBigRoyalLogoRoute() {
@@ -697,9 +764,420 @@ public class DataModel {
 		this.deleteQuestion = deleteQuestion;
 	}
 
-	
-	
-	
-	
-	
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public String getMailIncon() {
+		return mailIncon;
+	}
+
+	public void setMailIncon(String mailIncon) {
+		this.mailIncon = mailIncon;
+	}
+
+	public String getUserHome() {
+		return userHome;
+	}
+
+	public void setUserHome(String userHome) {
+		this.userHome = userHome;
+	}
+
+	public String getDownloadRute() {
+		return downloadRute;
+	}
+
+	public void setDownloadRute(String downloadRute) {
+		this.downloadRute = downloadRute;
+	}
+
+	public String getErrorAdjunto() {
+		return errorAdjunto;
+	}
+
+	public void setErrorAdjunto(String errorAdjunto) {
+		this.errorAdjunto = errorAdjunto;
+	}
+
+	public String getErrorCreatingJScrollPane() {
+		return errorCreatingJScrollPane;
+	}
+
+	public void setErrorCreatingJScrollPane(String errorCreatingJScrollPane) {
+		this.errorCreatingJScrollPane = errorCreatingJScrollPane;
+	}
+
+	public String getEmails() {
+		return emails;
+	}
+
+	public void setEmails(String emails) {
+		this.emails = emails;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getErrorUpdatingJScrollPane() {
+		return errorUpdatingJScrollPane;
+	}
+
+	public void setErrorUpdatingJScrollPane(String errorUpdatingJScrollPane) {
+		this.errorUpdatingJScrollPane = errorUpdatingJScrollPane;
+	}
+
+	public String getSubjectHTML() {
+		return subjectHTML;
+	}
+
+	public void setSubjectHTML(String subjectHTML) {
+		this.subjectHTML = subjectHTML;
+	}
+
+	public String getFinishP() {
+		return finishP;
+	}
+
+	public void setFinishP(String finishP) {
+		this.finishP = finishP;
+	}
+
+	public String getOnlyTagP() {
+		return onlyTagP;
+	}
+
+	public void setOnlyTagP(String onlyTagP) {
+		this.onlyTagP = onlyTagP;
+	}
+
+	public String getSenderCode() {
+		return senderCode;
+	}
+
+	public void setSenderCode(String senderCode) {
+		this.senderCode = senderCode;
+	}
+
+	public String getCodeImg() {
+		return codeImg;
+	}
+
+	public void setCodeImg(String codeImg) {
+		this.codeImg = codeImg;
+	}
+
+	public String getFileSource() {
+		return fileSource;
+	}
+
+	public void setFileSource(String fileSource) {
+		this.fileSource = fileSource;
+	}
+
+	public String getCloseSymbol() {
+		return closeSymbol;
+	}
+
+	public void setCloseSymbol(String closeSymbol) {
+		this.closeSymbol = closeSymbol;
+	}
+
+	public String getCloseSymbolSimple() {
+		return closeSymbolSimple;
+	}
+
+	public void setCloseSymbolSimple(String closeSymbolSimple) {
+		this.closeSymbolSimple = closeSymbolSimple;
+	}
+
+	public String getOpenSymbol() {
+		return openSymbol;
+	}
+
+	public void setOpenSymbol(String openSymbol) {
+		this.openSymbol = openSymbol;
+	}
+
+	public String getiCaracter() {
+		return iCaracter;
+	}
+
+	public void setiCaracter(String iCaracter) {
+		this.iCaracter = iCaracter;
+	}
+
+	public String getmCaracter() {
+		return mCaracter;
+	}
+
+	public void setmCaracter(String mCaracter) {
+		this.mCaracter = mCaracter;
+	}
+
+	public String getgCaracter() {
+		return gCaracter;
+	}
+
+	public void setgCaracter(String gCaracter) {
+		this.gCaracter = gCaracter;
+	}
+
+	public String getCloseLink() {
+		return closeLink;
+	}
+
+	public void setCloseLink(String closeLink) {
+		this.closeLink = closeLink;
+	}
+
+	public String getCodeHTML() {
+		return codeHTML;
+	}
+
+	public void setCodeHTML(String codeHTML) {
+		this.codeHTML = codeHTML;
+	}
+
+	public String getMessageErrorContentMessage() {
+		return messageErrorContentMessage;
+	}
+
+	public void setMessageErrorContentMessage(String messageErrorContentMessage) {
+		this.messageErrorContentMessage = messageErrorContentMessage;
+	}
+
+	public String getSender() {
+		return sender;
+	}
+
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+
+	public String getSlash() {
+		return slash;
+	}
+
+	public void setSlash(String slash) {
+		this.slash = slash;
+	}
+
+	public String getOpenBrTag() {
+		return openBrTag;
+	}
+
+	public void setOpenBrTag(String openBrTag) {
+		this.openBrTag = openBrTag;
+	}
+
+	public String getCloseBrTag() {
+		return closeBrTag;
+	}
+
+	public void setCloseBrTag(String closeBrTag) {
+		this.closeBrTag = closeBrTag;
+	}
+
+	public String getMineTypeText() {
+		return mineTypeText;
+	}
+
+	public void setMineTypeText(String mineTypeText) {
+		this.mineTypeText = mineTypeText;
+	}
+
+	public String getMineTypeAlternative() {
+		return mineTypeAlternative;
+	}
+
+	public void setMineTypeAlternative(String mineTypeAlternative) {
+		this.mineTypeAlternative = mineTypeAlternative;
+	}
+
+	public String getMinetypeTextPlain() {
+		return minetypeTextPlain;
+	}
+
+	public void setMinetypeTextPlain(String minetypeTextPlain) {
+		this.minetypeTextPlain = minetypeTextPlain;
+	}
+
+	public String getMinetypeHTML() {
+		return minetypeHTML;
+	}
+
+	public void setMinetypeHTML(String minetypeHTML) {
+		this.minetypeHTML = minetypeHTML;
+	}
+
+	public String getMineTypeMultiplart() {
+		return mineTypeMultiplart;
+	}
+
+	public void setMineTypeMultiplart(String mineTypeMultiplart) {
+		this.mineTypeMultiplart = mineTypeMultiplart;
+	}
+
+	public String getMessageErrorGettingBodyPart() {
+		return messageErrorGettingBodyPart;
+	}
+
+	public void setMessageErrorGettingBodyPart(String messageErrorGettingBodyPart) {
+		this.messageErrorGettingBodyPart = messageErrorGettingBodyPart;
+	}
+
+	public String getMessageErrorGettingMessages() {
+		return messageErrorGettingMessages;
+	}
+
+	public void setMessageErrorGettingMessages(String messageErrorGettingMessages) {
+		this.messageErrorGettingMessages = messageErrorGettingMessages;
+	}
+
+	public String getFolderCode() {
+		return folderCode;
+	}
+
+	public void setFolderCode(String folderCode) {
+		this.folderCode = folderCode;
+	}
+
+	public String getMessageErrorReceiveListEmail() {
+		return messageErrorReceiveListEmail;
+	}
+
+	public void setMessageErrorReceiveListEmail(String messageErrorReceiveListEmail) {
+		this.messageErrorReceiveListEmail = messageErrorReceiveListEmail;
+	}
+
+	public String getStoreCode() {
+		return storeCode;
+	}
+
+	public void setStoreCode(String storeCode) {
+		this.storeCode = storeCode;
+	}
+
+	public String getHostPop3() {
+		return hostPop3;
+	}
+
+	public void setHostPop3(String hostPop3) {
+		this.hostPop3 = hostPop3;
+	}
+
+	public String getPortPop3() {
+		return portPop3;
+	}
+
+	public void setPortPop3(String portPop3) {
+		this.portPop3 = portPop3;
+	}
+
+	public String getPortPop() {
+		return portPop;
+	}
+
+	public void setPortPop(String portPop) {
+		this.portPop = portPop;
+	}
+
+	public String getCodeStarttls() {
+		return codeStarttls;
+	}
+
+	public void setCodeStarttls(String codeStarttls) {
+		this.codeStarttls = codeStarttls;
+	}
+
+	public String getTrueString() {
+		return trueString;
+	}
+
+	public void setTrueString(String trueString) {
+		this.trueString = trueString;
+	}
+
+	public String getMessageErrorSettingProperties() {
+		return messageErrorSettingProperties;
+	}
+
+	public void setMessageErrorSettingProperties(String messageErrorSettingProperties) {
+		this.messageErrorSettingProperties = messageErrorSettingProperties;
+	}
+
+	public String getPopGmail() {
+		return popGmail;
+	}
+
+	public void setPopGmail(String popGmail) {
+		this.popGmail = popGmail;
+	}
+
+	public String getPop3() {
+		return pop3;
+	}
+
+	public void setPop3(String pop3) {
+		this.pop3 = pop3;
+	}
+
+	public String getMessageErrorUpdatingEmails() {
+		return messageErrorUpdatingEmails;
+	}
+
+	public void setMessageErrorUpdatingEmails(String messageErrorUpdatingEmails) {
+		this.messageErrorUpdatingEmails = messageErrorUpdatingEmails;
+	}
+
+	public String getKeyMail() {
+		return keyMail;
+	}
+
+	public void setKeyMail(String keyMail) {
+		this.keyMail = keyMail;
+	}
+
+	public String getMessageErrorLogin() {
+		return messageErrorLogin;
+	}
+
+	public void setMessageErrorLogin(String messageErrorLogin) {
+		this.messageErrorLogin = messageErrorLogin;
+	}
+
+	public String getMessageErrorListenerLink() {
+		return messageErrorListenerLink;
+	}
+
+	public void setMessageErrorListenerLink(String messageErrorListenerLink) {
+		this.messageErrorListenerLink = messageErrorListenerLink;
+	}
+
+	public String getUrlSyntaxError() {
+		return urlSyntaxError;
+	}
+
+	public void setUrlSyntaxError(String urlSyntaxError) {
+		this.urlSyntaxError = urlSyntaxError;
+	}
+
+	public String getErrorFormat() {
+		return errorFormat;
+	}
+
+	public void setErrorFormat(String errorFormat) {
+		this.errorFormat = errorFormat;
+	}
+
 }

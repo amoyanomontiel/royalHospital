@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -48,16 +49,18 @@ public class InboxView extends JFrame {
 	 */
 	public InboxView() {
 		EventQueue.invokeLater(new Runnable() {
+			@SuppressWarnings("static-access")
 			public void run() {
 				try {
-					
+
 					objectMail = new MailMethods();
-					
+
 					String valorPass = new String(MainMailView.getTxtPassword().getPassword());
-					objectMail.setAllDataConnection("pop.gmail.com", "pop3", MainMailView.getTxtUserName().getText(), valorPass);
+					objectMail.setAllDataConnection("pop.gmail.com", "pop3", MainMailView.getTxtUserName().getText(),
+							valorPass);
 					objectMail.setProperties();
 					connectMail = objectMail.connectMailServer();
-					if(connectMail) {
+					if (connectMail) {
 						MainMailView.getFrame().setVisible(false);
 						objectMail.setFolderEmails();
 						objectMail.receiveAndSaveAllEmails();
@@ -76,24 +79,28 @@ public class InboxView extends JFrame {
 						lblInbox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
 						headPane.add(lblInbox);
 
-					JButton btnRefresh = new JButton("Refrescar");
-					btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					ImageIcon refreshIcon = new ImageIcon("src//main//java//views//refresh.png");
-					Icon newRefreshIcon = new ImageIcon(refreshIcon.getImage().getScaledInstance(width+5, height, Image.SCALE_DEFAULT));
-					btnRefresh.setIcon(newRefreshIcon);
-					headPane.add(btnRefresh);
+						JButton btnRefresh = new JButton("");
+						btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+						btnRefresh.setToolTipText("Refrescar");
+						ImageIcon refreshIcon = new ImageIcon("src//main//java//views//refresh.png");
+						Icon newRefreshIcon = new ImageIcon(
+								refreshIcon.getImage().getScaledInstance(width + 5, height, Image.SCALE_DEFAULT));
+						btnRefresh.setIcon(newRefreshIcon);
+						headPane.add(btnRefresh);
 
 						JButton btnWriteEmail = new JButton("Redactar");
 						btnWriteEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
 						ImageIcon mailIcon = new ImageIcon("src//main//java//views//newGmail.png");
-						Icon newMailIcon = new ImageIcon(mailIcon.getImage().getScaledInstance(width+15, height, Image.SCALE_DEFAULT));
+						Icon newMailIcon = new ImageIcon(
+								mailIcon.getImage().getScaledInstance(width + 15, height, Image.SCALE_DEFAULT));
 						btnWriteEmail.setIcon(newMailIcon);
 						headPane.add(btnWriteEmail);
 
 						JButton btnCloseInbox = new JButton("Volver");
 						btnCloseInbox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 						ImageIcon returnIcon = new ImageIcon("src//main//java//views//homeIcon.png");
-						Icon newReturnIcon = new ImageIcon(returnIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+						Icon newReturnIcon = new ImageIcon(
+								returnIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 						btnCloseInbox.setIcon(newReturnIcon);
 						headPane.add(btnCloseInbox);
 
@@ -116,14 +123,18 @@ public class InboxView extends JFrame {
 						contentPane.add(mailListPane);
 
 						OpenNewEmailListener.addNewMailOpenListener(btnWriteEmail);
-						
+
 						/**
 						 * Create and start Thread that auto refresh the JComboBox with emails
 						 */
 						objectThreadAutoRefresh = new ThreadAutoRefresh(contentPane, contextMailPane);
 						objectThreadAutoRefresh.start();
-						
+
 						setVisible(true);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Dirección de correo o contraseña incorrecta", "Login Fallido",
+								JOptionPane.WARNING_MESSAGE);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

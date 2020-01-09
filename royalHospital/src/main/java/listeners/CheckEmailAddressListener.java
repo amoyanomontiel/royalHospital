@@ -1,6 +1,5 @@
 package listeners;
 
-import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
@@ -32,8 +31,7 @@ public class CheckEmailAddressListener {
 				if (occurrences > 1) {
 					if (addresseeTextField.getText().contains(",")) {
 						addressees = addresseeTextField.getText().split(",");
-					}
-					else if (addresseeTextField.getText().contains(" ")) {
+					} else if (addresseeTextField.getText().contains(" ")) {
 						addressees = addresseeTextField.getText().split(" ");
 					} else {
 						addressees = new String[1];
@@ -50,7 +48,7 @@ public class CheckEmailAddressListener {
 				for (int i = 0; i < occurrences; i++) {
 					if (!addressees[i].equals(" ")) {
 						String trimmedAddresse = addressees[i].trim();
-						
+
 						if (!trimmedAddresse.equals(addressees[i])) {
 							errorList.add(excessSpace);
 							errorCounter++;
@@ -62,7 +60,8 @@ public class CheckEmailAddressListener {
 							errorList.add(invalidEmailErrorModified);
 							errorCounter++;
 						}
-						if (occurrences > 1 && !addresseeTextField.getText().contains(",") && !errorList.contains(multipleAddressees)) {
+						if (occurrences > 1 && !addresseeTextField.getText().contains(",")
+								&& !errorList.contains(multipleAddressees) && !errorList.contains(excessSpace)) {
 							errorList.add(multipleAddressees);
 							errorCounter++;
 						}

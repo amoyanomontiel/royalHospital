@@ -20,7 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 /**
  * 
- * @author Daniel Cuenca
+ * @author Daniel Cuenca / Cristina Montilla
  *
  */
 public class CreateModifyView extends JDialog{

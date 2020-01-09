@@ -78,7 +78,7 @@ public class DataModel {
 	private String verifyServer = "No se pudo borrar el archivo verifica que estás conectado al servidor";
 	private String createDirNoPossible = "El directorio ya existe\n";
 	private String fileRename = "El fichero fue renombrado con éxito\n";
-	
+	private String fileRenameError = "El fichero no pudo ser renombrado\n";
 	
 	public DataModel() {
 		
@@ -570,6 +570,14 @@ public class DataModel {
 
 	public void setFileRename(String fileRename) {
 		this.fileRename = fileRename;
+	}
+
+	public String getFileRenameError() {
+		return fileRenameError;
+	}
+
+	public void setFileRenameError(String fileRenameError) {
+		this.fileRenameError = fileRenameError;
 	}
 	
 	

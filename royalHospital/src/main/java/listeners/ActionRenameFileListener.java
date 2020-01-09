@@ -47,12 +47,13 @@ public class ActionRenameFileListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		DataModel data = new DataModel();
 		if (DataModel.actualUserPath != "") {
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				try {
 					ftp.changeWorkingDirectory(DataModel.directionPath);
 					if(text.getText().toString().isEmpty() || text.getText().length()>20) {
-						ErrorRoyalView error = new ErrorRoyalView("Escriba el nombre nuevo para el fichero(máximo 20 caracteres)", 1);
+						ErrorRoyalView error = new ErrorRoyalView(data.getRenameFileLeghtMax(), 1);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
 					}else {
@@ -60,14 +61,14 @@ public class ActionRenameFileListener implements ActionListener {
 							nameFrame.dispose();
 							AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "renombrar", DataModel.selectedFile, 
 									AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-							royal.getTxtaHistorial().append("El fichero fue renombrado con éxito\n");
+							royal.getTxtaHistorial().append(data.getFileRename());
 							DefaultMutableTreeNode node = (DefaultMutableTreeNode)royal.getTree().getLastSelectedPathComponent();
 							node.setUserObject(text.getText().toString());
 							DefaultTreeModel model = (DefaultTreeModel) royal.getTree().getModel();
 							model.nodeChanged(node);
 							royal.getTree().setModel(model);
 						} else {
-							royal.getTxtaHistorial().append("El fichero no pudo ser renombrado\n");
+							royal.getTxtaHistorial().append(data.getFileRenameError());
 						}
 					}					
 				} catch (IOException e) {

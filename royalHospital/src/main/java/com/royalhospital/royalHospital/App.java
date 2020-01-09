@@ -28,6 +28,5 @@ public class App {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		//Alguna gilipollez para Javi
 	}
 }

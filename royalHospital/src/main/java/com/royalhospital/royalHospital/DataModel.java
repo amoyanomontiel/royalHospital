@@ -44,6 +44,7 @@ public class DataModel {
 	private String patientTag = "PACIENTE";
 	private String renameFileTag = "Renombrar fichero";
 	private String insertNewNameLbl = "Introduce el nuevo nombre del fichero: ";
+	private String logoutTag = "Cerrar Sesión";
 	//Data base info
 	private String db = "jdbc:mysql://localhost/royalhospital";
 	private String dbUser = "root";
@@ -495,6 +496,14 @@ public class DataModel {
 
 	public void setSelectFileFirst(String selectFileFirst) {
 		this.selectFileFirst = selectFileFirst;
+	}
+
+	public String getLogoutTag() {
+		return logoutTag;
+	}
+
+	public void setLogoutTag(String logoutTag) {
+		this.logoutTag = logoutTag;
 	}
 
 	

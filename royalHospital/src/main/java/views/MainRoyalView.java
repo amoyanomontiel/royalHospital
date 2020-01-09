@@ -150,6 +150,13 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 		contentPane.add(btnMail);
 		btnMail.setBackground(Color.WHITE);
 		btnMail.setFont(new Font(data.getFontType(), Font.PLAIN, 15));
+		btnMail.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//Añadir Correo
+			}
+		});
 		
 		JButton btnLogout = new JButton();
 		contentPane.add(btnLogout);
@@ -166,7 +173,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 				login.setVisible(true);	
 			}
 		});
-		btnLogout.setToolTipText("Cerrar Sesión");
+		btnLogout.setToolTipText(data.getLogoutTag());
 		
 
 		btnDocuments.setBounds(64, 13, BTN_WIDTH, BTN_HEIGHT);

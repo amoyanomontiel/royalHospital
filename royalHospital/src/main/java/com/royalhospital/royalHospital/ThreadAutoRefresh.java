@@ -44,7 +44,7 @@ public class ThreadAutoRefresh extends Thread {
 			boolean refresh = true;
 			
 			while (refresh) {
-				sleep(3000);
+				sleep(120000);
 				synchronized (this) {
 					if(InboxView.getInstance().isShowing()) {
 						InboxView.setObjectMail(new MailMethods());

@@ -19,7 +19,7 @@ public class CheckEmailAddressListener {
 				ArrayList<String> errorList = new ArrayList<String>();
 				int occurrences = 0;
 				int errorCounter = 0;
-				String invalidEmailError = "No se ha encontrado el correo '*'. Comprueba que no haya errores y vuelve a intentarlo";
+				String invalidEmailError = "La dirección de correo '*' no pertenece a gmail ni a la fundación loyola.";
 				String multipleAddressees = "Pon una coma entre las direcciones de correo electrónico para mandar el correo a múltiples personas a la vez";
 				String excessSpace = "No puedes dejar espacios entre las direcciones de correo electrónico y las comas separadoras";
 

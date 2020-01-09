@@ -15,6 +15,7 @@ import com.royalhospital.royalHospital.SendNewMail;
 import com.royalhospital.royalHospital.UploadedFile;
 
 import listeners.CheckEmailAddressListener;
+import listeners.OpenNewEmailListener;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -57,6 +58,7 @@ public class NewMailView extends JFrame {
 	private JTextField textFieldAddressee;
 	private JTextField textFieldSubjectText;
 	private JTextArea textAreaBody;
+	private static JFrame instance = null;
 
 	
 //	public static void main(String[] args) {
@@ -302,10 +304,10 @@ public class NewMailView extends JFrame {
 				int answer = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres desechar el mensaje?",
 						"Desechar Mensaje", JOptionPane.YES_NO_OPTION);
 				if (answer == 0) {
-					dispose();
+					setVisible(false);
 				}
 			} else {
-				dispose();
+				setVisible(false);
 			}
 		}
 	}
@@ -314,6 +316,9 @@ public class NewMailView extends JFrame {
 	 * Create the frame.
 	 */
 	public NewMailView() {
+		
+		instance = this;
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -430,4 +435,13 @@ public class NewMailView extends JFrame {
 			}
 		});
 	}
+
+	public static JFrame getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(JFrame instance) {
+		NewMailView.instance = instance;
+	}
+	
 }

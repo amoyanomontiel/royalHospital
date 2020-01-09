@@ -20,6 +20,8 @@ import com.royalhospital.royalHospital.ThreadAutoRefresh;
 
 import listeners.OpenNewEmailListener;
 import listeners.RefreshEmail;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class InboxView extends JFrame {
 
@@ -36,7 +38,8 @@ public class InboxView extends JFrame {
 	private static JPanel mailListPane;
 	private static ThreadAutoRefresh objectThreadAutoRefresh;
 	private static boolean connectMail;
-
+	private static JFrame instance = null;
+	
 	/**
 	 * Launch the View
 	 */
@@ -48,6 +51,24 @@ public class InboxView extends JFrame {
 	 * Create the frame.
 	 */
 	public InboxView() {
+		
+		instance = this;
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					if(!NewMailView.getInstance().isShowing()) {
+						NewMailView.getInstance().dispose();
+						MainMailView.getFrame().dispose();
+						setVisible(false);
+					}	
+				} catch (Exception e2) {
+					MainMailView.getFrame().dispose();
+					setVisible(false);
+				}
+			}
+		});
 		EventQueue.invokeLater(new Runnable() {
 			@SuppressWarnings("static-access")
 			public void run() {
@@ -66,7 +87,7 @@ public class InboxView extends JFrame {
 						objectMail.receiveAndSaveAllEmails();
 
 						setResizable(false);
-						setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 						setBounds(100, 100, 1381, 551);
 						contentPane = new JPanel();
 						contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -129,7 +150,6 @@ public class InboxView extends JFrame {
 						 */
 						objectThreadAutoRefresh = new ThreadAutoRefresh(contentPane, contextMailPane);
 						objectThreadAutoRefresh.start();
-
 						setVisible(true);
 					}
 					else {
@@ -177,4 +197,14 @@ public class InboxView extends JFrame {
 		InboxView.connectMail = connectMail;
 	}
 
+	public static JFrame getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(JFrame instance) {
+		InboxView.instance = instance;
+	}
+
+	
+	
 }

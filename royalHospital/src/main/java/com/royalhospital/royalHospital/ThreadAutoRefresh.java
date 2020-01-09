@@ -1,10 +1,14 @@
 package com.royalhospital.royalHospital;
 
+import java.sql.Ref;
+
 // All imports
 import javax.swing.JPanel;
 
+import listeners.OpenNewEmailListener;
 import views.InboxView;
 import views.MainMailView;
+import views.NewMailView;
 
 /**
  * Class that control the function of autoRefresh email
@@ -36,22 +40,30 @@ public class ThreadAutoRefresh extends Thread {
 	 */
 	public void run() {
 		try {
-			while (true) {
-				sleep(60000);
+			
+			boolean refresh = true;
+			
+			while (refresh) {
+				sleep(3000);
 				synchronized (this) {
-					InboxView.setObjectMail(new MailMethods());
-					InboxView.getObjectMail().setAllDataConnection("pop.gmail.com", "pop3",
-							MainMailView.getTxtUserName().getText(), new String(MainMailView.getTxtPassword().getPassword()));
-					InboxView.getObjectMail().setProperties();
-					InboxView.getObjectMail().connectMailServer();
-					InboxView.getObjectMail().setFolderEmails();
-					InboxView.getObjectMail().receiveAndSaveAllEmails();
+					if(InboxView.getInstance().isShowing()) {
+						InboxView.setObjectMail(new MailMethods());
+						InboxView.getObjectMail().setAllDataConnection("pop.gmail.com", "pop3",
+								MainMailView.getTxtUserName().getText(), new String(MainMailView.getTxtPassword().getPassword()));
+						InboxView.getObjectMail().setProperties();
+						InboxView.getObjectMail().connectMailServer();
+						InboxView.getObjectMail().setFolderEmails();
+						InboxView.getObjectMail().receiveAndSaveAllEmails();
 
-					if (MailMethods.getScrollEmails().getItemCount() != MailMethods.getMessages().length + 1) {
-						MailMethods.getScrollEmails().removeAllItems();
-						MailMethods.updateJComboBox();
-						contentView.revalidate();
-						contentView.repaint();
+						if (MailMethods.getScrollEmails().getItemCount() != MailMethods.getMessages().length + 1) {
+							MailMethods.getScrollEmails().removeAllItems();
+							MailMethods.updateJComboBox();
+							contentView.revalidate();
+							contentView.repaint();
+						}	
+					}else {
+						refresh = false;
+						InboxView.getInstance().dispose();
 					}
 				}
 			}

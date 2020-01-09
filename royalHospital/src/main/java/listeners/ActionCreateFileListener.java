@@ -31,13 +31,25 @@ public class ActionCreateFileListener implements ActionListener{
 	private MainRoyalView royal;
 	private CreateModifyView nameFrame;
 	
+	/**
+	 * Initializes class variables
+	 * 
+	 * @param ftpClient - FTPCLient - Connection FTP object
+	 * @param textField - JTextField - JTextField contains text
+	 * @param royalView - MainRoyalView - Main view object
+	 * @param nameFrame - CreateModifyView - create view
+	 */
 	public ActionCreateFileListener(FTPClient ftpClient, JTextField textField, MainRoyalView royalView, CreateModifyView nameFrame) {
 		this.ftp = ftpClient;
 		this.royal = royalView;
 		this.text = textField;
 		this.nameFrame = nameFrame;
 	}
-
+	
+	/**
+	 * Get the name of the file and its extension, create a temporary file, upload it to the FTP server and delete it. 
+	 * Update the JTree
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		DataModel data = new DataModel();

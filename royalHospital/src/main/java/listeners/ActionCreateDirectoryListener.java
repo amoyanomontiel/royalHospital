@@ -41,6 +41,7 @@ public class ActionCreateDirectoryListener implements ActionListener {
 		this.royal = royalView;
 		this.nameFrame = nameframe;
 	}
+
 /**
  * Create directory event function which check selected file and if its possible creates a new directory
  */

@@ -73,11 +73,6 @@ public class Extensions {
 		forbiddenGmailExtensions.add("wsc");
 		forbiddenGmailExtensions.add("wsf");
 		forbiddenGmailExtensions.add("wsh");
-		forbiddenGmailExtensions.add("rar");
-		forbiddenGmailExtensions.add("zip");
-		forbiddenGmailExtensions.add("7zip");
-		forbiddenGmailExtensions.add("sitx");
-		forbiddenGmailExtensions.add("gz");
 	}
 
 

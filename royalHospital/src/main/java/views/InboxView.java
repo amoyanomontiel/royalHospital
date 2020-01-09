@@ -75,7 +75,7 @@ public class InboxView extends JFrame {
 
 					JButton btnRefresh = new JButton("Refrescar");
 					btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					ImageIcon refreshIcon = new ImageIcon("src//main//java//views//refresh.jpg");
+					ImageIcon refreshIcon = new ImageIcon("src//main//java//views//refresh.png");
 					Icon newRefreshIcon = new ImageIcon(refreshIcon.getImage().getScaledInstance(width+5, height, Image.SCALE_DEFAULT));
 					btnRefresh.setIcon(newRefreshIcon);
 					headPane.add(btnRefresh);

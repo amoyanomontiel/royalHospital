@@ -270,6 +270,11 @@ public class MailMethods {
 		String filterFrom = "";
 		boolean checkCaracter = false;
 
+		
+		if(!fromParam.contains("<")) {
+			filterFrom = "Remitente:     " + fromParam;
+		}
+		
 		for (int counter = 0; counter < fromParam.length(); counter++) {
 			char caracter = fromParam.charAt(counter);
 			if (caracter == "<".charAt(0) || checkCaracter) {

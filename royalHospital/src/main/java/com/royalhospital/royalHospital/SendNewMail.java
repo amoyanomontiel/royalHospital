@@ -45,6 +45,7 @@ public class SendNewMail {
 			message.setSubject(subject);
 			Multipart multipart = createMessage(body, attached);
 			
+			
 			if (multipart != null) {
 				message.setContent(multipart);
 				Transport transport = session.getTransport("smtp");

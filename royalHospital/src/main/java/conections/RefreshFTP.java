@@ -1,21 +1,16 @@
 package conections;
 
 import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.net.ftp.FTPClient;
 
 public class RefreshFTP implements Runnable{
 	
 	private FTPClient client;
-	private ScheduledExecutorService event = Executors.newSingleThreadScheduledExecutor();
 	private Boolean flag = true;
 	
 	public RefreshFTP(FTPClient client) {
 		this.client = client;
-		event.scheduleAtFixedRate(this, 1, 1, TimeUnit.MINUTES);
 	}
 
 	public RefreshFTP() {}
@@ -32,26 +27,18 @@ public class RefreshFTP implements Runnable{
 			}
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(60000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+		System.out.println("he salido del while");
+		System.out.println("El boolean es" + flag);
 	}
 	
 	public void stopRunning() {
-		if(!event.isShutdown()) {
-			flag = false;
-			event.shutdownNow();
-			if(event.isTerminated()) {
-				System.out.println("se ha parado loco");
-			}
-		}else {
-			System.out.println("se ha parado");
-		}
-		
+			flag = false;				
 	}
 
 }

@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.swing.JTextField;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
@@ -53,10 +54,11 @@ public class ActionRenameFileListener implements ActionListener {
 						AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "renombrar", DataModel.selectedFile, 
 								AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 						royal.getTxtaHistorial().append("El fichero fue renombrado con éxito\n");
-//						DefaultMutableTreeNode root = royal.getRaiz();
-//						root.removeAllChildren();
-//						royal.createFilesTree(root, ftp.listFiles(), ftp);
-//						royal.changedJTree(root);
+						DefaultMutableTreeNode node = (DefaultMutableTreeNode)royal.getTree().getLastSelectedPathComponent();
+						node.setUserObject(text.getText().toString());
+						DefaultTreeModel model = (DefaultTreeModel) royal.getTree().getModel();
+						model.nodeChanged(node);
+						royal.getTree().setModel(model);
 					} else {
 						royal.getTxtaHistorial().append("El fichero no pudo ser renombrado\n");
 					}

@@ -53,7 +53,7 @@ public class LoginListener implements ActionListener {
 				loginView.getTxtUserName().setText("");
 				loginView.getTxtPassword().setText("");
 			} else {
-				loginView.getBtnLogin().setEnabled(false);
+				loginView.dispose();
 				FTPConection ftpConect = new FTPConection();
 				FTPClient ftpClient = ftpConect.createFTPClient();
 				String rol = getRol(userText);

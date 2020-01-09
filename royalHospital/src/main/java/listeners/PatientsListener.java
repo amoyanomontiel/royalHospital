@@ -12,7 +12,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import views.ErrorRoyalView;
 import views.MainRoyalView;
 /**
- * 
+ * Listener for Patients button which changes tree to patients files
  * @author Daniel Cuenca
  *
  */
@@ -20,7 +20,11 @@ public class PatientsListener implements ActionListener {
 
 	private FTPClient client;
 	private MainRoyalView royal;
-
+/**
+ * Initialize
+ * @param ftpClient
+ * @param mainRoyalView
+ */
 	public PatientsListener(FTPClient ftpClient, MainRoyalView mainRoyalView) {
 		this.client = ftpClient;
 		this.royal = mainRoyalView;

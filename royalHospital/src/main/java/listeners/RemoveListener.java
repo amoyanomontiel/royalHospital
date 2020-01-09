@@ -29,6 +29,7 @@ public class RemoveListener implements ActionListener {
 
 	MainRoyalView mainRoyal;
 	FTPClient ftpClient;
+	DataModel data = new DataModel();
 
 	/**
 	 * Initialize the objects
@@ -56,44 +57,46 @@ public class RemoveListener implements ActionListener {
 					if (fileForRemove.isDirectory()) {
 						FTPFile[] filesInside = ftpClient.listFiles(DataModel.actualUserPath);
 						if (filesInside.length > 0) {
-							mainRoyal.getTxtaHistorial()
-									.append("No es posible borrar el directorio si contiene algún elemento\n");
+							mainRoyal.getTxtaHistorial().append(data.getDeleteNoPossibleWithElems() + "\n");
 						} else {
 							if (FTPReply.isPositiveCompletion(ftpClient.rmd(DataModel.selectedFile))) {
-								AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "borrar directorio", DataModel.selectedFile, 
-										AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-								mainRoyal.getTxtaHistorial().append("Se borró el directorio con éxito\n");
+								AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, data.getDeleteDirTag(),
+										DataModel.selectedFile, AuxiliaryTools.actualDate(),
+										AuxiliaryTools.actualTime());
+								mainRoyal.getTxtaHistorial().append(data.getDeleteSuccess() + "\n");
 								upDateTree();
 								mainRoyal.rootsToBlank();
 							} else {
-								mainRoyal.getTxtaHistorial().append("No se pudo borrar el directorio\n");
+								mainRoyal.getTxtaHistorial().append(data.getDeleteDirNoPossible() + "\n");
 							}
 						}
 					} else {
 						if (ftpClient.deleteFile(DataModel.selectedFile)) {
-							AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "borrar fichero", DataModel.selectedFile, 
-									AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-							mainRoyal.getTxtaHistorial().append("Se borró el fichero con éxito\n");
+							AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, data.getDeleteFileTag(),
+									DataModel.selectedFile, AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
+							mainRoyal.getTxtaHistorial().append(data.getDeleteFileSuccess() + "\n");
 							upDateTree();
 							mainRoyal.rootsToBlank();
 						} else {
-							mainRoyal.getTxtaHistorial().append("No se pudo borrar el fichero\n");
+							mainRoyal.getTxtaHistorial().append(data.getDeleteFileNoPossible() + "\n");
 						}
 					}
 				} catch (IOException ex) {
-					ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+					ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
 					error.setVisible(true);
 					error.setLocationRelativeTo(null);
 				}
 			} else {
-				mainRoyal.getTxtaHistorial()
-						.append("No se pudo borrar el archivo verifica que estás conectado al servidor\n");
+				mainRoyal.getTxtaHistorial().append(data.getVerifyServer() + "\n");
 			}
 		} else {
-			mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero de la lista\n");
+			mainRoyal.getTxtaHistorial().append(data.getSelectFileFirst() + "\n");
 		}
 	}
 
+	/**
+	 * Function which updates the files tree after delete
+	 */
 	private void upDateTree() {
 		DefaultTreeModel model = (DefaultTreeModel) mainRoyal.getTree().getModel();
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) mainRoyal.getTree().getLastSelectedPathComponent();

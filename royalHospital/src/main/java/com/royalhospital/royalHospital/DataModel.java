@@ -22,7 +22,7 @@ public class DataModel {
 	private String noEmptyLoginFieldsMsg = "El campo usuario y/o contraseña no pueden estar vacios";
 	private String dbConectionError = "Error de conexión con la Base de Datos";
 	private String ftpConectionError = "Error de conexión con el servidor";
-	//Tags
+	//Tags & labels
 	private String userTag = "Usuario";
 	private String passwordTag = "Contraseña";
 	private String loginBtnTag = "Entrar";
@@ -32,14 +32,18 @@ public class DataModel {
 	private String uploadFileTag = "Cargar fichero";
 	private String downloadTag = "Descargar";
 	private String deleteTag = "Borrar";
+	private String deleteDirTag = "borrar directorio";
+	private String deleteFileTag = "borrar fichero";
 	private String createFolderTag = "Crear Carpeta";
 	private String createFileTag = "Crear Fichero";
 	private String renameTag = "Renombrar";
-	private String documentsTag = "Documentos";
+	private String documentsTag = "Mis Documentos";
 	private String patientsTag = "Pacientes";
 	private String mailTag = "Correo";
 	private String doctorTag = "MEDICO";
 	private String patientTag = "PACIENTE";
+	private String renameFileTag = "Renombrar fichero";
+	private String insertNewNameLbl = "Introduce el nuevo nombre del fichero: ";
 	//Data base info
 	private String db = "jdbc:mysql://localhost/royalhospital";
 	private String dbUser = "root";
@@ -56,6 +60,14 @@ public class DataModel {
 	private String uploadFake = "No se pudo cargar el fichero";
 	private String selectFileForUpload = "Seleccione primero un directorio donde cargar el fichero";
 	private String isFileMsg = "Para cargar un fichero debe seleccionar un directorio";
+	private String selectFileOrDir = "Seleccione primero un fichero o directorio de la lista";
+	private String selectFileFirst = "Seleccione primero un fichero de la lista";
+	private String deleteNoPossibleWithElems = "No es posible borrar el directorio si contiene algún elemento";
+	private String deleteSuccess = "Se borró el directorio con éxito";
+	private String deleteFileSuccess = "Se borró el fichero con éxito";
+	private String deleteDirNoPossible = "No se pudo borrar el directorio";
+	private String deleteFileNoPossible = "No se pudo borrar el fichero";
+	private String verifyServer = "No se pudo borrar el archivo verifica que estás conectado al servidor";
 	
 	public DataModel() {
 		
@@ -387,6 +399,102 @@ public class DataModel {
 
 	public void setIsFileMsg(String isFileMsg) {
 		this.isFileMsg = isFileMsg;
+	}
+
+	public String getRenameFileTag() {
+		return renameFileTag;
+	}
+
+	public void setRenameFileTag(String renameFileTag) {
+		this.renameFileTag = renameFileTag;
+	}
+
+	public String getInsertNewNameLbl() {
+		return insertNewNameLbl;
+	}
+
+	public void setInsertNewNameLbl(String insertNewNameLbl) {
+		this.insertNewNameLbl = insertNewNameLbl;
+	}
+
+	public String getSelectFileOrDir() {
+		return selectFileOrDir;
+	}
+
+	public void setSelectFileOrDir(String selectFileOrDir) {
+		this.selectFileOrDir = selectFileOrDir;
+	}
+
+	public String getDeleteNoPossibleWithElems() {
+		return deleteNoPossibleWithElems;
+	}
+
+	public void setDeleteNoPossibleWithElems(String deleteNoPossible) {
+		this.deleteNoPossibleWithElems = deleteNoPossible;
+	}
+
+	public String getDeleteDirTag() {
+		return deleteDirTag;
+	}
+
+	public void setDeleteDirTag(String deleteDirTag) {
+		this.deleteDirTag = deleteDirTag;
+	}
+
+	public String getDeleteSuccess() {
+		return deleteSuccess;
+	}
+
+	public void setDeleteSuccess(String deleteSuccess) {
+		this.deleteSuccess = deleteSuccess;
+	}
+
+	public String getDeleteDirNoPossible() {
+		return deleteDirNoPossible;
+	}
+
+	public void setDeleteDirNoPossible(String deleteDirNoPossible) {
+		this.deleteDirNoPossible = deleteDirNoPossible;
+	}
+
+	public String getDeleteFileTag() {
+		return deleteFileTag;
+	}
+
+	public void setDeleteFileTag(String deleteFileTag) {
+		this.deleteFileTag = deleteFileTag;
+	}
+
+	public String getDeleteFileSuccess() {
+		return deleteFileSuccess;
+	}
+
+	public void setDeleteFileSuccess(String deleteFileSuccess) {
+		this.deleteFileSuccess = deleteFileSuccess;
+	}
+
+	public String getDeleteFileNoPossible() {
+		return deleteFileNoPossible;
+	}
+
+	public void setDeleteFileNoPossible(String deleteFileNoPossible) {
+		this.deleteFileNoPossible = deleteFileNoPossible;
+	}
+
+	public String getVerifyServer() {
+		return verifyServer;
+	}
+
+	public void setVerifyServer(String verifyServer) {
+		this.verifyServer = verifyServer;
+	}
+
+	public String getSelectFileFirst() {
+		return selectFileFirst;
+	}
+
+	public void setSelectFileFirst(String selectFileFirst) {
+		this.selectFileFirst = selectFileFirst;
 	}
 
 	

@@ -15,32 +15,37 @@ import views.CreateModifyView;
 import views.MainRoyalView;
 
 /**
- * @author Cristina
+ * Listener for rename button which opens the "insert new name" dialog
+ * @author Cristina Montilla 
  *
  */
 public class RenameListener implements ActionListener {
 
 	private MainRoyalView royal;
 	private FTPClient ftp;
-	/**
-	 * 
-	 */
+	DataModel data = new DataModel();
+/**
+ * Initializes values of variables
+ * @param MainRoyalView mainRoyalView Principal Frame
+ * @param FTPCLient ftpClient FTP client
+ */
 	public RenameListener(MainRoyalView mainRoyalView, FTPClient ftpClient) {
 		this.ftp = ftpClient;
 		this.royal = mainRoyalView;
 	}
-
+/**
+ * Function which opens the "insert new name" dialog
+ */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//Añadir comprobaciones
 		if (DataModel.actualUserPath != "") {
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
-				CreateModifyView view = new CreateModifyView("Renombrar fichero", "Introduce el nuevo nombre del fichero: ", "Renombrar", 2, ftp, royal);
+				CreateModifyView view = new CreateModifyView(data.getRenameFileTag(), data.getInsertNewNameLbl(), data.getRenameTag(), 2, ftp, royal);
 				view.setVisible(true);
 				view.setLocationRelativeTo(null);
 			}
 		} else {
-			royal.getTxtaHistorial().append("Seleccione primero un fichero o directorio de la lista\n");
+			royal.getTxtaHistorial().append(data.getSelectFileOrDir() + "\n");
 		}
 	}
 

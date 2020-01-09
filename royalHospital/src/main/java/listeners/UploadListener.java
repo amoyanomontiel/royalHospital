@@ -74,7 +74,7 @@ public class UploadListener implements ActionListener {
 									mainRoyal.getTxtaHistorial().append(data.getFileAlreadyExist() + "\n");
 								} else {
 									if (ftpClient.storeFile(file.getName(), input)) {										
-										AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "cargar", file.getName(), 
+										AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, data.getUploadTag(), file.getName(), 
 												AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 										mainRoyal.getTxtaHistorial().append(data.getFileUpload() + "\n");
 										mainRoyal.refreshJTree(file.getName());

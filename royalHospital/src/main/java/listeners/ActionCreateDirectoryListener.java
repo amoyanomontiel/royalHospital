@@ -42,7 +42,7 @@ public class ActionCreateDirectoryListener implements ActionListener {
 				FTPFile[] directory = ftp.listDirectories(DataModel.actualUserPath);
 				if(directory != null && directory.length != 0) {
 					for (FTPFile a : directory) {
-						if (!directoryName.getText().toString().equalsIgnoreCase("")) {
+						if ((!directoryName.getText().toString().equalsIgnoreCase("")) && (directoryName.getText().length()<20)) {
 							if (a.getName().equalsIgnoreCase(directoryName.getText().toString())) {
 								royal.getTxtaHistorial().append("El directorio ya existe\n");
 							} else {
@@ -55,7 +55,7 @@ public class ActionCreateDirectoryListener implements ActionListener {
 								break;
 							}
 						}else {
-							ErrorRoyalView error = new ErrorRoyalView("Escribe un nombre para el directorio", 1);
+							ErrorRoyalView error = new ErrorRoyalView("Escribe un nombre para el directorio de máximo 20 caracteres", 1);
 							error.setVisible(true);
 							error.setLocationRelativeTo(null);
 							break;
@@ -64,6 +64,7 @@ public class ActionCreateDirectoryListener implements ActionListener {
 				}else {
 					if(!directoryName.getText().toString().equalsIgnoreCase("")) {
 						ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
+						nameFrame.dispose();
 						AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "crear directorio", DataModel.selectedFile, 
 								AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 						royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");

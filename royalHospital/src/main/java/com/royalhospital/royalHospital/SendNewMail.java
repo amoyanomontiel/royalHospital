@@ -41,7 +41,7 @@ public class SendNewMail {
 		try {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(sender));
-			message.addRecipients(Message.RecipientType.CC, addressee);
+			message.addRecipients(Message.RecipientType.TO, addressee);
 			message.setSubject(subject);
 			Multipart multipart = createMessage(body, attached);
 			
@@ -67,9 +67,11 @@ public class SendNewMail {
 	public Properties establishGmailPropierties() {
 		Properties props = new Properties();  
 	    props.setProperty("mail.transport.protocol", "smtp");     
-	    props.setProperty("mail.host", "smtp.gmail.com");  
+//	    props.setProperty("mail.host", "smtp.gmail.com");  
 	    props.put("mail.smtp.auth", "true");  
-	    props.put("mail.smtp.port", "465");  
+	    props.put("mail.smtp.port", "465");
+	    props.put("mail.smtp.host", "smtp.gmail.com");
+	    props.put("mail.smtp.ssl.enable", "true");
 	    props.put("mail.debug", "true");  
 	    props.put("mail.smtp.socketFactory.port", "465");  
 	    props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");  

@@ -36,20 +36,21 @@ public class ThreadAutoRefresh extends Thread {
 	}
 
 	/**
-	 * Run of Thread
+	 * Run of Thread If the views are closed, the thread end
 	 */
 	public void run() {
 		try {
-			
+
 			boolean refresh = true;
-			
+
 			while (refresh) {
 				sleep(120000);
 				synchronized (this) {
-					if(InboxView.getInstance().isShowing()) {
+					if (InboxView.getInstance().isShowing()) {
 						InboxView.setObjectMail(new MailMethods());
 						InboxView.getObjectMail().setAllDataConnection("pop.gmail.com", "pop3",
-								MainMailView.getTxtUserName().getText(), new String(MainMailView.getTxtPassword().getPassword()));
+								MainMailView.getTxtUserName().getText(),
+								new String(MainMailView.getTxtPassword().getPassword()));
 						InboxView.getObjectMail().setProperties();
 						InboxView.getObjectMail().connectMailServer();
 						InboxView.getObjectMail().setFolderEmails();
@@ -60,10 +61,12 @@ public class ThreadAutoRefresh extends Thread {
 							MailMethods.updateJComboBox();
 							contentView.revalidate();
 							contentView.repaint();
-						}	
-					}else {
+						}
+					} else {
 						refresh = false;
-						InboxView.getInstance().dispose();
+						for (int counter = 0; counter < ListEmailViews.getAllEmailView().size(); counter++) {
+							ListEmailViews.getAllEmailView().get(counter).dispose();
+						}
 					}
 				}
 			}

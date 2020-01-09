@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.royalhospital.royalHospital.ListEmailViews;
+
 import listeners.EmailLoginListener;
 
 import javax.swing.JTextField;
@@ -27,6 +29,7 @@ import javax.swing.JPasswordField;
  */
 public class MainMailView extends JFrame {
 
+	// All variables of class
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static JTextField txtUserName;
@@ -34,9 +37,18 @@ public class MainMailView extends JFrame {
 	private static JPasswordField txtPassword;
 	private static MainMailView frame;
 
-	
+	/**
+	 * Constructor of the class
+	 * 
+	 * @param user_email String, email of user
+	 * @param iconRoute  String, rute of icon
+	 */
 	public MainMailView(String user_email, String iconRoute) {
+
+		// Save instance
 		frame = this;
+		ListEmailViews.getAllEmailView().add(frame);
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -75,8 +87,8 @@ public class MainMailView extends JFrame {
 					JLabel lblRoyalIcon = new JLabel();
 					lblRoyalIcon.setBounds(90, 35, 268, 137);
 					ImageIcon img = new ImageIcon(MainMailView.class.getResource(iconRoute));
-					Icon in = new ImageIcon(img.getImage().getScaledInstance(lblRoyalIcon.getWidth()-50, lblRoyalIcon.getHeight()+40,
-							Image.SCALE_DEFAULT));
+					Icon in = new ImageIcon(img.getImage().getScaledInstance(lblRoyalIcon.getWidth() - 50,
+							lblRoyalIcon.getHeight() + 40, Image.SCALE_DEFAULT));
 					lblRoyalIcon.setIcon(in);
 					contentPane.add(lblRoyalIcon);
 
@@ -92,8 +104,7 @@ public class MainMailView extends JFrame {
 		});
 	}
 
-
-	
+	// All gets and sets
 
 	public static MainMailView getFrame() {
 		return frame;

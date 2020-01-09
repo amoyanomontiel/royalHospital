@@ -3,18 +3,18 @@ package com.royalhospital.royalHospital;
 import java.util.ArrayList;
 
 public class Extensions {
-	
+
 	private ArrayList<String> textExtensions;
 	private ArrayList<String> forbiddenGmailExtensions;
-	
+
 	public Extensions() {
 		textExtensions = new ArrayList<String>();
 		forbiddenGmailExtensions = new ArrayList<String>();
-		
+
 		fillExtensions();
 		fillForbiddenGmailExtensions();
 	}
-	
+
 	private void fillExtensions() {
 		textExtensions.add("doc");
 		textExtensions.add("docx");
@@ -27,7 +27,7 @@ public class Extensions {
 		textExtensions.add("rtf");
 		textExtensions.add("nfo");
 	}
-	
+
 	private void fillForbiddenGmailExtensions() {
 		forbiddenGmailExtensions.add("ade");
 		forbiddenGmailExtensions.add("adp");
@@ -74,7 +74,6 @@ public class Extensions {
 		forbiddenGmailExtensions.add("wsf");
 		forbiddenGmailExtensions.add("wsh");
 	}
-
 
 	public ArrayList<String> getTextExtensions() {
 		return textExtensions;

@@ -34,7 +34,7 @@ public class LinksEmailListener {
 					if (Desktop.isDesktopSupported()) {
 						try {
 							Desktop.getDesktop().browse(e.getURL().toURI());
-							
+
 						} catch (IOException e1) {
 							System.out.println("AQUI");
 							System.out.println(e.getURL());

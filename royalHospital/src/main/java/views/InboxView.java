@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.royalhospital.royalHospital.ListEmailViews;
 import com.royalhospital.royalHospital.MailMethods;
 import com.royalhospital.royalHospital.ThreadAutoRefresh;
 
@@ -39,36 +40,35 @@ public class InboxView extends JFrame {
 	private static ThreadAutoRefresh objectThreadAutoRefresh;
 	private static boolean connectMail;
 	private static JFrame instance = null;
-	
-	/**
-	 * Launch the View
-	 */
-//	public static void main(String[] args) {
-//		
-//	}
 
 	/**
 	 * Create the frame.
 	 */
 	public InboxView() {
-		
+
+		// Save instance of JFrame
 		instance = this;
-		
+		ListEmailViews.getAllEmailView().add(instance);
+
+		/**
+		 * Add listener to close windows
+		 */
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				try {
-					if(!NewMailView.getInstance().isShowing()) {
+					if (!NewMailView.getInstance().isShowing()) {
 						NewMailView.getInstance().dispose();
 						MainMailView.getFrame().dispose();
 						setVisible(false);
-					}	
+					}
 				} catch (Exception e2) {
 					MainMailView.getFrame().dispose();
 					setVisible(false);
 				}
 			}
 		});
+
 		EventQueue.invokeLater(new Runnable() {
 			@SuppressWarnings("static-access")
 			public void run() {
@@ -151,10 +151,9 @@ public class InboxView extends JFrame {
 						objectThreadAutoRefresh = new ThreadAutoRefresh(contentPane, contextMailPane);
 						objectThreadAutoRefresh.start();
 						setVisible(true);
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "Dirección de correo o contraseña incorrecta", "Login Fallido",
-								JOptionPane.WARNING_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "Dirección de correo o contraseña incorrecta",
+								"Login Fallido", JOptionPane.WARNING_MESSAGE);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -205,6 +204,4 @@ public class InboxView extends JFrame {
 		InboxView.instance = instance;
 	}
 
-	
-	
 }

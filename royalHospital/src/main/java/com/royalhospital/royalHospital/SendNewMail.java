@@ -20,32 +20,30 @@ import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 
 public class SendNewMail {
-	
+
 	private String sender;
 	private String password;
-	
+
 	public SendNewMail(String sender, String password) {
 		this.sender = sender;
 		this.password = password;
 	}
-	
+
 	public boolean sendNewGmail(String addressee, String subject, String body, ArrayList<UploadedFile> attached) {
 		Properties props = establishGmailPropierties();
-		Session session = Session.getInstance(props,
-			    new javax.mail.Authenticator() {
-			       protected PasswordAuthentication getPasswordAuthentication() {  
-			       return new PasswordAuthentication(sender,password);  
-			   }  
-			   });
-		
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(sender, password);
+			}
+		});
+
 		try {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(sender));
 			message.addRecipients(Message.RecipientType.TO, addressee);
 			message.setSubject(subject);
 			Multipart multipart = createMessage(body, attached);
-			
-			
+
 			if (multipart != null) {
 				message.setContent(multipart);
 				Transport transport = session.getTransport("smtp");
@@ -53,8 +51,7 @@ public class SendNewMail {
 				transport.sendMessage(message, message.getAllRecipients());
 				transport.close();
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
 		} catch (AddressException e) {
@@ -62,37 +59,38 @@ public class SendNewMail {
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		} catch (MessagingException e) {
-			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al mandar el mensaje, vuelve a intentarlo", "Error fatal",
-					JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al mandar el mensaje, vuelve a intentarlo",
+					"Error fatal", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 	}
-	
+
 	/*
-	 * Define the properties of the gmail server and define the gmail account that you are going to use
+	 * Define the properties of the gmail server and define the gmail account that
+	 * you are going to use
 	 */
 	public Properties establishGmailPropierties() {
-		Properties props = new Properties();  
-	    props.setProperty("mail.transport.protocol", "smtp");     
-//	    props.setProperty("mail.host", "smtp.gmail.com");  
-	    props.put("mail.smtp.auth", "true");  
-	    props.put("mail.smtp.port", "465");
-	    props.put("mail.smtp.host", "smtp.gmail.com");
-	    props.put("mail.smtp.ssl.enable", "true");
-	    props.put("mail.debug", "true");  
-	    props.put("mail.smtp.socketFactory.port", "465");  
-	    props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");  
-	    props.put("mail.smtp.socketFactory.fallback", "false");  
-	    return props;
+		Properties props = new Properties();
+		props.setProperty("mail.transport.protocol", "smtp");
+		props.setProperty("mail.host", "smtp.gmail.com");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.debug", "true");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.socketFactory.fallback", "false");
+		return props;
 	}
-	
+
 	public Multipart createMessage(String body, ArrayList<UploadedFile> attached) {
 		Multipart multipart = new MimeMultipart();
-		try {			
+		try {
 			BodyPart messageBodyPart = new MimeBodyPart(); // Crear el cuerpo del mensaje
-			messageBodyPart.setText("<p>" + body + "</p>");
+			messageBodyPart.setText(body);
 			multipart.addBodyPart(messageBodyPart);
-			
+
 			if (attached.size() != 0) {
 				for (UploadedFile currentFile : attached) {
 					messageBodyPart = new MimeBodyPart();
@@ -103,8 +101,8 @@ public class SendNewMail {
 				}
 			}
 		} catch (MessagingException e) {
-			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al crear el mensaje, vuelve a intentarlo", "Error fatal",
-					JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al crear el mensaje, vuelve a intentarlo",
+					"Error fatal", JOptionPane.WARNING_MESSAGE);
 			return null;
 		}
 		return multipart;

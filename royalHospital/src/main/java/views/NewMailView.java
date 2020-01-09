@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import org.apache.commons.io.FilenameUtils;
 
 import com.royalhospital.royalHospital.Extensions;
+import com.royalhospital.royalHospital.ListEmailViews;
 import com.royalhospital.royalHospital.SendNewMail;
 import com.royalhospital.royalHospital.UploadedFile;
 
@@ -59,21 +60,6 @@ public class NewMailView extends JFrame {
 	private JTextField textFieldSubjectText;
 	private JTextArea textAreaBody;
 	private static JFrame instance = null;
-
-	
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					NewMailView frame = new NewMailView();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					System.out.println(e.getMessage());
-//				}
-//			}
-//		});
-//	}
-
 
 	public void createFileChooser(JPanel contentPane) {
 		try {
@@ -152,12 +138,12 @@ public class NewMailView extends JFrame {
 							newFile.setToolTipText("Este archivo contiene 0 bytes; por tanto, no se adjuntará");
 						}
 					}
-					
+
 					if (extensions.getForbiddenGmailExtensions().contains(extension)) {
 						newFile.setForeground(Color.RED);
 						newFile.setToolTipText("Este archivo no se puede mandar por gmail por motivos de seguridad");
 					}
-					
+
 					listUploadedFiles[i][j] = newFile;
 
 				} else if (j == 2) {
@@ -229,10 +215,10 @@ public class NewMailView extends JFrame {
 
 		case "rar":
 			return "src//main//java//views//compressed.png";
-			
+
 		case "gz":
 			return "src//main//java//views//compressed.png";
-			
+
 		case "sitx":
 			return "src//main//java//views//compressed.png";
 
@@ -241,7 +227,7 @@ public class NewMailView extends JFrame {
 
 		case "java":
 			return "src//main//java//views//jar.png";
-			
+
 		case "jar":
 			return "src//main//java//views//jar.png";
 
@@ -277,7 +263,7 @@ public class NewMailView extends JFrame {
 		if (action.equals("send")) {
 			SendNewMail newGmail = new SendNewMail(gmailUsername, gmailPassword);
 			boolean messageState = false;
-			
+
 			if (emptyaddressee) {
 				JOptionPane.showMessageDialog(null, "Debes introducir un destinatario", "Introduzca Destinatario",
 						JOptionPane.WARNING_MESSAGE);
@@ -294,10 +280,9 @@ public class NewMailView extends JFrame {
 			if (messageState) {
 				JOptionPane.showMessageDialog(null, "Correo enviado correctamente", "Operación correcta",
 						JOptionPane.WARNING_MESSAGE);
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "El Correo no se ha enviado correctamente, intentalo de nuevo", "Operación incorrecta",
-						JOptionPane.WARNING_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "El Correo no se ha enviado correctamente, intentalo de nuevo",
+						"Operación incorrecta", JOptionPane.WARNING_MESSAGE);
 			}
 		} else {
 			if (!emptyaddressee || !emptysubject || !emptybody || fileList.size() != 0) {
@@ -316,9 +301,10 @@ public class NewMailView extends JFrame {
 	 * Create the frame.
 	 */
 	public NewMailView() {
-		
+
 		instance = this;
-		
+		ListEmailViews.getAllEmailView().add(instance);
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -388,7 +374,8 @@ public class NewMailView extends JFrame {
 					btnNewFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					btnNewFile.setBounds(67, 593, 150, 40);
 					ImageIcon fileIcon = new ImageIcon("src//main//java//views//download.png");
-					Icon newFileIcon = new ImageIcon(fileIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+					Icon newFileIcon = new ImageIcon(
+							fileIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 					btnNewFile.setIcon(newFileIcon);
 					contentPane.add(btnNewFile);
 
@@ -401,7 +388,8 @@ public class NewMailView extends JFrame {
 					btnSend.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					btnSend.setBounds(595, 593, 150, 40);
 					ImageIcon sendIcon = new ImageIcon("src//main//java//views//send.png");
-					Icon newSendIcon = new ImageIcon(sendIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+					Icon newSendIcon = new ImageIcon(
+							sendIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 					btnSend.setIcon(newSendIcon);
 					contentPane.add(btnSend);
 
@@ -414,20 +402,21 @@ public class NewMailView extends JFrame {
 					btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					btnCancel.setBounds(381, 593, 150, 40);
 					ImageIcon cancelIcon = new ImageIcon("src//main//java//views//cancel.png");
-					Icon newCancelIcon = new ImageIcon(cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+					Icon newCancelIcon = new ImageIcon(
+							cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 					btnCancel.setIcon(newCancelIcon);
 					contentPane.add(btnCancel);
-					
+
 					JLabel lblWarning = new JLabel("");
 					lblWarning.setEnabled(false);
 					lblWarning.setBounds(760, 21, 55, 40);
 					lblWarning.setVisible(false);
 					ImageIcon warningIcon = new ImageIcon("src//main//java//views//warning.png");
 					Icon newWarningIcon = new ImageIcon(
-							warningIcon.getImage().getScaledInstance(width+15, height+10, Image.SCALE_DEFAULT));
+							warningIcon.getImage().getScaledInstance(width + 15, height + 10, Image.SCALE_DEFAULT));
 					lblWarning.setIcon(newWarningIcon);
 					contentPane.add(lblWarning);
-					
+
 					CheckEmailAddressListener.addNewLostFocusListener(textFieldAddressee, lblWarning);
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
@@ -443,5 +432,5 @@ public class NewMailView extends JFrame {
 	public static void setInstance(JFrame instance) {
 		NewMailView.instance = instance;
 	}
-	
+
 }

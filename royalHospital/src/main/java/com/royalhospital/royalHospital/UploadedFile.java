@@ -4,7 +4,7 @@ public class UploadedFile {
 
 	private String fileName;
 	private String filePath;
-	
+
 	public UploadedFile(String fileName, String filePath) {
 		this.fileName = fileName;
 		this.filePath = filePath;

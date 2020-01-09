@@ -95,7 +95,7 @@ public class MailMethods {
 					continue;
 				}
 				InputStream is = bodyPart.getInputStream();
-				
+
 				// Save attachment on Download directory
 				fileAttachment = new File(homeRute + "\\Downloads\\" + bodyPart.getFileName().replace(" ", ""));
 				FileOutputStream fos = new FileOutputStream(fileAttachment);
@@ -169,9 +169,9 @@ public class MailMethods {
 	public static JPanel generateJEditorPaneEmail(int position) {
 		try {
 			Message objectMessage = messages[position];
-			
+
 			try {
-				Multipart multipart = (Multipart) objectMessage.getContent();	
+				Multipart multipart = (Multipart) objectMessage.getContent();
 			} catch (Exception e) {
 				String multipart = (String) objectMessage.getContent();
 			}
@@ -179,8 +179,7 @@ public class MailMethods {
 			String bodyTextSave = "";
 			bodyTextSave += "<p align= 'left'>Subject:   " + objectMessage.getSubject() + "</p>";
 			bodyTextSave += "<p></p>";
-			bodyTextSave += "<p align= 'left'> " + filterFromMessage(objectMessage.getFrom()[0].toString())
-					+ "</p>";
+			bodyTextSave += "<p align= 'left'> " + filterFromMessage(objectMessage.getFrom()[0].toString()) + "</p>";
 			bodyTextSave += "<p></p>";
 			bodyTextSave += getBodyText(objectMessage);
 			String filterName = "";
@@ -190,11 +189,11 @@ public class MailMethods {
 			for (int counterAttachments = 0; counterAttachments < attachments.size(); counterAttachments++) {
 				filterName = searchOnlyNameAttachment(attachments.get(counterAttachments).toString());
 				bodyTextSave.replace(attachments.get(counterAttachments).toString(), "");
-				if(bodyTextSave.contains("<img")) {
-					bodyTextSave = searchLinks(bodyTextSave);	
+				if (bodyTextSave.contains("<img")) {
+					bodyTextSave = searchLinks(bodyTextSave);
 				}
-				bodyTextSave += "<a href=file:///'" + attachments.get(counterAttachments).toString().replace(" ", "") + "'>" + filterName.replace(" ", "")
-						+ " </a>";
+				bodyTextSave += "<a href=file:///'" + attachments.get(counterAttachments).toString().replace(" ", "")
+						+ "'>" + filterName.replace(" ", "") + " </a>";
 			}
 
 			JPanel allEmailInfo = new JPanel();
@@ -224,37 +223,37 @@ public class MailMethods {
 	 * @return String, The filtered body text
 	 */
 	public static String searchLinks(String bodyTextSave) {
-		char [] listOfCaracters = new char [bodyTextSave.length()];
+		char[] listOfCaracters = new char[bodyTextSave.length()];
 		String labelImage = "";
 		boolean dontSaveImageLink = false;
-		for(int counter = 0; counter < bodyTextSave.length(); counter++) {
-			if(dontSaveImageLink) {
-				if(bodyTextSave.charAt(counter-1) == ">".charAt(0)) {
+		for (int counter = 0; counter < bodyTextSave.length(); counter++) {
+			if (dontSaveImageLink) {
+				if (bodyTextSave.charAt(counter - 1) == ">".charAt(0)) {
 					dontSaveImageLink = false;
 				}
 			}
-			if(bodyTextSave.charAt(counter) == "<".charAt(0)) {
-				if(bodyTextSave.charAt(counter+1) == "i".charAt(0)) {
-					if(bodyTextSave.charAt(counter+2) == "m".charAt(0)) {
-						if(bodyTextSave.charAt(counter+3) == "g".charAt(0)) {
-							dontSaveImageLink = true;	
-						}else {
-							if(!dontSaveImageLink) {
+			if (bodyTextSave.charAt(counter) == "<".charAt(0)) {
+				if (bodyTextSave.charAt(counter + 1) == "i".charAt(0)) {
+					if (bodyTextSave.charAt(counter + 2) == "m".charAt(0)) {
+						if (bodyTextSave.charAt(counter + 3) == "g".charAt(0)) {
+							dontSaveImageLink = true;
+						} else {
+							if (!dontSaveImageLink) {
 								listOfCaracters[counter] = bodyTextSave.charAt(counter);
-							}	
+							}
 						}
-					}else {
-						if(!dontSaveImageLink) {
+					} else {
+						if (!dontSaveImageLink) {
 							listOfCaracters[counter] = bodyTextSave.charAt(counter);
 						}
 					}
-				}else {
-					if(!dontSaveImageLink) {
+				} else {
+					if (!dontSaveImageLink) {
 						listOfCaracters[counter] = bodyTextSave.charAt(counter);
 					}
 				}
-			}else {
-				if(!dontSaveImageLink) {
+			} else {
+				if (!dontSaveImageLink) {
 					listOfCaracters[counter] = bodyTextSave.charAt(counter);
 				}
 			}
@@ -262,19 +261,21 @@ public class MailMethods {
 		System.out.println(String.valueOf(listOfCaracters));
 		return String.valueOf(listOfCaracters);
 	}
-	
-	/*
-	 * get the sender of Email
+
+	/**
+	 * Get the sender of email by filtering of the content of the parameter
+	 * 
+	 * @param fromParam String, contain some data and the sender of email
+	 * @return sender of email
 	 */
 	public static String filterFromMessage(String fromParam) {
 		String filterFrom = "";
 		boolean checkCaracter = false;
 
-		
-		if(!fromParam.contains("<")) {
+		if (!fromParam.contains("<")) {
 			filterFrom = "Remitente:     " + fromParam;
 		}
-		
+
 		for (int counter = 0; counter < fromParam.length(); counter++) {
 			char caracter = fromParam.charAt(counter);
 			if (caracter == "<".charAt(0) || checkCaracter) {

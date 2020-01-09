@@ -11,12 +11,12 @@ public class EmailAuthenticator {
 
 	private String user;
 	private String password;
-	
+
 	public EmailAuthenticator(String user, String password) {
 		this.user = user;
 		this.password = password;
 	}
-	
+
 	public int AuthenticateEmail() {
 		try {
 			Properties props = System.getProperties();
@@ -29,7 +29,7 @@ public class EmailAuthenticator {
 			props.put("mail.smtp.ssl.trust", "smtp.gmail.com"); // Para que no pete al usar el gmail
 
 			Session session = Session.getDefaultInstance(props);
-			
+
 			Transport transport = session.getTransport("smtp");
 			transport.connect("smtp.gmail.com", user, password);
 			return 0;

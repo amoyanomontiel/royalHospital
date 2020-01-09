@@ -16,6 +16,7 @@ import com.royalhospital.royalHospital.AuxiliaryTools;
 import com.royalhospital.royalHospital.DataModel;
 
 import conections.FTPConection;
+import views.CreateModifyView;
 import views.ErrorRoyalView;
 import views.MainRoyalView;
 
@@ -59,28 +60,12 @@ public class RemoveListener implements ActionListener {
 						if (filesInside.length > 0) {
 							mainRoyal.getTxtaHistorial().append(data.getDeleteNoPossibleWithElems() + "\n");
 						} else {
-							if (FTPReply.isPositiveCompletion(ftpClient.rmd(DataModel.selectedFile))) {
-								AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, data.getDeleteDirTag(),
-										DataModel.selectedFile, AuxiliaryTools.actualDate(),
-										AuxiliaryTools.actualTime());
-								mainRoyal.getTxtaHistorial().append(data.getDeleteSuccess() + "\n");
-								upDateTree();
-								mainRoyal.rootsToBlank();
-							} else {
-								mainRoyal.getTxtaHistorial().append(data.getDeleteDirNoPossible() + "\n");
-							}
+							CreateModifyView confirmDialog = new CreateModifyView(ftpClient, mainRoyal, "directorio");
+							confirmDialog.setVisible(true);
 						}
 					} else {
-						//Ventana de confirmacion
-						if (ftpClient.deleteFile(DataModel.selectedFile)) {
-							AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, data.getDeleteFileTag(),
-									DataModel.selectedFile, AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-							mainRoyal.getTxtaHistorial().append(data.getDeleteFileSuccess() + "\n");
-							upDateTree();
-							mainRoyal.rootsToBlank();
-						} else {
-							mainRoyal.getTxtaHistorial().append(data.getDeleteFileNoPossible() + "\n");
-						}
+						CreateModifyView confirmDialog = new CreateModifyView(ftpClient, mainRoyal, "fichero");
+						confirmDialog.setVisible(true);
 					}
 				} catch (IOException ex) {
 					ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
@@ -93,14 +78,5 @@ public class RemoveListener implements ActionListener {
 		} else {
 			mainRoyal.getTxtaHistorial().append(data.getSelectFileFirst() + "\n");
 		}
-	}
-
-	/**
-	 * Function which updates the files tree after delete
-	 */
-	private void upDateTree() {
-		DefaultTreeModel model = (DefaultTreeModel) mainRoyal.getTree().getModel();
-		DefaultMutableTreeNode node = (DefaultMutableTreeNode) mainRoyal.getTree().getLastSelectedPathComponent();
-		model.removeNodeFromParent(node);
 	}
 }

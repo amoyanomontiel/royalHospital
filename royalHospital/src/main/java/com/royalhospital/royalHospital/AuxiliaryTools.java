@@ -66,7 +66,7 @@ public class AuxiliaryTools {
 		return time;
 	}
 
-	public static boolean saveOperationAtDBRecord(int codUser, String operation, String file, String date,
+	public static void saveOperationAtDBRecord(int codUser, String operation, String file, String date,
 			String time) {
 		DBConection conectToDB = new DBConection();
 		Statement state = null;
@@ -76,13 +76,10 @@ public class AuxiliaryTools {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		boolean savedOperation = false;
 		try {
 			state.executeUpdate("Insert into historialftp values(" + codUser + ", '" + operation + "', '" + file
 					+ "' , '" + date + "', '" + time + "')");
-			savedOperation = true;
 		} catch (SQLException e) {
-			savedOperation = false;
 			// Error
 			e.printStackTrace();
 		}
@@ -92,7 +89,5 @@ public class AuxiliaryTools {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
 	}
-
 }

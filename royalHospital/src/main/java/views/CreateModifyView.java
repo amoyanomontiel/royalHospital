@@ -1,6 +1,5 @@
 package views;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import org.apache.commons.net.ftp.FTPClient;
@@ -10,6 +9,7 @@ import com.royalhospital.royalHospital.DataModel;
 import listeners.ActionCreateDirectoryListener;
 import listeners.ActionCreateFileListener;
 import listeners.ActionRenameFileListener;
+import listeners.ConfirmDeleteListener;
 
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -27,6 +27,9 @@ public class CreateModifyView extends JDialog{
 	
 	private JPanel contentPane;
 	private JTextField textField;
+	private JButton btnOk;
+	JButton btnCancel;
+	DataModel data = new DataModel();
 	
 	public CreateModifyView(String button, String label, String title, int type, FTPClient ftpClient, MainRoyalView royalView) {
 		setResizable(false);
@@ -55,20 +58,42 @@ public class CreateModifyView extends JDialog{
 		btnChange.setBounds(262, 40, 150, 30);
 		contentPane.add(btnChange);
 		if(type == 0) {
-			//aqui listener del btnChange cuando se pulsa el botón de crear directorio
-			//Hay que crear una carpeta en el servidor FTP y un nodo nuevo en el arbol o borrar el arbol y crearlo de nuevo
-			btnChange.addActionListener(new ActionCreateDirectoryListener(ftpClient, textField, royalView, this));
-			
+			btnChange.addActionListener(new ActionCreateDirectoryListener(ftpClient, textField, royalView, this));		
 		}else if(type == 1) {
-			//aqui listener del btnChange cuando se pulsa el botón de crear fichero
-			//Hay que crear una carpeta en el servidor FTP y un nodo nuevo en el arbol o borrar el arbol y crearlo de nuevo
 			btnChange.addActionListener(new ActionCreateFileListener(ftpClient, textField, royalView, this));
 		}else {
-			//aqui listener del btnChange cuando se pulsa el botón de renombrar
-			//Hay que cambiar el nombre de una carpeta en el servidor FTP y un nodo en el arbol o borrar el arbol y crearlo de nuevo
 			textField.setText(DataModel.selectedFile);
 			btnChange.addActionListener(new ActionRenameFileListener(ftpClient, textField, royalView, this));
 		}
 		
 	}
+	
+	public CreateModifyView (FTPClient ftpClient, MainRoyalView principalFrame, String fileType) {
+		setResizable(false);
+		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		setBounds(100, 100, 430, 120);
+		setLocationRelativeTo(null);
+		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
+		setIconImage(royal.getImage());
+		setTitle("Royal Hospital - " + data.getDeleteTag());
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		contentPane.setBackground(new Color(204, 204, 255));
+		
+		JLabel lblTitle = new JLabel("¿Seguro que desea borrar el fichero?");
+		lblTitle.setBounds(110, 13, 370, 16);
+		contentPane.add(lblTitle);
+		
+		btnOk = new JButton("Aceptar");
+		btnOk.setBounds(40, 40, 150, 30);
+		contentPane.add(btnOk);
+		btnOk.addActionListener(new ConfirmDeleteListener(btnOk, this, ftpClient, principalFrame, fileType));
+		
+		btnCancel = new JButton("Cancelar");
+		btnCancel.setBounds(230, 40, 150, 30);
+		contentPane.add(btnCancel);
+		btnCancel.addActionListener(new ConfirmDeleteListener(btnCancel, this, ftpClient, principalFrame, fileType));
+	}	
 }

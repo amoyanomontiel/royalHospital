@@ -29,18 +29,19 @@ public class CreateFileListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		DataModel data = new DataModel();
 		if (DataModel.actualUserPath != "") {
 			if(!AuxiliaryTools.checkFile(ftp)) {
 				if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
-					CreateModifyView view = new CreateModifyView("Crear Fichero", "Introduce el nombre del fichero: ", "Crear Fichero", 1, ftp, royal);
+					CreateModifyView view = new CreateModifyView(data.getCreateFileTag(), data.getInsertNewFileLbl(), data.getCreateFileTag(), 1, ftp, royal);
 					view.setVisible(true);
 				}
 			}else {
-				royal.getTxtaHistorial().append("Para crear un fichero es necesario seleccionar un directorio de creación" + "\n");
+				royal.getTxtaHistorial().append(data.getFileMsg() + "\n");
 			}
 			
 		} else {
-			royal.getTxtaHistorial().append("Seleccione primero una carpeta donde crear el fichero\n");
+			royal.getTxtaHistorial().append(data.getSelectDir()+"\n");
 		}
 		
 	}

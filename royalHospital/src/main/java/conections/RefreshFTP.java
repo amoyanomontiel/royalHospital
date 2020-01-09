@@ -18,11 +18,11 @@ public class RefreshFTP extends Thread{
 		do {
 			try {
 				client.sendNoOp();
-				System.out.println("Refresca el Filezilla");
+//				System.out.println("Refresca el Filezilla");
 			} catch (IOException e) {
 				System.out.println("oh");
 			}
-			System.out.println(flag);
+//			System.out.println(flag);
 			
 			try {
 				Thread.sleep(60000);

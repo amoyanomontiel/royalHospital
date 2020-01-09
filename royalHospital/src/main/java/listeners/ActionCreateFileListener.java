@@ -71,7 +71,7 @@ public class ActionCreateFileListener implements ActionListener{
 					nameFrame.dispose();
 					AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "crear fichero", DataModel.selectedFile, 
 							AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-					royal.getTxtaHistorial().append("El fichero '"+ nameFile + "' ha sido creado\n");
+					royal.getTxtaHistorial().append(data.getTheFile() + nameFile + data.getCreatedSuccess() +"\n");
 					input.close();
 					fileTmp.delete();
 					System.out.println(fileTmp.getAbsolutePath());

@@ -45,13 +45,13 @@ public class ActionCreateDirectoryListener implements ActionListener {
 					for (FTPFile a : directory) {
 						if ((!directoryName.getText().toString().equalsIgnoreCase("")) && (directoryName.getText().length()<50)) {
 							if (a.getName().equalsIgnoreCase(directoryName.getText().toString())) {
-								royal.getTxtaHistorial().append(data.getCreateDirNoPossible());
+								royal.getTxtaHistorial().append(data.getCreateDirNoPossible() + "\n");
 							} else {
 								ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
 								nameFrame.dispose();
 								AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "crear directorio", DataModel.selectedFile, 
 										AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-								royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
+								royal.getTxtaHistorial().append(data.getTheDir() + directoryName.getText().toString() + data.getCreatedSuccess() +"\n");
 								royal.refreshJTree(directoryName.getText().toString());
 								break;
 							}
@@ -66,9 +66,9 @@ public class ActionCreateDirectoryListener implements ActionListener {
 					if(!directoryName.getText().toString().equalsIgnoreCase("")) {
 						ftp.makeDirectory(DataModel.actualUserPath + "/" + directoryName.getText().toString());
 						nameFrame.dispose();
-						AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, data.getCreateDirTag(), DataModel.selectedFile, 
+						AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "crear directorio", DataModel.selectedFile, 
 								AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-						royal.getTxtaHistorial().append("El directorio '" + directoryName.getText().toString() + "' ha sido creado\n");
+						royal.getTxtaHistorial().append(data.getTheDir() + directoryName.getText().toString() + data.getCreatedSuccess() + "\n");
 						royal.refreshJTree(directoryName.getText().toString());
 						royal.rootsToBlank();
 					}else {

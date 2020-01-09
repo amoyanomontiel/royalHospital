@@ -82,7 +82,7 @@ public class CreateModifyView extends JDialog{
 		contentPane.setLayout(null);
 		contentPane.setBackground(new Color(204, 204, 255));
 		
-		JLabel lblTitle = new JLabel("¿Seguro que desea borrar el fichero?");
+		JLabel lblTitle = new JLabel(data.getDeleteQuestion());
 		lblTitle.setBounds(110, 13, 370, 16);
 		contentPane.add(lblTitle);
 		

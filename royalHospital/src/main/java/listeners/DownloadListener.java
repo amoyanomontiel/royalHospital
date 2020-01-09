@@ -31,6 +31,7 @@ public class DownloadListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		DataModel data = new DataModel();
 		if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
 			if (DataModel.selectedFile != "") {
 				if (!AuxiliaryTools.checkDirectory(ftpClient)) {
@@ -40,30 +41,30 @@ public class DownloadListener implements ActionListener {
 						File downloadDirectory = new File(sDirectoryWork + DataModel.selectedFile);
 						if (downloadDirectory.exists()) {
 							mainRoyal.getTxtaHistorial()
-									.append("El fichero ya está descargado, revise su directorio de descargas\n");
+									.append(data.getDownLoadExits()+ "\n");
 						} else {
 							FileOutputStream out = new FileOutputStream(sDirectoryWork + DataModel.selectedFile);
 							if (ftpClient.retrieveFile(DataModel.selectedFile, out)) {
 								AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "descargar", DataModel.selectedFile, 
 										AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-								mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito en su directorio de descargas \n");
+								mainRoyal.getTxtaHistorial().append(data.getDownLoadSuccess()+"\n");
 								mainRoyal.rootsToBlank();
 							} else {
-								mainRoyal.getTxtaHistorial().append("No se pudo descargar el fichero \n");
+								mainRoyal.getTxtaHistorial().append(data.getDownLoadFail() + "\n");
 							}
 							out.close();
 						}
 					} catch (IOException e1) {
 						System.out.println(e1.getMessage());
-						ErrorRoyalView error = new ErrorRoyalView("No se ha podido conectar con el servidor FTP", 0);
+						ErrorRoyalView error = new ErrorRoyalView(data.getFtpConectionError(), 0);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
 					}
 				} else {
-					mainRoyal.getTxtaHistorial().append("No es posible descargar un directorio \n");
+					mainRoyal.getTxtaHistorial().append(data.getDownLoadDirError() + "\n");
 				}
 			} else {
-				mainRoyal.getTxtaHistorial().append("Seleccione primero un fichero en la lista \n");
+				mainRoyal.getTxtaHistorial().append(data.getSelectFileFirst() + "\n");
 			}
 		}
 	}

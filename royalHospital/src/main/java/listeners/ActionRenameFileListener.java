@@ -52,7 +52,7 @@ public class ActionRenameFileListener implements ActionListener {
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				try {
 					ftp.changeWorkingDirectory(DataModel.directionPath);
-					if(text.getText().toString().isEmpty() || text.getText().length()>20) {
+					if(text.getText().toString().isEmpty() || text.getText().length()>50) {
 						ErrorRoyalView error = new ErrorRoyalView(data.getRenameFileLeghtMax(), 1);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
@@ -61,14 +61,14 @@ public class ActionRenameFileListener implements ActionListener {
 							nameFrame.dispose();
 							AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "renombrar", DataModel.selectedFile, 
 									AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-							royal.getTxtaHistorial().append(data.getFileRename());
+							royal.getTxtaHistorial().append(data.getFileRename() + "\n");
 							DefaultMutableTreeNode node = (DefaultMutableTreeNode)royal.getTree().getLastSelectedPathComponent();
 							node.setUserObject(text.getText().toString());
 							DefaultTreeModel model = (DefaultTreeModel) royal.getTree().getModel();
 							model.nodeChanged(node);
 							royal.getTree().setModel(model);
 						} else {
-							royal.getTxtaHistorial().append(data.getFileRenameError());
+							royal.getTxtaHistorial().append(data.getFileRenameError() + "\n");
 						}
 					}					
 				} catch (IOException e) {

@@ -1,3 +1,10 @@
+/**
+ * Esta clase se encarga de añadir un focus event al textfield de destinatario y comprobar que las direcciones de correo sean de gmail o de la fundación y si no, manda un aviso, además salta el aviso si
+ * @author Fernando Cañadas Ortega
+ * @version 1.0
+ * Realizado el 9 november 2020
+ */
+
 package listeners;
 
 import java.awt.event.FocusEvent;

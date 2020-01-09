@@ -55,7 +55,7 @@ public class DataModel {
 	private String ftpUser = "usuario";
 	private String ftpPassword = "usuario";
 	//Record messages
-	private String selectedFileMsg = "Archivo seleccionado: ";
+	private String selectedFileMsg = "Elemento seleccionado: ";
 	private String fileAlreadyExist = "El fichero ya existe en el directorio actual";
 	private String fileUpload = "Cargó satisfactoriamente el fichero";
 	private String uploadFake = "No se pudo cargar el fichero";

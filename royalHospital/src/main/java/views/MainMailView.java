@@ -55,6 +55,7 @@ public class MainMailView extends JFrame {
 					setResizable(false);
 					setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					setBounds(100, 100, 410, 500);
+					setLocationRelativeTo(null);
 					ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
 					setIconImage(royal.getImage());
 					setTitle("Royal Hospital - Gmail Login");

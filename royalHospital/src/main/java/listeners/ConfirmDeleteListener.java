@@ -60,6 +60,7 @@ public class ConfirmDeleteListener implements ActionListener {
 						royal.getTxtaHistorial().append(data.getDeleteFileSuccess() + "\n");
 						upDateTree();
 						royal.rootsToBlank();
+						frame.dispose();
 					} else {
 						royal.getTxtaHistorial().append(data.getDeleteFileNoPossible() + "\n");
 					}
@@ -76,6 +77,7 @@ public class ConfirmDeleteListener implements ActionListener {
 						royal.getTxtaHistorial().append(data.getDeleteSuccess() + "\n");
 						upDateTree();
 						royal.rootsToBlank();
+						frame.dispose();
 					} else {
 						royal.getTxtaHistorial().append(data.getDeleteDirNoPossible() + "\n");
 					}

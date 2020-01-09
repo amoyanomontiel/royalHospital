@@ -18,10 +18,7 @@ public class App {
 	 * 
 	 * @param args Application startup arguments
 	 */
-	public static void main(String[] args) {
-		@SuppressWarnings("unused")
-		MainMailView objectLoginMail = new MainMailView("Correo Electrónico", "mailIcon.png");
-		
+	public static void main(String[] args) {		
 		DataModel data = new DataModel();
 		RoyalLoginView initLogin = new RoyalLoginView(data.getUserTag(), data.getBigRoyalLogoRoute());
 		initLogin.setLocationRelativeTo(null);

@@ -24,7 +24,7 @@ import javax.swing.JPasswordField;
 /**
  * Login view class which define all frame properties
  * 
- * @author Cristina Montilla
+ * @author Fernando Cañadas
  *
  */
 public class MainMailView extends JFrame {

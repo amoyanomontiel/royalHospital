@@ -392,20 +392,9 @@ public class NewMailView extends JFrame {
 							sendIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 					btnSend.setIcon(newSendIcon);
 					contentPane.add(btnSend);
-
-					JButton btnCancel = new JButton(" Cancelar");
-					btnCancel.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							checkTextBoxes(textFieldAddressee, textFieldSubjectText, textAreaBody, "cancel");
-						}
-					});
-					btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					btnCancel.setBounds(381, 593, 150, 40);
 					ImageIcon cancelIcon = new ImageIcon("src//main//java//views//cancel.png");
 					Icon newCancelIcon = new ImageIcon(
 							cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-					btnCancel.setIcon(newCancelIcon);
-					contentPane.add(btnCancel);
 
 					JLabel lblWarning = new JLabel("");
 					lblWarning.setEnabled(false);

@@ -116,14 +116,9 @@ public class InboxView extends JFrame {
 								mailIcon.getImage().getScaledInstance(width + 15, height, Image.SCALE_DEFAULT));
 						btnWriteEmail.setIcon(newMailIcon);
 						headPane.add(btnWriteEmail);
-
-						JButton btnCloseInbox = new JButton("Volver");
-						btnCloseInbox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 						ImageIcon returnIcon = new ImageIcon("src//main//java//views//homeIcon.png");
 						Icon newReturnIcon = new ImageIcon(
 								returnIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-						btnCloseInbox.setIcon(newReturnIcon);
-						headPane.add(btnCloseInbox);
 
 						contextMailPane = new JPanel();
 						contentPane.add(contextMailPane, BorderLayout.SOUTH);

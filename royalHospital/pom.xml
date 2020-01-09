@@ -64,6 +64,7 @@
     <version>5.1.5</version>
 </dependency>
 
+<<<<<<< HEAD
 <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 <dependency>
     <groupId>commons-io</groupId>
@@ -72,6 +73,14 @@
 </dependency>
 
 
+=======
+<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-io -->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-io</artifactId>
+    <version>1.3.2</version>
+</dependency>
+>>>>>>> refs/heads/mail
 
   </dependencies>
 

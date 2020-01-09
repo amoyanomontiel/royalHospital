@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.royalhospital.royalHospital.DataModel;
 import com.royalhospital.royalHospital.Extensions;
 import com.royalhospital.royalHospital.ListEmailViews;
 import com.royalhospital.royalHospital.SendNewMail;
@@ -67,6 +68,7 @@ public class NewMailView extends JFrame {
 	private JTextField textFieldSubjectText;
 	private JTextArea textAreaBody;
 	private static JFrame instance = null;
+	private DataModel model;
 
 	/**
 	 * Method that creates a file selector to select any file on the computer and
@@ -210,64 +212,64 @@ public class NewMailView extends JFrame {
 	private String searchImage(String extension) {
 		switch (extension) {
 		case "mp4":
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return model.getMp4_mp3_webm_gifRoute();
 
 		case "mp3":
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return model.getMp4_mp3_webm_gifRoute();
 
 		case "webm":
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return model.getMp4_mp3_webm_gifRoute();
 
 		case "gif":
-			return "src//main//java//views//mp4_mp3_webm_gif.png";
+			return model.getMp4_mp3_webm_gifRoute();
 
 		case "docx":
-			return "src//main//java//views//docx.png";
+			return model.getDocxRoute();
 
 		case "png":
-			return "src//main//java//views//png_jpg_jpeg.png";
+			return model.getPng_jpg_jpegRoute();
 
 		case "jpg":
-			return "src//main//java//views//png_jpg_jpeg.png";
+			return model.getPng_jpg_jpegRoute();
 
 		case "txt":
-			return "src//main//java//views//txt.png";
+			return model.getTxtRoute();
 
 		case "pdf":
-			return "src//main//java//views//pdf.png";
+			return model.getPdfRoute();
 
 		case "jpeg":
-			return "src//main//java//views//png_jpg_jpeg.png";
+			return model.getPng_jpg_jpegRoute();
 
 		case "bmp":
-			return "src//main//java//views//png_jpg_jpeg.png";
+			return model.getPng_jpg_jpegRoute();
 
 		case "zip":
-			return "src//main//java//views//compressed.png";
+			return model.getCompressedRoute();
 
 		case "7z":
-			return "src//main//java//views//compressed.png";
+			return model.getCompressedRoute();
 
 		case "rar":
-			return "src//main//java//views//compressed.png";
+			return model.getCompressedRoute();
 
 		case "gz":
-			return "src//main//java//views//compressed.png";
+			return model.getCompressedRoute();
 
 		case "sitx":
-			return "src//main//java//views//compressed.png";
+			return model.getCompressedRoute();
 
 		case "sql":
-			return "src//main//java//views//sql.png";
+			return model.getSqlRoute();
 
 		case "java":
-			return "src//main//java//views//jar.png";
+			return model.getJarRoute();
 
 		case "jar":
-			return "src//main//java//views//jar.png";
+			return model.getJarRoute();
 
 		default:
-			return "src//main//java//views//general icon.png";
+			return model.getGeneralIconRoute();
 		}
 	}
 
@@ -317,11 +319,11 @@ public class NewMailView extends JFrame {
 			boolean messageState = false;
 
 			if (emptyaddressee) {
-				JOptionPane.showMessageDialog(null, "Debes introducir un destinatario", "Introduzca Destinatario",
+				JOptionPane.showMessageDialog(null, model.getAddresseeError(), model.getEmailHeader(),
 						JOptionPane.WARNING_MESSAGE);
 			} else if (emptysubject || emptybody) {
 				int answer = JOptionPane.showConfirmDialog(null,
-						"¿Estás seguro de que quieres enviar un mensaje sin asunto o sin cuerpo?", "Enviar Mensaje",
+						model.getNoBodyNoSubjectWarning(), model.getEmailHeader(),
 						JOptionPane.YES_NO_OPTION);
 				if (answer == 0) {
 					messageState = newGmail.sendNewGmail(addressee, subject, body, fileList);
@@ -330,16 +332,16 @@ public class NewMailView extends JFrame {
 				messageState = newGmail.sendNewGmail(addressee, subject, body, fileList);
 			}
 			if (messageState) {
-				JOptionPane.showMessageDialog(null, "Correo enviado correctamente", "Operación correcta",
+				JOptionPane.showMessageDialog(null, model.getEmailSent(), model.getEmailHeader(),
 						JOptionPane.WARNING_MESSAGE);
 			} else {
-				JOptionPane.showMessageDialog(null, "El Correo no se ha enviado correctamente, intentalo de nuevo",
-						"Operación incorrecta", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, model.getEmailNotSent(),
+						model.getEmailHeader(), JOptionPane.WARNING_MESSAGE);
 			}
 		} else {
 			if (!emptyaddressee || !emptysubject || !emptybody || fileList.size() != 0) {
-				int answer = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres desechar el mensaje?",
-						"Desechar Mensaje", JOptionPane.YES_NO_OPTION);
+				int answer = JOptionPane.showConfirmDialog(null, model.getDisposeMessage(),
+						model.getEmailHeader(), JOptionPane.YES_NO_OPTION);
 				if (answer == 0) {
 					setVisible(false);
 				}
@@ -368,6 +370,7 @@ public class NewMailView extends JFrame {
 				try {
 					fileList = new ArrayList<UploadedFile>();
 					extensions = new Extensions();
+					model = new DataModel();
 
 					setResizable(false);
 					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -425,7 +428,7 @@ public class NewMailView extends JFrame {
 					});
 					btnNewFile.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					btnNewFile.setBounds(67, 593, 150, 40);
-					ImageIcon fileIcon = new ImageIcon("src//main//java//views//download.png");
+					ImageIcon fileIcon = new ImageIcon(model.getDownloadIconRoute());
 					Icon newFileIcon = new ImageIcon(
 							fileIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 					btnNewFile.setIcon(newFileIcon);
@@ -439,7 +442,7 @@ public class NewMailView extends JFrame {
 					});
 					btnSend.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					btnSend.setBounds(595, 593, 150, 40);
-					ImageIcon sendIcon = new ImageIcon("src//main//java//views//send.png");
+					ImageIcon sendIcon = new ImageIcon(model.getSendIconRoute());
 					Icon newSendIcon = new ImageIcon(
 							sendIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 					btnSend.setIcon(newSendIcon);
@@ -449,7 +452,7 @@ public class NewMailView extends JFrame {
 					lblWarning.setEnabled(false);
 					lblWarning.setBounds(760, 21, 55, 40);
 					lblWarning.setVisible(false);
-					ImageIcon warningIcon = new ImageIcon("src//main//java//views//warning.png");
+					ImageIcon warningIcon = new ImageIcon(model.getWarningRoute());
 					Icon newWarningIcon = new ImageIcon(
 							warningIcon.getImage().getScaledInstance(width + 15, height + 10, Image.SCALE_DEFAULT));
 					lblWarning.setIcon(newWarningIcon);

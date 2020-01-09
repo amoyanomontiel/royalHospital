@@ -14,6 +14,8 @@ public class App {
 
 		// initLogin.getBtnLogin().addActionListener(new LoginListener(initLogin));
 		// Test about mail
+		
+		// Revisar que mientras se envia el correo, el programa se queda parado
 		MainMailView objectLoginMail = new MainMailView("", "");
 	}
 }

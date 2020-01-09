@@ -34,7 +34,6 @@ public class CreateFileListener implements ActionListener{
 				if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 					CreateModifyView view = new CreateModifyView("Crear Fichero", "Introduce el nombre del fichero: ", "Crear Fichero", 1, ftp, royal);
 					view.setVisible(true);
-					view.setLocationRelativeTo(null);
 				}
 			}else {
 				royal.getTxtaHistorial().append("Para crear un fichero es necesario seleccionar un directorio de creación" + "\n");

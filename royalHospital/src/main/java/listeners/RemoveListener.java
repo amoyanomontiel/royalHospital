@@ -71,6 +71,7 @@ public class RemoveListener implements ActionListener {
 							}
 						}
 					} else {
+						//Ventana de confirmacion
 						if (ftpClient.deleteFile(DataModel.selectedFile)) {
 							AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, data.getDeleteFileTag(),
 									DataModel.selectedFile, AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());

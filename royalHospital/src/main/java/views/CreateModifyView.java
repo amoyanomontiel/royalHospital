@@ -11,14 +11,17 @@ import listeners.ActionRenameFileListener;
 
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Dialog;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 /**
  * 
  * @author Daniel Cuenca
  *
  */
-public class CreateModifyView extends JFrame{
+public class CreateModifyView extends JDialog{
 	
 	private JPanel contentPane;
 	private JTextField textField;
@@ -26,7 +29,9 @@ public class CreateModifyView extends JFrame{
 	public CreateModifyView(String button, String label, String title, int type, FTPClient ftpClient, MainRoyalView royalView) {
 		setResizable(false);
 		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		setBounds(100, 100, 430, 120);
+		setLocationRelativeTo(null);
 		ImageIcon royal = new ImageIcon("src\\main\\java\\views\\ic_launcher.png");
 		setIconImage(royal.getImage());
 		setTitle("Royal Hospital - " + title);

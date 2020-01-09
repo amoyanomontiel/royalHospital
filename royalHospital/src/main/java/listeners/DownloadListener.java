@@ -47,6 +47,7 @@ public class DownloadListener implements ActionListener {
 								AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "descargar", DataModel.selectedFile, 
 										AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
 								mainRoyal.getTxtaHistorial().append("Se descargó el fichero con éxito en su directorio de descargas \n");
+								mainRoyal.rootsToBlank();
 							} else {
 								mainRoyal.getTxtaHistorial().append("No se pudo descargar el fichero \n");
 							}

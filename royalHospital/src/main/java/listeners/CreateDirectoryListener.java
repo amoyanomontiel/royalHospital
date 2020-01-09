@@ -35,7 +35,6 @@ public class CreateDirectoryListener implements ActionListener {
 					CreateModifyView view = new CreateModifyView("Crear Directorio",
 							"Introduce el nombre del directorio: ", "Crear Directorio", 0, client, royal);
 					view.setVisible(true);
-					view.setLocationRelativeTo(null);
 				}
 			} else {
 				royal.getTxtaHistorial().append("Para crear un directorio es necesario seleccionar un directorio de creación\n");

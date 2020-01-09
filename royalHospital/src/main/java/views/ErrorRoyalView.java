@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 
 import java.awt.Color;
+import java.awt.Dialog;
 
 /**
  * View class for errors and warnings
@@ -38,6 +39,8 @@ public class ErrorRoyalView extends JDialog {
 		setResizable(false);
 		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 480, 220);
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		setLocationRelativeTo(null);
 		ImageIcon royal = new ImageIcon(data.getIconRoyalLogo());
 		setIconImage(royal.getImage());
 		setTitle(data.getErrorTag());

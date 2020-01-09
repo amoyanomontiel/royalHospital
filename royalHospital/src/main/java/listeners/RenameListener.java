@@ -42,7 +42,6 @@ public class RenameListener implements ActionListener {
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				CreateModifyView view = new CreateModifyView(data.getRenameFileTag(), data.getInsertNewNameLbl(), data.getRenameTag(), 2, ftp, royal);
 				view.setVisible(true);
-				view.setLocationRelativeTo(null);
 			}
 		} else {
 			royal.getTxtaHistorial().append(data.getSelectFileOrDir() + "\n");

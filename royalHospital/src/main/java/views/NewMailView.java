@@ -316,7 +316,6 @@ public class NewMailView extends JFrame {
 					textFieldAddressee.setBounds(230, 29, 515, 27);
 					contentPane.add(textFieldAddressee);
 					textFieldAddressee.setColumns(10);
-					CheckEmailAddressListener.addNewLostFocusListener(textFieldAddressee, lblAddressee);
 
 					JLabel lblSubject = new JLabel("Asunto");
 					lblSubject.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -385,6 +384,18 @@ public class NewMailView extends JFrame {
 					Icon newCancelIcon = new ImageIcon(cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 					btnCancel.setIcon(newCancelIcon);
 					contentPane.add(btnCancel);
+					
+					JLabel lblWarning = new JLabel("");
+					lblWarning.setEnabled(false);
+					lblWarning.setBounds(760, 21, 55, 40);
+					lblWarning.setVisible(false);
+					ImageIcon warningIcon = new ImageIcon("src//main//java//views//warning.png");
+					Icon newWarningIcon = new ImageIcon(
+							warningIcon.getImage().getScaledInstance(width+15, height+10, Image.SCALE_DEFAULT));
+					lblWarning.setIcon(newWarningIcon);
+					contentPane.add(lblWarning);
+					
+					CheckEmailAddressListener.addNewLostFocusListener(textFieldAddressee, lblWarning);
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}

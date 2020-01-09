@@ -41,7 +41,7 @@ public class SendNewMail {
 		try {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(sender));
-			message.addRecipients(Message.RecipientType.TO, addressee);
+			message.addRecipients(Message.RecipientType.CC, addressee);
 			message.setSubject(subject);
 			Multipart multipart = createMessage(body, attached);
 			
@@ -56,7 +56,6 @@ public class SendNewMail {
 			JOptionPane.showMessageDialog(null, "No se ha encontrado dicha cuenta de correo", "Correo erróneo",
 					JOptionPane.WARNING_MESSAGE);
 		} catch (MessagingException e) {
-			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al mandar el mensaje, vuelve a intentarlo", "Error fatal",
 					JOptionPane.WARNING_MESSAGE);
 		}

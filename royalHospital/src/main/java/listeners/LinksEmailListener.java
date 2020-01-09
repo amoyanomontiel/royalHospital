@@ -10,6 +10,8 @@ import javax.swing.JEditorPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
+import com.royalhospital.royalHospital.DataModel;
+
 /**
  * Class that add listener to links of content emails, for to access to
  * attachments
@@ -18,6 +20,8 @@ import javax.swing.event.HyperlinkListener;
  * @version 1.0
  */
 public class LinksEmailListener {
+
+	private static DataModel dataModelObject = new DataModel();
 
 	/**
 	 * Add listener to links
@@ -36,11 +40,9 @@ public class LinksEmailListener {
 							Desktop.getDesktop().browse(e.getURL().toURI());
 
 						} catch (IOException e1) {
-							System.out.println("AQUI");
-							System.out.println(e.getURL());
-							System.out.println("Input/outPut error");
+							System.out.println(dataModelObject.getMessageErrorListenerLink());
 						} catch (URISyntaxException e1) {
-							System.out.println("URL sintax error");
+							System.out.println(dataModelObject.getUrlSyntaxError());
 						}
 					}
 				}

@@ -67,8 +67,11 @@ public class MailMethods {
 	// List of attachents that containts the (selected) email
 	private static ArrayList<File> attachments;
 
+	// DataModel object
+	private static DataModel dataModelObject = new DataModel();
+
 	// Containts the home rute of user
-	private static String homeRute = System.getProperty("user.home");
+	private static String homeRute = System.getProperty(dataModelObject.getUserHome());
 
 	/**
 	 * This method store all attachments of the email This method get the specific
@@ -97,7 +100,8 @@ public class MailMethods {
 				InputStream is = bodyPart.getInputStream();
 
 				// Save attachment on Download directory
-				fileAttachment = new File(homeRute + "\\Downloads\\" + bodyPart.getFileName().replace(" ", ""));
+				fileAttachment = new File(
+						homeRute + dataModelObject.getDownloadRute() + bodyPart.getFileName().replace(" ", ""));
 				FileOutputStream fos = new FileOutputStream(fileAttachment);
 
 				// Buffer of bytes
@@ -111,7 +115,7 @@ public class MailMethods {
 				attachments.add(fileAttachment);
 			}
 		} catch (Exception e) {
-			System.out.println("Error getting attachments for Email");
+			System.out.println(dataModelObject.getErrorAdjunto());
 		}
 	}
 
@@ -136,7 +140,7 @@ public class MailMethods {
 			viewScroll.add(scrollEmails);
 			return viewScroll;
 		} catch (Exception e) {
-			System.out.println("Error creating JScrollPane");
+			System.out.println(dataModelObject.getErrorCreatingJScrollPane());
 			return null;
 		}
 	}
@@ -146,17 +150,17 @@ public class MailMethods {
 	 */
 	public static void updateJComboBox() {
 		try {
-			scrollEmails.addItem("EMAILS");
+			scrollEmails.addItem(dataModelObject.getEmails());
 			for (int counter = 0; counter < messages.length; counter++) {
 				Message objectMessage = messages[counter];
 
-				String informationEmail = "Titulo:   " + objectMessage.getSubject() + "      "
+				String informationEmail = dataModelObject.getTitulo() + objectMessage.getSubject() + "      "
 						+ filterFromMessage(objectMessage.getFrom()[0].toString());
 				System.out.println(informationEmail);
 				scrollEmails.addItem(informationEmail);
 			}
 		} catch (Exception e) {
-			System.out.println("error updating JScroll");
+			System.out.println(dataModelObject.getErrorUpdatingJScrollPane());
 		}
 	}
 
@@ -177,10 +181,12 @@ public class MailMethods {
 			}
 
 			String bodyTextSave = "";
-			bodyTextSave += "<p align= 'left'>Subject:   " + objectMessage.getSubject() + "</p>";
-			bodyTextSave += "<p></p>";
-			bodyTextSave += "<p align= 'left'> " + filterFromMessage(objectMessage.getFrom()[0].toString()) + "</p>";
-			bodyTextSave += "<p></p>";
+			bodyTextSave += dataModelObject.getSubjectHTML() + objectMessage.getSubject()
+					+ dataModelObject.getFinishP();
+			bodyTextSave += dataModelObject.getOnlyTagP();
+			bodyTextSave += dataModelObject.getSenderCode() + filterFromMessage(objectMessage.getFrom()[0].toString())
+					+ dataModelObject.getFinishP();
+			bodyTextSave += dataModelObject.getOnlyTagP();
 			bodyTextSave += getBodyText(objectMessage);
 			String filterName = "";
 
@@ -189,16 +195,18 @@ public class MailMethods {
 			for (int counterAttachments = 0; counterAttachments < attachments.size(); counterAttachments++) {
 				filterName = searchOnlyNameAttachment(attachments.get(counterAttachments).toString());
 				bodyTextSave.replace(attachments.get(counterAttachments).toString(), "");
-				if (bodyTextSave.contains("<img")) {
+				if (bodyTextSave.contains(dataModelObject.getCodeImg())) {
 					bodyTextSave = searchLinks(bodyTextSave);
 				}
-				bodyTextSave += "<a href=file:///'" + attachments.get(counterAttachments).toString().replace(" ", "")
-						+ "'>" + filterName.replace(" ", "") + " </a>";
+				bodyTextSave += dataModelObject.getFileSource()
+						+ attachments.get(counterAttachments).toString().replace(" ", "")
+						+ dataModelObject.getCloseSymbol() + filterName.replace(" ", "")
+						+ dataModelObject.getCloseLink();
 			}
 
 			JPanel allEmailInfo = new JPanel();
 
-			JEditorPane editor = new JEditorPane("text/html", bodyTextSave);
+			JEditorPane editor = new JEditorPane(dataModelObject.getCodeHTML(), bodyTextSave);
 
 			editor.setEditable(false);
 			listeners.LinksEmailListener.addListenerLink(editor);
@@ -211,7 +219,7 @@ public class MailMethods {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Error reading content about messages");
+			System.out.println(dataModelObject.getMessageErrorContentMessage());
 			return null;
 		}
 	}
@@ -228,14 +236,14 @@ public class MailMethods {
 		boolean dontSaveImageLink = false;
 		for (int counter = 0; counter < bodyTextSave.length(); counter++) {
 			if (dontSaveImageLink) {
-				if (bodyTextSave.charAt(counter - 1) == ">".charAt(0)) {
+				if (bodyTextSave.charAt(counter - 1) == dataModelObject.getCloseSymbolSimple().charAt(0)) {
 					dontSaveImageLink = false;
 				}
 			}
-			if (bodyTextSave.charAt(counter) == "<".charAt(0)) {
-				if (bodyTextSave.charAt(counter + 1) == "i".charAt(0)) {
-					if (bodyTextSave.charAt(counter + 2) == "m".charAt(0)) {
-						if (bodyTextSave.charAt(counter + 3) == "g".charAt(0)) {
+			if (bodyTextSave.charAt(counter) == dataModelObject.getOpenSymbol().charAt(0)) {
+				if (bodyTextSave.charAt(counter + 1) == dataModelObject.getiCaracter().charAt(0)) {
+					if (bodyTextSave.charAt(counter + 2) == dataModelObject.getmCaracter().charAt(0)) {
+						if (bodyTextSave.charAt(counter + 3) == dataModelObject.getgCaracter().charAt(0)) {
 							dontSaveImageLink = true;
 						} else {
 							if (!dontSaveImageLink) {
@@ -272,18 +280,18 @@ public class MailMethods {
 		String filterFrom = "";
 		boolean checkCaracter = false;
 
-		if (!fromParam.contains("<")) {
-			filterFrom = "Remitente:     " + fromParam;
+		if (!fromParam.contains(dataModelObject.getOpenSymbol())) {
+			filterFrom = dataModelObject.getSender() + fromParam;
 		}
 
 		for (int counter = 0; counter < fromParam.length(); counter++) {
 			char caracter = fromParam.charAt(counter);
-			if (caracter == "<".charAt(0) || checkCaracter) {
+			if (caracter == dataModelObject.getOpenSymbol().charAt(0) || checkCaracter) {
 				if (!checkCaracter) {
-					filterFrom += "Remitente:     ";
+					filterFrom += dataModelObject.getSender();
 					checkCaracter = true;
 				} else {
-					if (caracter == ">".charAt(0)) {
+					if (caracter == dataModelObject.getCloseSymbolSimple().charAt(0)) {
 						break;
 					} else {
 						filterFrom += Character.toString(caracter);
@@ -304,7 +312,7 @@ public class MailMethods {
 		try {
 			char[] allCaracters = ruteAttachment.toCharArray();
 			ArrayList<Character> allCaractersArray = new ArrayList<Character>();
-			char elementSearch = "\\'".charAt(0);
+			char elementSearch = dataModelObject.getSlash().charAt(0);
 			for (int counter = 0; counter < allCaracters.length; counter++) {
 				if (allCaracters[allCaracters.length - 1 - counter] != elementSearch) {
 					allCaractersArray.add(allCaracters[allCaracters.length - 1 - counter]);
@@ -323,7 +331,7 @@ public class MailMethods {
 				builderName.append(ch);
 			}
 
-			return "<br>" + builderName.toString() + "</br>";
+			return dataModelObject.getOpenBrTag() + builderName.toString() + dataModelObject.getCloseBrTag();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -338,21 +346,21 @@ public class MailMethods {
 	 */
 	public static String getBodyText(Part bodyPart) {
 		try {
-			if (bodyPart.isMimeType("text/*")) {
+			if (bodyPart.isMimeType(dataModelObject.getMineTypeText())) {
 				String contextBody = (String) bodyPart.getContent();
 				return contextBody;
 			}
 
-			if (bodyPart.isMimeType("multipart/alternative")) {
+			if (bodyPart.isMimeType(dataModelObject.getMineTypeAlternative())) {
 				Multipart multiPart = (Multipart) bodyPart.getContent();
 				String text = null;
 				for (int i = 0; i < multiPart.getCount(); i++) {
 					Part bodyP = multiPart.getBodyPart(i);
-					if (bodyP.isMimeType("text/plain")) {
+					if (bodyP.isMimeType(dataModelObject.getMinetypeTextPlain())) {
 						if (text == null)
 							text = getBodyText(bodyP);
 						continue;
-					} else if (bodyP.isMimeType("text/html")) {
+					} else if (bodyP.isMimeType(dataModelObject.getMinetypeHTML())) {
 						String textHtml = getBodyText(bodyP);
 						if (textHtml != null)
 							return textHtml;
@@ -361,7 +369,7 @@ public class MailMethods {
 					}
 				}
 				return text;
-			} else if (bodyPart.isMimeType("multipart/*")) {
+			} else if (bodyPart.isMimeType(dataModelObject.getMineTypeMultiplart())) {
 				Multipart mp = (Multipart) bodyPart.getContent();
 				for (int i = 0; i < mp.getCount(); i++) {
 					String bodyText = getBodyText(mp.getBodyPart(i));
@@ -373,7 +381,7 @@ public class MailMethods {
 
 			return null;
 		} catch (Exception e) {
-			System.out.println("Error getting body part about Message");
+			System.out.println(dataModelObject.getMessageErrorGettingBodyPart());
 			return null;
 		}
 	}
@@ -385,9 +393,8 @@ public class MailMethods {
 	public void receiveAndSaveAllEmails() {
 		try {
 			messages = emailFolder.getMessages();
-			System.out.println("you have " + messages.length + " messages");
 		} catch (Exception e) {
-			System.out.println("Error getting messages");
+			System.out.println(dataModelObject.getMessageErrorGettingMessages());
 		}
 	}
 
@@ -398,10 +405,10 @@ public class MailMethods {
 		try {
 			folderList = store.getDefaultFolder().list();
 
-			emailFolder = store.getFolder("INBOX");
+			emailFolder = store.getFolder(dataModelObject.getFolderCode());
 			emailFolder.open(Folder.READ_ONLY);
 		} catch (Exception e) {
-			System.out.println("Error receive list of folders Email");
+			System.out.println(dataModelObject.getMessageErrorReceiveListEmail());
 		}
 
 	}
@@ -417,7 +424,7 @@ public class MailMethods {
 	 */
 	public boolean connectMailServer() {
 		try {
-			store = session.getStore("imaps");
+			store = session.getStore(dataModelObject.getStoreCode());
 			store.connect(host, userName, passwd);
 			return true;
 		} catch (Exception e) {
@@ -447,12 +454,12 @@ public class MailMethods {
 	 */
 	public void setProperties() {
 		try {
-			properties.put("mail.pop3.host", host);
-			properties.put("mail.pop3.port", "995");
-			properties.put("mail.pop3.starttls.enable", "true");
+			properties.put(dataModelObject.getHostPop3(), host);
+			properties.put(dataModelObject.getPortPop3(), dataModelObject.getPortPop());
+			properties.put(dataModelObject.getCodeStarttls(), dataModelObject.getTrueString());
 			session = Session.getDefaultInstance(properties);
 		} catch (Exception e) {
-			System.out.println("Error setting properties about E-mail");
+			System.out.println(dataModelObject.getMessageErrorSettingProperties());
 		}
 	}
 

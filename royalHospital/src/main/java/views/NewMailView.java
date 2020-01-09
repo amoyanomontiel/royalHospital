@@ -1,3 +1,10 @@
+/**
+ * New mail view which allows you to send emails
+ * @author Fernando Cañadas Ortega
+ * @version 1.0
+ * Realizado el 9 november 2020
+ */
+
 package views;
 
 import java.awt.Component;
@@ -61,6 +68,13 @@ public class NewMailView extends JFrame {
 	private JTextArea textAreaBody;
 	private static JFrame instance = null;
 
+	/**
+	 * Method that creates a file selector to select any file on the computer and
+	 * saves the file name and its path in an array
+	 * 
+	 * @param contentPane container frame where all the elements of the window are
+	 *                    put
+	 */
 	public void createFileChooser(JPanel contentPane) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -82,6 +96,10 @@ public class NewMailView extends JFrame {
 		}
 	}
 
+	/**
+	 * Method that when he has the scroll container, refreshes the panel where the
+	 * attached files are displayed
+	 */
 	public void refreshUploadedFiles() {
 		int cellsNumber = 3;
 		if (uploadedFilesPane.getComponentCount() != 0) {
@@ -103,6 +121,16 @@ public class NewMailView extends JFrame {
 		uploadedFilesPane.revalidate();
 	}
 
+	/**
+	 * Method that fills a two-dimensional array with the name of the attached
+	 * files, the icons of to the extensions and the check box to delete those files
+	 * 
+	 * @param Number of cells the array will have, depending on the number of
+	 *               attachments
+	 * @return two-dimensional array that contains the name of the attached files,
+	 *         the icons of to the extensions and the check box to delete those
+	 *         files
+	 */
 	public Object[][] refillArrays(int cellsNumber) {
 		Object[][] listUploadedFiles = new Object[fileList.size()][cellsNumber];
 		int i = 0;
@@ -172,6 +200,13 @@ public class NewMailView extends JFrame {
 		return listUploadedFiles;
 	}
 
+	/**
+	 * Method that receives the extension of a file and depending on its extension
+	 * an icon or another is assigned
+	 * 
+	 * @param extension String that contains the extension of the file
+	 * @return String that contains the route where the icon is saved
+	 */
 	private String searchImage(String extension) {
 		switch (extension) {
 		case "mp4":
@@ -236,6 +271,12 @@ public class NewMailView extends JFrame {
 		}
 	}
 
+	/**
+	 * Method that introduces the panel with all attachments in a scroll container
+	 * so they can view
+	 * 
+	 * @param panel JPanel that contains all the attachments with its icons
+	 */
 	public void createScrollPane(JPanel panel) {
 		JScrollPane scrollPane = new JScrollPane(panel);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -245,6 +286,17 @@ public class NewMailView extends JFrame {
 		uploadedFilesPane.add(scrollPane);
 	}
 
+	/**
+	 * Method that is responsible for receiving information from all text boxes and
+	 * the array of attachments and make different checks with that information
+	 * 
+	 * @param addresseeText TextField that contains the addressee to whom the
+	 *                      message is aimed to
+	 * @param subjectText   TextField that contains the subject of the message
+	 * @param bodyText      TextField that contains the message body
+	 * @param action        String that indicate if you want to send the message or
+	 *                      dispose the message
+	 */
 	public void checkTextBoxes(JTextField addresseeText, JTextField subjectText, JTextArea bodyText, String action) {
 		String addressee = addresseeText.getText();
 		String subject = subjectText.getText();
@@ -298,7 +350,7 @@ public class NewMailView extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the frame
 	 */
 	public NewMailView() {
 
@@ -392,9 +444,6 @@ public class NewMailView extends JFrame {
 							sendIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 					btnSend.setIcon(newSendIcon);
 					contentPane.add(btnSend);
-					ImageIcon cancelIcon = new ImageIcon("src//main//java//views//cancel.png");
-					Icon newCancelIcon = new ImageIcon(
-							cancelIcon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 
 					JLabel lblWarning = new JLabel("");
 					lblWarning.setEnabled(false);

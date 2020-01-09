@@ -17,6 +17,7 @@ public class ThreadRefreshEmails extends Thread {
 	// All variables of class
 	private JPanel contentView;
 	private JPanel contentMailPane;
+	private DataModel dataModelObject;
 
 	/**
 	 * Constructor of class
@@ -28,6 +29,7 @@ public class ThreadRefreshEmails extends Thread {
 	public ThreadRefreshEmails(JPanel contentViewParam, JPanel contentMailPaneParam) {
 		contentView = contentViewParam;
 		contentMailPane = contentMailPaneParam;
+		dataModelObject = new DataModel();
 	}
 
 	/**
@@ -36,7 +38,7 @@ public class ThreadRefreshEmails extends Thread {
 	public void run() {
 		synchronized (this) {
 			InboxView.setObjectMail(new MailMethods());
-			InboxView.getObjectMail().setAllDataConnection("pop.gmail.com", "pop3",
+			InboxView.getObjectMail().setAllDataConnection(dataModelObject.getPopGmail(), dataModelObject.getPop3(),
 					MainMailView.getTxtUserName().getText(), new String(MainMailView.getTxtPassword().getPassword()));
 			InboxView.getObjectMail().setProperties();
 			InboxView.getObjectMail().connectMailServer();

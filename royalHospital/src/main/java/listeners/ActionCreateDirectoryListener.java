@@ -19,7 +19,7 @@ import views.MainRoyalView;
 /**
  * Class to create directories and update Jtree
  * 
- * @author Daniel Cuenca
+ * @author Daniel Cuenca / Cristina Montilla
  *
  */
 public class ActionCreateDirectoryListener implements ActionListener {
@@ -28,14 +28,12 @@ public class ActionCreateDirectoryListener implements ActionListener {
 	private JTextField directoryName;
 	private MainRoyalView royal;
 	private CreateModifyView nameFrame;
-	
 	/**
-	 * Initializes class variables
-	 * 
-	 * @param ftpClient - FTPClient - Connection FTP object
-	 * @param textField - JTextField - JTextField contains text
-	 * @param royalView - MainRoyalView - Main view object
-	 * @param nameframe - CreateModifyView - create view
+	 * Initializes values of variables
+	 * @param FTPClient ftpClient FTP client
+	 * @param JTextField textField Field where user write new directory's name
+	 * @param MainRoyalView royalView Principal frame
+	 * @param CreateModifyView nameframe Insert name dialog 
 	 */
 	public ActionCreateDirectoryListener(FTPClient ftpClient, JTextField textField, MainRoyalView royalView, CreateModifyView nameframe) {
 		this.ftp = ftpClient;
@@ -43,10 +41,10 @@ public class ActionCreateDirectoryListener implements ActionListener {
 		this.royal = royalView;
 		this.nameFrame = nameframe;
 	}
-	
-	/**
-	 * Create a directory and update the JTree
-	 */
+
+/**
+ * Create directory event function which check selected file and if its possible creates a new directory
+ */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		DataModel data = new DataModel();

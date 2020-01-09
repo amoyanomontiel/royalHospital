@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import com.royalhospital.royalHospital.DataModel;
+
 import views.InboxView;
 import views.MainMailView;
 
@@ -18,6 +20,8 @@ import views.MainMailView;
  */
 public class EmailLoginListener {
 
+	private static DataModel dataModelObject = new DataModel();
+
 	/**
 	 * Add listener to Button for login email
 	 * 
@@ -28,11 +32,11 @@ public class EmailLoginListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (MainMailView.getTxtUserName().getText().contains("@alumnado.fundacionloyola.net")) {
+				if (MainMailView.getTxtUserName().getText().contains(dataModelObject.getKeyMail())) {
 					InboxView viewReceiveEmails = new InboxView();
 				} else {
-					JOptionPane.showMessageDialog(null, "Formato de correo inválido", "Login Fallido",
-							JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, dataModelObject.getErrorFormat(),
+							dataModelObject.getMessageErrorLogin(), JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});

@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 /**
- * 
+ * Dialog frame for insert files names or confirm files delete
  * @author Daniel Cuenca / Cristina Montilla
  *
  */
@@ -30,7 +30,15 @@ public class CreateModifyView extends JDialog{
 	private JButton btnOk;
 	JButton btnCancel;
 	DataModel data = new DataModel();
-	
+	/**
+	 * Creates insert names dialog
+	 * @param String button Button name
+	 * @param String label Label content
+	 * @param String title Frame title
+	 * @param int type Defines button listener
+	 * @param FTPClient ftpClient FTP client
+	 * @param MainRoyalView royalView Principal view
+	 */
 	public CreateModifyView(String button, String label, String title, int type, FTPClient ftpClient, MainRoyalView royalView) {
 		setResizable(false);
 		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
@@ -67,7 +75,12 @@ public class CreateModifyView extends JDialog{
 		}
 		
 	}
-	
+	/**
+	 * Creates confirm delete dialog
+	 * @param FTPClient ftpClient FTP client
+	 * @param MainRoyalView principalFrame Principal frame
+	 * @param String fileType Defines file type (Directory/File)
+	 */
 	public CreateModifyView (FTPClient ftpClient, MainRoyalView principalFrame, String fileType) {
 		setResizable(false);
 		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);

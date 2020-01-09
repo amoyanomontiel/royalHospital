@@ -29,13 +29,24 @@ public class ActionCreateDirectoryListener implements ActionListener {
 	private MainRoyalView royal;
 	private CreateModifyView nameFrame;
 	
+	/**
+	 * Initializes class variables
+	 * 
+	 * @param ftpClient - FTPClient - Connection FTP object
+	 * @param textField - JTextField - JTextField contains text
+	 * @param royalView - MainRoyalView - Main view object
+	 * @param nameframe - CreateModifyView - create view
+	 */
 	public ActionCreateDirectoryListener(FTPClient ftpClient, JTextField textField, MainRoyalView royalView, CreateModifyView nameframe) {
 		this.ftp = ftpClient;
 		this.directoryName = textField;
 		this.royal = royalView;
 		this.nameFrame = nameframe;
 	}
-
+	
+	/**
+	 * Create a directory and update the JTree
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		DataModel data = new DataModel();

@@ -35,7 +35,12 @@ public class ActionRenameFileListener implements ActionListener {
 	private String file;
 
 	/**
+	 * Initializes class variables
 	 * 
+	 * @param ftpClient - FTPClient - Connection FTP object
+	 * @param textField - JTextField - JTextField contains text
+	 * @param royalView - MainRoyalView - Main view object
+	 * @param nameFrame - CreateModifyView - create view
 	 */
 	public ActionRenameFileListener(FTPClient ftpClient, JTextField textField, MainRoyalView royalView,
 			CreateModifyView nameFrame) {
@@ -44,7 +49,10 @@ public class ActionRenameFileListener implements ActionListener {
 		this.text = textField;
 		this.nameFrame = nameFrame;
 	}
-
+	
+	/**
+	 * Rename the object and update the JTree
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		DataModel data = new DataModel();

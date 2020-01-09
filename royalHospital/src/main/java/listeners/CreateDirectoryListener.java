@@ -13,7 +13,7 @@ import views.CreateModifyView;
 import views.MainRoyalView;
 
 /**
- * 
+ * This listener is responsible for generating the window to create a directory
  * @author Daniel Cuenca
  *
  */
@@ -21,12 +21,20 @@ public class CreateDirectoryListener implements ActionListener {
 
 	private MainRoyalView royal;
 	private FTPClient client;
-
+	
+	/**
+	 * Initializes class variables
+	 * 
+	 * @param mainRoyalView - Main View Object 
+	 * @param ftpClient - FTPClient - Connection FTP object
+	 */
 	public CreateDirectoryListener(MainRoyalView mainRoyalView, FTPClient ftpClient) {
 		this.client = ftpClient;
 		this.royal = mainRoyalView;
 	}
-
+	/**
+	 * Verify that a directory has been selected and create the directory creation window
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		DataModel data = new DataModel();

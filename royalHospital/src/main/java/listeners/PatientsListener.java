@@ -21,15 +21,18 @@ public class PatientsListener implements ActionListener {
 	private FTPClient client;
 	private MainRoyalView royal;
 /**
- * Initialize
- * @param ftpClient
- * @param mainRoyalView
+ * Initializes class variables
+ * 
+ * @param ftpClient - FTPClient - Connection FTP object
+ * @param mainRoyalView - MainRoyalView - Main view object
  */
 	public PatientsListener(FTPClient ftpClient, MainRoyalView mainRoyalView) {
 		this.client = ftpClient;
 		this.royal = mainRoyalView;
 	}
-
+	/**
+	 * change the working path of the FTP server and create the JTree with the files in it
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		try {

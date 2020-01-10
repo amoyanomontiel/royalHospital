@@ -25,10 +25,10 @@ public class DataModel {
 	private String noEmptyLoginFieldsMsg = "El campo usuario y/o contraseña no pueden estar vacios";
 	private String dbConectionError = "Error de conexión con la Base de Datos";
 	private String ftpConectionError = "Error de conexión con el servidor";
-	private String createDirLeghtMaxException = "Escribe un nombre para el directorio de máximo 20 caracteres";
+	private String createDirLeghtMaxException = "Escribe un nombre para el directorio de máximo 50 caracteres";
 	private String createDirTextEmpty = "Escribe un nombre para el directorio";
-	private String createFileTextLeght = "Escriba el nombre del fichero (máximo 20 caracteres) y su extensión si lo desea.";
-	private String renameFileLeghtMax = "Escriba el nombre nuevo para el fichero(máximo 20 caracteres)";
+	private String createFileTextLeght = "Escriba el nombre del fichero (máximo 50 caracteres) y su extensión si lo desea.";
+	private String renameFileLeghtMax = "Escriba el nombre nuevo para el fichero(máximo 50 caracteres)";
 
 	// Tags & labels
 	private String userTag = "Usuario";

@@ -49,9 +49,15 @@ public class ErrorRoyalView extends JDialog {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
 		JLabel lblMessage = new JLabel(error);
-		lblMessage.setBounds(95, 48, 350, 46);
+		if(error.length()>54) {
+			lblMessage.setBounds(95, 48, 630, 46);
+			setSize(600, 220);
+		}else {
+			lblMessage.setBounds(95, 48, 365, 46);
+		}
+		
 		contentPane.add(lblMessage);
 
 		JLabel img_error = new JLabel();
@@ -72,7 +78,13 @@ public class ErrorRoyalView extends JDialog {
 		contentPane.add(img_error);
 
 		JButton btnAccept = new JButton(data.getAcceptTag());
-		btnAccept.setBounds(190, 123, 100, 30);
+		if(error.length()>54) {
+			btnAccept.setBounds(250, 123, 100, 30);
+		}else {
+			btnAccept.setBounds(190, 123, 100, 30);
+		}
+		
+		
 		contentPane.add(btnAccept);
 
 		btnAccept.addActionListener(new ActionListener() {

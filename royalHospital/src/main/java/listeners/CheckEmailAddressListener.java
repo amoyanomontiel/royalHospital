@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import com.royalhospital.royalHospital.DataModel;
+
 public class CheckEmailAddressListener {
+	private DataModel model = new DataModel(); 
 
 	/**
 	 * Method that adds a focus event to the addressees textfield and when this textfield loses focus, written addressees will be checked

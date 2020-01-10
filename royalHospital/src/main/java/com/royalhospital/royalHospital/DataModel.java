@@ -159,9 +159,122 @@ public class DataModel {
 	private String minetypeTextPlain = "text/plain";
 	private String minetypeHTML = "text/html";
 	private String mineTypeMultiplart = "multipart/*";
+	
+	// iconRoutes
+	private String mp4_mp3_webm_gifRoute = "src//main//java//views//mp4_mp3_webm_gif.png";
+	private String docxRoute = "src//main//java//views//docx.png";
+	private String png_jpg_jpegRoute = "src//main//java//views//png_jpg_jpeg.png";
+	private String txtRoute = "src//main//java//views//txt.png";
+	private String pdfRoute = "src//main//java//views//pdf.png";
+	private String compressedRoute = "src//main//java//views//compressed.png";
+	private String sqlRoute = "src//main//java//views//sql.png";
+	private String jarRoute = "src//main//java//views//jar.png";
+	private String generalIconRoute = "src//main//java//views//general icon.png";
+	private String downloadIconRoute = "src//main//java//views//download.png";
+	private String sendIconRoute = "src//main//java//views//send.png";
+	private String warningRoute = "src//main//java//views//warning.png";
+	
+	// sendingEmails
+	private String emailSent = "Correo enviado correctamente";
+	private String emailNotSent = "El Correo no se ha enviado correctamente, intentalo de nuevo";
+	private String addresseeError = "Debes introducir un destinatario";
+	private String NoBodyNoSubjectWarning = "¿Estás seguro de que quieres enviar un mensaje sin asunto o sin cuerpo?";
+	private String disposeMessage = "¿Estás seguro de que quieres desechar el mensaje?";
+	private String emailHeader = "La aplicación de email dice:";
+	private String noAccountFound = "No se ha encontrado dicha cuenta de correo";
+	private String generalError = "Ha ocurrido un error al mandar el mensaje, vuelve a intentarlo";
+	private String creatingMessageError = "Ha ocurrido un error al crear el mensaje, vuelve a intentarlo";
 
 	public DataModel() {
 
+	}
+
+	public String getNoAccountFound() {
+		return noAccountFound;
+	}
+
+	public void setNoAccountFound(String noAccountFound) {
+		this.noAccountFound = noAccountFound;
+	}
+
+	public String getGeneralError() {
+		return generalError;
+	}
+
+	public void setGeneralError(String generalError) {
+		this.generalError = generalError;
+	}
+
+	public String getCreatingMessageError() {
+		return creatingMessageError;
+	}
+
+	public void setCreatingMessageError(String creatingMessageError) {
+		this.creatingMessageError = creatingMessageError;
+	}
+
+	public String getEmailSent() {
+		return emailSent;
+	}
+
+	public void setEmailSent(String emailSent) {
+		this.emailSent = emailSent;
+	}
+
+	public String getEmailNotSent() {
+		return emailNotSent;
+	}
+
+	public void setEmailNotSent(String emailNotSent) {
+		this.emailNotSent = emailNotSent;
+	}
+
+	public String getAddresseeError() {
+		return addresseeError;
+	}
+
+	public void setAddresseeError(String addresseeError) {
+		this.addresseeError = addresseeError;
+	}
+
+	public String getNoBodyNoSubjectWarning() {
+		return NoBodyNoSubjectWarning;
+	}
+
+	public void setNoBodyNoSubjectWarning(String noBodyNoSubjectWarning) {
+		NoBodyNoSubjectWarning = noBodyNoSubjectWarning;
+	}
+
+	public String getDisposeMessage() {
+		return disposeMessage;
+	}
+
+	public void setDisposeMessage(String disposeMessage) {
+		this.disposeMessage = disposeMessage;
+	}
+
+	public String getEmailHeader() {
+		return emailHeader;
+	}
+
+	public void setEmailHeader(String emailHeader) {
+		this.emailHeader = emailHeader;
+	}
+
+	public String getSendIconRoute() {
+		return sendIconRoute;
+	}
+
+	public void setSendIconRoute(String sendIconRoute) {
+		this.sendIconRoute = sendIconRoute;
+	}
+
+	public String getWarningRoute() {
+		return warningRoute;
+	}
+
+	public void setWarningRoute(String warningRoute) {
+		this.warningRoute = warningRoute;
 	}
 
 	public String getBigRoyalLogoRoute() {
@@ -1180,4 +1293,83 @@ public class DataModel {
 		this.errorFormat = errorFormat;
 	}
 
+	public String getMp4_mp3_webm_gifRoute() {
+		return mp4_mp3_webm_gifRoute;
+	}
+
+	public void setMp4_mp3_webm_gifRoute(String mp4_mp3_webm_gifRoute) {
+		this.mp4_mp3_webm_gifRoute = mp4_mp3_webm_gifRoute;
+	}
+
+	public String getDocxRoute() {
+		return docxRoute;
+	}
+
+	public void setDocxRoute(String docxRoute) {
+		this.docxRoute = docxRoute;
+	}
+
+	public String getPng_jpg_jpegRoute() {
+		return png_jpg_jpegRoute;
+	}
+
+	public void setPng_jpg_jpegRoute(String png_jpg_jpegRoute) {
+		this.png_jpg_jpegRoute = png_jpg_jpegRoute;
+	}
+
+	public String getTxtRoute() {
+		return txtRoute;
+	}
+
+	public void setTxtRoute(String txtRoute) {
+		this.txtRoute = txtRoute;
+	}
+
+	public String getPdfRoute() {
+		return pdfRoute;
+	}
+
+	public void setPdfRoute(String pdfRoute) {
+		this.pdfRoute = pdfRoute;
+	}
+
+	public String getCompressedRoute() {
+		return compressedRoute;
+	}
+
+	public void setCompressedRoute(String compressedRoute) {
+		this.compressedRoute = compressedRoute;
+	}
+
+	public String getSqlRoute() {
+		return sqlRoute;
+	}
+
+	public void setSqlRoute(String sqlRoute) {
+		this.sqlRoute = sqlRoute;
+	}
+
+	public String getJarRoute() {
+		return jarRoute;
+	}
+
+	public void setJarRoute(String jarRoute) {
+		this.jarRoute = jarRoute;
+	}
+
+	public String getGeneralIconRoute() {
+		return generalIconRoute;
+	}
+
+	public void setGeneralIconRoute(String generalIconRoute) {
+		this.generalIconRoute = generalIconRoute;
+	}
+
+	public String getDownloadIconRoute() {
+		return downloadIconRoute;
+	}
+
+	public void setDownloadIconRoute(String downloadIconRoute) {
+		this.downloadIconRoute = downloadIconRoute;
+	}
 }

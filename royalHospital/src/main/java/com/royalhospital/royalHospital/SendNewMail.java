@@ -30,6 +30,7 @@ public class SendNewMail {
 
 	private String sender;
 	private String password;
+	private DataModel model = new DataModel(); 
 
 	/**
 	 * Builder of this class that fill the email sender and email password of the
@@ -82,12 +83,12 @@ public class SendNewMail {
 				return false;
 			}
 		} catch (AddressException e) {
-			JOptionPane.showMessageDialog(null, "No se ha encontrado dicha cuenta de correo", "Correo erróneo",
+			JOptionPane.showMessageDialog(null, model.getNoAccountFound(), model.getEmailHeader(),
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		} catch (MessagingException e) {
-			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al mandar el mensaje, vuelve a intentarlo",
-					"Error fatal", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, model.getGeneralError(),
+					model.getEmailHeader(), JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 	}
@@ -140,8 +141,8 @@ public class SendNewMail {
 				}
 			}
 		} catch (MessagingException e) {
-			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al crear el mensaje, vuelve a intentarlo",
-					"Error fatal", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, model.getCreatingMessageError(),
+					model.getEmailHeader(), JOptionPane.WARNING_MESSAGE);
 			return null;
 		}
 		return multipart;

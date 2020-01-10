@@ -172,7 +172,7 @@ public class DataModel {
 	private String generalIconRoute = "src//main//java//views//general icon.png";
 	private String downloadIconRoute = "src//main//java//views//download.png";
 	private String sendIconRoute = "src//main//java//views//send.png";
-	private String warningRoute = "src//main//java//views//warning.png";
+	private String warningRoute = "src//main//java//views//addresseeWarning.png";
 	
 	// sendingEmails
 	private String emailSent = "Correo enviado correctamente";

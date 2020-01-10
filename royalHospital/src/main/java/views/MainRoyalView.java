@@ -340,7 +340,7 @@ public class MainRoyalView extends JFrame implements TreeSelectionListener {
 			DataModel.selectedFile = selectedNode.toString();
 			TreeNode[] route = selectedNode.getPath();
 			for (int i = 0; i < route.length; i++) {
-				System.out.println(path);
+//				System.out.println(path);
 				if (i == route.length - 1) {
 					DataModel.directionPath = path;
 				}

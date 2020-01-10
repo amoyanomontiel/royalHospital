@@ -16,7 +16,7 @@ public class DataModel {
 	private String bigRoyalLogoRoute = "/views/royalhospital.png";
 	private String iconRoyalLogo = "src\\main\\java\\views\\ic_launcher.png";// Porque tan larga
 	private String errorIconRoute = "/views/errorIcono.png";
-	private String warningIconRoute = "/views/warning.png";
+	private String warningIconRoute = "views/warning.png";
 	private String loginTitle = "Royal Hospital - Login";
 	private String mainTitle = "Royal Hospital - Main";
 	private String fontType = "Tahoma";

@@ -60,24 +60,30 @@ public class ActionRenameFileListener implements ActionListener {
 			if (FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
 				try {
 					ftp.changeWorkingDirectory(DataModel.directionPath);
-					if(text.getText().toString().isEmpty() || text.getText().length()>50) {
-						ErrorRoyalView error = new ErrorRoyalView(data.getRenameFileLeghtMax(), 1);
+					if(text.getText().equals(DataModel.selectedFile)) {
+						ErrorRoyalView error = new ErrorRoyalView("El nombre del fichero no puede ser el mismo", 1);
 						error.setVisible(true);
 						error.setLocationRelativeTo(null);
 					}else {
-						if (ftp.rename(DataModel.selectedFile, text.getText())) {
-							nameFrame.dispose();
-							AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "renombrar", DataModel.selectedFile, 
-									AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
-							royal.getTxtaHistorial().append(data.getFileRename() + "\n");
-							DefaultMutableTreeNode node = (DefaultMutableTreeNode)royal.getTree().getLastSelectedPathComponent();
-							node.setUserObject(text.getText().toString());
-							DefaultTreeModel model = (DefaultTreeModel) royal.getTree().getModel();
-							model.nodeChanged(node);
-							royal.getTree().setModel(model);
-						} else {
-							royal.getTxtaHistorial().append(data.getFileRenameError() + "\n");
-						}
+						if(text.getText().toString().isEmpty() || text.getText().length()>50) {
+							ErrorRoyalView error = new ErrorRoyalView(data.getRenameFileLeghtMax(), 1);
+							error.setVisible(true);
+							error.setLocationRelativeTo(null);
+						}else {
+							if (ftp.rename(DataModel.selectedFile, text.getText())) {
+								nameFrame.dispose();
+								AuxiliaryTools.saveOperationAtDBRecord(DataModel.codActualUser, "renombrar", DataModel.selectedFile, 
+										AuxiliaryTools.actualDate(), AuxiliaryTools.actualTime());
+								royal.getTxtaHistorial().append(data.getFileRename() + "\n");
+								DefaultMutableTreeNode node = (DefaultMutableTreeNode)royal.getTree().getLastSelectedPathComponent();
+								node.setUserObject(text.getText().toString());
+								DefaultTreeModel model = (DefaultTreeModel) royal.getTree().getModel();
+								model.nodeChanged(node);
+								royal.getTree().setModel(model);
+							} else {
+								royal.getTxtaHistorial().append(data.getFileRenameError() + "\n");
+							}
+						}					
 					}					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

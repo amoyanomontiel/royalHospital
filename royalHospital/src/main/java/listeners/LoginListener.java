@@ -2,6 +2,9 @@ package listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -128,13 +131,12 @@ public class LoginListener implements ActionListener {
 			error.setLocationRelativeTo(null);
 		}
 		try {
-			ResultSet result = state.executeQuery("Select nameUser, password, codUser from usuarios where nameUser like '"
-					+ userText.toString() + "' and password like '" + passwordText.toString() + "'");
+			ResultSet result = state.executeQuery(
+					"Select nameUser, password, codUser from usuarios where nameUser like '" + userText.toString()
+							+ "' and password like '" + encryptPassword(passwordText.toString()) + "'");
 			result.next();
-			System.out.println(result.getString(1) + result.getString(2));
 			isCorrect = true;
 			DataModel.codActualUser = result.getInt(3);
-			System.out.println(DataModel.codActualUser);
 		} catch (SQLException | NullPointerException e) {
 			isCorrect = false;
 		}
@@ -144,5 +146,27 @@ public class LoginListener implements ActionListener {
 			// DB conection still open (user doesn't care about that)
 		}
 		return isCorrect;
+	}
+
+	/**
+	 * Function for encrypt password
+	 * 
+	 * @param String password user password
+	 * @return String encrypted password
+	 */
+	private String encryptPassword(String password) {
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		byte[] hashInBytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
+
+		StringBuilder sb = new StringBuilder();
+		for (byte b : hashInBytes) {
+			sb.append(String.format("%02x", b));
+		}
+		return sb.toString();
 	}
 }
